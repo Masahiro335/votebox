@@ -41,6 +41,17 @@ header li {
   font-size: 14px;
 }
 
+.btn {
+  padding: 5px 40px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn.add {
+  margin-top: 10px;
+  background-color: #f91462;
+}
+
 .wrapper {
   margin-top: 100px;
 }
@@ -101,4 +112,8 @@ input[name=vote-item] {
 .fa-plus-square, .fa-minus-square {
   font-size: 20px;
   margin-right: 5px;
+}
+
+.vote-add {
+  margin-bottom: 10px;
 }

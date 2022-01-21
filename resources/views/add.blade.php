@@ -5,7 +5,7 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item" id="theme">
-			{{ Form::open(['url' => '/']) }} 
+			{{ Form::open(['url' => '/add']) }} 
 			<label class="title">お題</label>
 			<div class="body">
 				{{ Form::textarea('body', '', ['placeholder'=>'テーマを記入してください。']) }}
@@ -19,8 +19,11 @@
 					{{ Form::text('vote', '', ['name'=>'vote-item', 'v-model' => 'texts[index]']) }}
 				</div>
 			</div>
-			<i class="fas fa-plus-square" @click="add" v-if="texts.length < 4"></i>
-			<i class="fas fa-minus-square" @click="del" v-if="texts.length > 0"></i>
+			<div class="vote-add">
+				<i class="fas fa-plus-square" @click="add" v-if="texts.length < 4"></i>
+				<i class="fas fa-minus-square" @click="del" v-if="texts.length > 0"></i>
+			</div>
+			{{ Form::submit('登録', ['class'=>'btn add']) }}
 			{{Form::close()}}
 		</div>
 	</div>
