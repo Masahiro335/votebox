@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function() {
     return view('top');
 });
-Route::post('/add', function() {
+Route::get('/add', function() {
     return view('add', ['title' => 'お題投稿']);
 });
