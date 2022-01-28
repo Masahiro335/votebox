@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateThemesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -13,10 +13,10 @@ class CreateUsersTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('users', function (Blueprint $table) {
+		Schema::create('themes', function (Blueprint $table) {
 			$table->id()->autoIncrement();
-			$table->string('name', 30)->unique();
-			$table->string('password', 100);
+			$table->foreignId('user_id')->constrained('users');
+			$table->string('body', 200);
 			$table->boolean('is_deleted')->default(false);
 			$table->timestamp('modified')->useCurrent();
 			$table->timestamp('created')->useCurrent();
@@ -30,6 +30,6 @@ class CreateUsersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('users');
+		Schema::dropIfExists('themes');
 	}
 }
