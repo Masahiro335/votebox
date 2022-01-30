@@ -21,7 +21,7 @@
 				</ul>
 			</nav>
 		</header>
-		<a href="/add" class="btn-new">投稿</a>
+		<a href="{{ url('themes/edit') }}" class="btn-new">投稿</a>
 		@yield('content')
 		<footer>
 			

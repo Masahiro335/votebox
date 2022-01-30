@@ -5,7 +5,7 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item" id="theme">
-			{{ Form::open(['url' => '/add']) }} 
+			{{ Form::open(['url' => '/themes/add']) }} 
 			<label class="title">お題</label>
 			<div class="body">
 				{{ Form::textarea('body', '', ['placeholder'=>'テーマを記入してください。']) }}
@@ -24,7 +24,7 @@
 				<i class="fas fa-minus-square" @click="del" v-if="texts.length > 0"></i>
 			</div>
 			{{ Form::submit('登録', ['class'=>'btn add']) }}
-			{{Form::close()}}
+			{{ Form::close() }}
 		</div>
 	</div>
 </div>
