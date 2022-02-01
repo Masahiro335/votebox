@@ -17,8 +17,7 @@ class CreateVoteUsersTable extends Migration
 			$table->id()->autoIncrement();
 			$table->foreignId('theme_id')->constrained('themes');
 			$table->foreignId('vote_id')->constrained('votes');
-			$table->timestamp('modified')->useCurrent();
-			$table->timestamp('created')->useCurrent();
+			$table->timestamps();
 		});
 	}
 

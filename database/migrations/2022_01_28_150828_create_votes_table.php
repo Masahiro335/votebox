@@ -19,8 +19,7 @@ class CreateVotesTable extends Migration
 			$table->string('name', 10);
 			$table->integer('sort_number');
 			$table->boolean('is_deleted')->default(false);
-			$table->timestamp('modified')->useCurrent();
-			$table->timestamp('created')->useCurrent();
+			$table->timestamps();
 		});
 	}
 

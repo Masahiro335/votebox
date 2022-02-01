@@ -18,8 +18,7 @@ class CreateUsersTable extends Migration
 			$table->string('name', 30)->unique();
 			$table->string('password', 100);
 			$table->boolean('is_deleted')->default(false);
-			$table->timestamp('modified')->useCurrent();
-			$table->timestamp('created')->useCurrent();
+			$table->timestamps();
 		});
 	}
 

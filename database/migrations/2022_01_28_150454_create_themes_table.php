@@ -18,8 +18,7 @@ class CreateThemesTable extends Migration
 			$table->foreignId('user_id')->constrained('users');
 			$table->string('body', 200);
 			$table->boolean('is_deleted')->default(false);
-			$table->timestamp('modified')->useCurrent();
-			$table->timestamp('created')->useCurrent();
+			$table->timestamps();
 		});
 	}
 
