@@ -6,17 +6,17 @@
 	<div class="content">
 		<div class="item" id="theme">
 			{{ Form::open(['url' => '/themes/edit']) }} 
-			<label class="title">お題</label>
+			<label class="title">テーマ</label>
 			<div class="body">
 				{{ Form::textarea('body', '', ['placeholder'=>'テーマを記入してください。']) }}
 			</div>
-			<label class="title">投稿項目</label>
+			<label class="title">投票項目</label>
 			<div class="vote-item-group">
 				<div class="vote-item">
-					{{ Form::text('vote', '', ['name'=>'votes[]', 'v-model' => 'texts[index]']) }}
+					{{ Form::text('vote', '', ['name'=>'vote-items[]', 'v-model' => 'texts[index]']) }}
 				</div>
 				<div class="vote-item" v-for="(text,index) in texts">
-					{{ Form::text('vote', '', ['name'=>'votes[]', 'v-model' => 'texts[index]']) }}
+					{{ Form::text('vote', '', ['name'=>'vote-items[]', 'v-model' => 'texts[index]']) }}
 				</div>
 			</div>
 			<div class="vote-add">
