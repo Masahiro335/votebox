@@ -21,6 +21,16 @@
 				</ul>
 			</nav>
 		</header>
+		@if (session('flash_message'))
+			<div class="flash-message">
+				{{ session('flash_message') }}
+			</div>
+		@endif
+		@if (session('flash_error_message'))
+			<div class="flash-message error">
+				{{ session('flash_error_message') }}
+			</div>
+		@endif
 		<a href="{{ url('themes/edit') }}" class="btn-new">投稿</a>
 		@yield('content')
 		<footer>

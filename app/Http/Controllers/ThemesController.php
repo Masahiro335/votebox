@@ -11,18 +11,33 @@ class ThemesController extends Controller
 	{
 		if(empty($request->input()) == false){
 			$getData = $request->input();
-			
 			$ThemeModel = new \App\Models\Theme();
-			$entTheme = $ThemeModel->create([
-				'user_id' => '1',
-				'body' => $getData['body'],
-			]);
-			var_dump($entTheme);
+			$VoteModel = new \App\Models\Vote();
 
-		
-			exit;
 
-			return view('top');
+			/*
+			try {
+				DB::beginTransaction();
+				$entTheme = $ThemeModel->create([
+					'user_id' => '1',
+					'body' => $getData['body'],
+				]);
+				foreach($getData['votes'] as $key => $voteName){
+					$entVote = $VoteModel->create([
+						'theme_id' => $entTheme->id,
+						'name' => $voteName,
+						'sort_number' => $key + 1,
+					]);
+				}
+				DB::commit();
+			} catch (\Exception $e) {
+				DB::rollback();
+				session()->flash('flash_error_message', '投稿に失敗しました');
+				return redirect()->route('Themes.edit');
+			}
+			*/
+			session()->flash('flash_message', 'テーマを投稿しました');
+			return redirect()->route('Top');
 		}
 		return view('Themes/edit', ['title' => 'テーマの登録']);
 	}
