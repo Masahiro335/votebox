@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -100,7 +104,7 @@ header li {
   }
 }
 
-input[name=vote-item] {
+input[name^=vote-items] {
   padding: 5px;
 }
 
@@ -113,7 +117,7 @@ input[name=vote-item] {
   margin-right: 5px;
 }
 
-.vote-add {
+.vote-edit {
   margin-bottom: 10px;
 }
 

@@ -16,6 +16,9 @@ $media-sp: 750px;
 * {
 	box-sizing: border-box
 }
+a {
+	text-decoration: none;
+}
  body {
 	margin: 0;
 	padding: 0;
@@ -101,7 +104,7 @@ textarea[name="body"]{
 		height: 100px;
 	} 
 }
-input[name="vote-item"] {
+input[name^="vote-items"] {
 	padding: 5px;
 }
 .vote-item {
@@ -111,7 +114,7 @@ input[name="vote-item"] {
 	font-size: 20px;
 	margin-right: 5px;
 }
-.vote-add {
+.vote-edit {
 	margin-bottom: 10px;
 }
 .flash-message {

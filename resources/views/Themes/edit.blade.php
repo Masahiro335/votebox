@@ -19,7 +19,7 @@
 					{{ Form::text('vote', '', ['name'=>'vote-items[]', 'v-model' => 'texts[index]']) }}
 				</div>
 			</div>
-			<div class="vote-add">
+			<div class="vote-edit">
 				<i class="fas fa-plus-square" @click="add" v-if="texts.length < 4"></i>
 				<i class="fas fa-minus-square" @click="del" v-if="texts.length > 0"></i>
 			</div>
