@@ -13,5 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() { return view('top'); })->name('Top');
+Route::get('/','ThemesController@index')->name('Top');
 Route::match(['get', 'post'], '/themes/edit/{id?}','ThemesController@edit')->name('Themes.edit');

@@ -10,13 +10,32 @@
 			<div class="body">
 				{{ Form::textarea('body', '', ['placeholder'=>'テーマを記入してください。']) }}
 			</div>
+			<?php if( $errors->has('body') ){ ?>
+				<?php foreach($errors->get('body') as $errorMessage){ ?>
+					<div class="error-message">{{ $errorMessage }}</div>
+				<?php } ?>
+			<?php } ?>
 			<label class="title">投票項目</label>
 			<div class="vote-item-group">
-				<div class="vote-item">
-					{{ Form::text('vote', '', ['name'=>'vote-items[]', 'v-model' => 'texts[index]']) }}
-				</div>
+				<?= var_dump($getData) ?>
+				<?php if( empty($getData) ){ ?>
+					<div class="vote-item">
+						{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
+					</div>
+				<?php }else{ ?>
+					<?php foreach($getData['vote-items'] as $key => $voteItem){ ?>
+						<div class="vote-item">
+							{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
+						</div>
+						<?php if( $errors->has('vote-items.*')[$key] ){ ?>
+							<?php foreach($errors->get('vote-items.*')[$key] as $errorMessage){ ?>
+								<div class="error-message">{{ $errorMessage }}</div>
+							<?php } ?>
+						<?php } ?>
+					<?php } ?>
+				<?php } ?>
 				<div class="vote-item" v-for="(text,index) in texts">
-					{{ Form::text('vote', '', ['name'=>'vote-items[]', 'v-model' => 'texts[index]']) }}
+					{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
 				</div>
 			</div>
 			<div class="vote-edit">
