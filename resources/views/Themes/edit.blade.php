@@ -17,30 +17,29 @@
 			<?php } ?>
 			<label class="title">投票項目</label>
 			<div class="vote-item-group">
-				<?= var_dump($getData) ?>
-				<?php if( empty($getData) ){ ?>
+				<?php if( empty(session()->get('_old_input.vote-items')) ){ ?>
 					<div class="vote-item">
-						{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
+						{{ Form::text('vote-items[0]', '', []) }}
 					</div>
 				<?php }else{ ?>
-					<?php foreach($getData['vote-items'] as $key => $voteItem){ ?>
+					<?php foreach(session()->get('_old_input.vote-items') as $key => $voteItem){ ?>
 						<div class="vote-item">
-							{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
-						</div>
-						<?php if( $errors->has('vote-items.*')[$key] ){ ?>
-							<?php foreach($errors->get('vote-items.*')[$key] as $errorMessage){ ?>
-								<div class="error-message">{{ $errorMessage }}</div>
+							{{ Form::text('vote-items['.$key.']', '', []) }}
+							<?php if( $errors->has('vote-items.'.$key) ){ ?>
+								<?php foreach($errors->get('vote-items.'.$key) as $errorMessage){ ?>
+									<div class="error-message">{{ $errorMessage }}</div>
+								<?php } ?>
 							<?php } ?>
-						<?php } ?>
+						</div>
 					<?php } ?>
 				<?php } ?>
-				<div class="vote-item" v-for="(text,index) in texts">
-					{{ Form::text('vote-items[]', '', ['v-model' => 'texts[index]']) }}
+				<div class="vote-item" v-for="(text,index) in items">
+					{{ Form::text('vote-items[]', '', []) }}
 				</div>
 			</div>
 			<div class="vote-edit">
-				<i class="fas fa-plus-square" @click="add" v-if="texts.length < 4"></i>
-				<i class="fas fa-minus-square" @click="del" v-if="texts.length > 0"></i>
+				<i class="fas fa-plus-square" @click="add" v-if="vote_items_count < 4"></i>
+				<i class="fas fa-minus-square" @click="del" v-if="vote_items_count > 1"></i>
 			</div>
 			{{ Form::submit('登録', ['class'=>'btn add']) }}
 			{{ Form::close() }}
@@ -52,18 +51,24 @@
 new Vue({
     el: '#theme',
 	data: {
-		texts: [],
+		items: [],
+		vote_items_count: $('.vote-item-group input[name^="vote-items"]').length,
 	},
     methods: {
         add: function(){
-			if( this.texts.length > 3 ){
+			this.vote_items_count = $('.vote-item-group input[name^="vote-items"]').length;
+			if( this.vote_items_count > 3 ){
 				alert('これ以上項目は増やせません');
 				return false;
 			}
-			this.texts.push('');
+			this.items.push('').val();
+			this.vote_items_count = this.vote_items_count + 1;
         },
         del: function(){
-			this.texts.pop();
+			 if( !this.items.pop() && this.vote_items_count > 1){
+				$('input[name^="vote-items"]:last').remove();
+			 }
+			this.vote_items_count = this.vote_items_count - 1;
         },
     }
 })

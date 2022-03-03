@@ -75,7 +75,6 @@ class ThemesController extends Controller
 				session()->flash('flash_error_message', '投稿に失敗しました');
 				return redirect()
 					->route('Themes.edit')
-					->with(compact('getData'))
 					->withErrors($validator)
 					->withInput()
 				;
@@ -84,9 +83,7 @@ class ThemesController extends Controller
 			session()->flash('flash_message', 'テーマを投稿しました');
 			return redirect()->route('Top');
 		}
-		if( empty($getData) ){
-			$getData = null;
-		}
-		return view('Themes/edit',['title' => 'テーマの登録', 'getData' => $getData]);
+
+		return view('Themes/edit',['title' => 'テーマの登録']);
 	}
 }

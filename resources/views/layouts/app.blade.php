@@ -7,6 +7,7 @@
 		<script src="https://kit.fontawesome.com/cd97f58519.js" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<title>{{ empty($title) ? 'VOTEBOX' : $title.'|VOTEBOX' }}</title>
 	</head>
 	<body>
