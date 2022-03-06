@@ -53,6 +53,7 @@ new Vue({
     el: '.item',
 	data: {
 		items: [],
+		//デフォルトの投票項目の数
 		vote_item_count: $('.vote-item input[name^="vote-items"]').length,
 	},
     methods: {
@@ -60,13 +61,15 @@ new Vue({
 			this.items.push('').val();
         },
         del: function(){
+			//追加したダミーを削除
 			if( this.items.length > 0 ){
 				this.items.pop();
+
+			//デフォルトの投票項目を削除
 			}else{
 				$('input[name^="vote-items"]:last').remove();
 				this.vote_item_count = this.vote_item_count - 1;
 			}
-			
 			if( $('.error-message').length > 0){
 				$('.error-message:last').remove();
 			}

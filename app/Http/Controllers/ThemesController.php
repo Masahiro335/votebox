@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\ThemeRequest;
 use \App\Models\Theme;
 use \App\Models\Vote;
 
@@ -34,18 +35,10 @@ class ThemesController extends Controller
 	{
 		if( $request->isMethod('post') ){
 			$getData = $request->all();
-			$rulus = [
-				'body' => ['required', 'max:100'],
-				'vote-items.*' => ['required', 'max:10'],
-			];
-			$errors = [
-				'body.required' => 'お題は必須項目です。',
-				'body.max' => '100文字以内で入力して下さい。',
-				'vote-items.*.required' => '投票項目は必須項目です。',
-				'vote-items.*.max' => '10文字以内で入力して下さい。',
-			];
-			$validator = Validator::make($request->all(), $rulus, $errors);
-			if( $validator->fails() ) {
+			$themeRequest = new ThemeRequest();
+
+			$validator = Validator::make($getData, $themeRequest->rules(), $themeRequest->messages());
+			if( empty($validator) == false ) {
 				session()->flash('flash_error_message', '投稿に失敗しました');
 				return redirect()
 					->route('Themes.edit')
