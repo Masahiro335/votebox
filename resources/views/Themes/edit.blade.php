@@ -33,7 +33,7 @@
 						</div>
 					<?php } ?>
 				<?php } ?>
-				<div class="vote-item-dummy" v-for="(text,index) in items">
+				<div class="vote-item-add" v-for="(text,index) in items">
 					{{ Form::text('vote-items[]', '', []) }}
 				</div>
 			</div>

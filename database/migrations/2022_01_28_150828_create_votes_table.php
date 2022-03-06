@@ -15,10 +15,10 @@ class CreateVotesTable extends Migration
 	{
 		Schema::create('votes', function (Blueprint $table) {
 			$table->id()->autoIncrement();
-			$table->foreignId('theme_id')->constrained('themes');
-			$table->string('name', 10);
-			$table->integer('sort_number');
-			$table->boolean('is_deleted')->default(false);
+			$table->foreignId('theme_id')->comment('テーマID')->constrained('themes');
+			$table->string('name', 10)->comment('投票名');
+			$table->integer('sort_number')->comment('ソートナンバー');
+			$table->boolean('is_deleted')->default(false)->comment('論理削除');
 			$table->timestamps();
 		});
 	}

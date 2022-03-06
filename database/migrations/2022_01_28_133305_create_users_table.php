@@ -15,9 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name', 30)->unique();
-            $table->string('password', 100);
-            $table->boolean('is_deleted')->default(false);
+            $table->string('name', 30)->unique()->comment('ユーザー名');
+            $table->string('password', 100)->comment('パスワード');
+            $table->boolean('is_deleted')->default(false)->comment('論理削除');
             $table->timestamps();
         });
     }

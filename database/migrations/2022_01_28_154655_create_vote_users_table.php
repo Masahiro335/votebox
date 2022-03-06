@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateVoteUsersTable extends Migration
 {
@@ -15,8 +16,8 @@ class CreateVoteUsersTable extends Migration
 	{
 		Schema::create('vote_users', function (Blueprint $table) {
 			$table->id()->autoIncrement();
-			$table->foreignId('theme_id')->constrained('themes');
-			$table->foreignId('vote_id')->constrained('votes');
+			$table->foreignId('user_id')->comment('ユーザーID')->constrained('users');
+			$table->foreignId('vote_id')->comment('投票ID')->constrained('votes');
 			$table->timestamps();
 		});
 	}
