@@ -39,7 +39,7 @@ class ThemesController extends Controller
 				'vote-items.*' => ['required', 'max:10'],
 			];
 			$errors = [
-				'body.required' => 'テーマは必須項目です。',
+				'body.required' => 'お題は必須項目です。',
 				'body.max' => '100文字以内で入力して下さい。',
 				'vote-items.*.required' => '投票項目は必須項目です。',
 				'vote-items.*.max' => '10文字以内で入力して下さい。',
@@ -80,10 +80,10 @@ class ThemesController extends Controller
 				;
 			}
 
-			session()->flash('flash_message', 'テーマを投稿しました');
+			session()->flash('flash_message', 'お題を投稿しました');
 			return redirect()->route('Top');
 		}
 
-		return view('Themes/edit',['title' => 'テーマの登録']);
+		return view('Themes/edit',['title' => 'お題の登録']);
 	}
 }

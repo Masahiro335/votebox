@@ -110,7 +110,7 @@ textarea[name="body"]{
 input[name^="vote-items"] {
 	padding: 5px;
 }
-.vote-item {
+.vote-item, .vote-item-dummy {
 	margin: 5px 0;
 }
 .fa-plus-square, .fa-minus-square {

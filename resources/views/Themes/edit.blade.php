@@ -4,11 +4,11 @@
 
 <div class="wrapper">
 	<div class="content">
-		<div class="item" id="theme">
+		<div class="item">
 			{{ Form::open(['url' => '/themes/edit']) }} 
-			<label class="title">テーマ</label>
+			<label class="title">お題</label>
 			<div class="body">
-				{{ Form::textarea('body', '', ['placeholder'=>'テーマを記入してください。']) }}
+				{{ Form::textarea('body', '', ['placeholder' => 'お題を記入してください。']) }}
 			</div>
 			<?php if( $errors->has('body') ){ ?>
 				<?php foreach($errors->get('body') as $errorMessage){ ?>
@@ -19,12 +19,12 @@
 			<div class="vote-item-group">
 				<?php if( empty(session()->get('_old_input.vote-items')) ){ ?>
 					<div class="vote-item">
-						{{ Form::text('vote-items[0]', '', []) }}
+						{{ Form::text('vote-items[]', '', []) }}
 					</div>
 				<?php }else{ ?>
 					<?php foreach(session()->get('_old_input.vote-items') as $key => $voteItem){ ?>
 						<div class="vote-item">
-							{{ Form::text('vote-items['.$key.']', '', []) }}
+							{{ Form::text('vote-items[]', '', []) }}
 							<?php if( $errors->has('vote-items.'.$key) ){ ?>
 								<?php foreach($errors->get('vote-items.'.$key) as $errorMessage){ ?>
 									<div class="error-message">{{ $errorMessage }}</div>
@@ -33,13 +33,13 @@
 						</div>
 					<?php } ?>
 				<?php } ?>
-				<div class="vote-item" v-for="(text,index) in items">
+				<div class="vote-item-dummy" v-for="(text,index) in items">
 					{{ Form::text('vote-items[]', '', []) }}
 				</div>
 			</div>
 			<div class="vote-edit">
-				<i class="fas fa-plus-square" @click="add" v-if="vote_items_count < 4"></i>
-				<i class="fas fa-minus-square" @click="del" v-if="vote_items_count > 1"></i>
+				<i class="fas fa-plus-square" @click="add" v-if="vote_item_count + items.length < 4"></i>
+				<i class="fas fa-minus-square" @click="del" v-if="vote_item_count + items.length > 1"></i>
 			</div>
 			{{ Form::submit('登録', ['class'=>'btn add']) }}
 			{{ Form::close() }}
@@ -48,29 +48,31 @@
 </div>
 
 <script>
+$(function(){
 new Vue({
-    el: '#theme',
+    el: '.item',
 	data: {
 		items: [],
-		vote_items_count: $('.vote-item-group input[name^="vote-items"]').length,
+		vote_item_count: $('.vote-item input[name^="vote-items"]').length,
 	},
     methods: {
         add: function(){
-			this.vote_items_count = $('.vote-item-group input[name^="vote-items"]').length;
-			if( this.vote_items_count > 3 ){
-				alert('これ以上項目は増やせません');
-				return false;
-			}
 			this.items.push('').val();
-			this.vote_items_count = this.vote_items_count + 1;
         },
         del: function(){
-			 if( !this.items.pop() && this.vote_items_count > 1){
+			if( this.items.length > 0 ){
+				this.items.pop();
+			}else{
 				$('input[name^="vote-items"]:last').remove();
-			 }
-			this.vote_items_count = this.vote_items_count - 1;
+				this.vote_item_count = this.vote_item_count - 1;
+			}
+			
+			if( $('.error-message').length > 0){
+				$('.error-message:last').remove();
+			}
         },
     }
 })
+});
 </script>
 @endsection
