@@ -20,7 +20,8 @@ class ThemesController extends AppController
 	 */
 	public function index()
 	{
-		$queryThemes = Theme::get()
+		$queryThemes = Theme::orderBy('created_at', 'desc')
+			->get()
 			->where('is_deleted', false)
 			->where('is_invalid', false)
 		;

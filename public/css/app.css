@@ -19,6 +19,19 @@ body {
   color: #f91462;
 }
 
+.flash-message {
+  background-color: #47c94d;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+}
+.flash-message.error {
+  background-color: crimson;
+}
+
 header {
   padding: 30px 11% 10px;
   width: 100%;
@@ -52,11 +65,17 @@ header li {
   padding: 5px 40px;
   color: #fff;
   border-radius: 10px;
+  text-align: center;
   cursor: pointer;
 }
 .btn.add {
   margin-top: 10px;
   background-color: #f91462;
+}
+.btn.graph-open {
+  margin: auto;
+  background-color: #2445b1;
+  width: 50%;
 }
 
 .wrapper {
@@ -75,7 +94,7 @@ header li {
   margin-bottom: 30px;
 }
 .item .name {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .form-item {
@@ -129,15 +148,10 @@ input[name^=vote-items] {
   margin-bottom: 10px;
 }
 
-.flash-message {
-  background-color: #47c94d;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: absolute;
-  width: 100%;
-  z-index: 5;
+.body {
+  margin: 20px 0;
 }
-.flash-message.error {
-  background-color: crimson;
+
+.graph {
+  display: none;
 }

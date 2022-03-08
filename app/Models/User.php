@@ -11,6 +11,6 @@ class User extends Model
 
     public function themes()
     {
-        return $this->hasMany(Theme::class)->where('is_deleted', false);
+        return $this->hasMany(Theme::class)->orderBy('created_at', 'desc')->where('is_deleted', false);
     }
 }
