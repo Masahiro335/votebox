@@ -3,6 +3,9 @@
 @section('content')
 <div class="wrapper">
 	<div class="content">
+	<div id="app">
+ 		<example-component></example-component>
+	 </div>
 		<?php foreach($queryThemes as $entTheme){ ?>
 			<div class="item">
 				<div class="name">{{ $entTheme->user->name }}</div>
