@@ -17,8 +17,8 @@ class CreateThemesTable extends Migration
 			$table->id()->autoIncrement();
 			$table->foreignId('user_id')->comment('ユーザーID')->constrained('users');
 			$table->string('body', 200)->comment('本文');
-			$table->timestamp('start_date_time')->nullable()->comment('開始日時');
-			$table->timestamp('end_date_time')->nullable()->comment('終了日時');
+			$table->datetime('start_date_time')->comment('開始日時');
+			$table->datetime('end_date_time')->comment('終了日時');
 			$table->boolean('is_invalid')->default(false)->comment('無効フラグ');
 			$table->boolean('is_deleted')->default(false)->comment('論理削除');
 			$table->timestamps();

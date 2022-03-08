@@ -78,6 +78,10 @@ header li {
   margin-bottom: 10px;
 }
 
+.form-item {
+  margin: 10px 0;
+}
+
 .btn-new {
   background-color: #f91462;
   position: fixed;

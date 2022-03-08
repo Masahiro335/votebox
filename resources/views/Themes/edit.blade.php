@@ -6,8 +6,30 @@
 	<div class="content">
 		<div class="item">
 			{{ Form::open(['url' => '/themes/edit']) }} 
-			<label class="title">お題</label>
-			<div class="body">
+			<label class="form-title">開始日時</label>
+			<div class="form-item">
+				{{ Form::date('start_date_time', date('Y-m-d'), ['min' => date('Y-m-d')]) }}
+				{{ Form::time('start_time', date('H:i'), []) }}
+			</div>
+			<?php if( $errors->has('start_date_time') ){ ?>
+				<?php foreach($errors->get('start_date_time') as $errorMessage){ ?>
+					<div class="error-message">{{ $errorMessage }}</div>
+				<?php } ?>
+			<?php } ?>
+
+			<label class="form-title">終了日時</label>
+			<div class="form-item">
+				{{ Form::date('end_date_time', date('Y-m-d',strtotime('+3 day')), ['min' => date('Y-m-d')]) }}
+				{{ Form::time('end_time', date('H:i'), []) }}
+			</div>
+			<?php if( $errors->has('end_date_time') ){ ?>
+				<?php foreach($errors->get('end_date_time') as $errorMessage){ ?>
+					<div class="error-message">{{ $errorMessage }}</div>
+				<?php } ?>
+			<?php } ?>
+
+			<label class="form-title">お題</label>
+			<div class="form-item">
 				{{ Form::textarea('body', '', ['placeholder' => 'お題を記入してください。']) }}
 			</div>
 			<?php if( $errors->has('body') ){ ?>
@@ -15,7 +37,8 @@
 					<div class="error-message">{{ $errorMessage }}</div>
 				<?php } ?>
 			<?php } ?>
-			<label class="title">投票項目</label>
+
+			<label class="form-title">投票項目</label>
 			<div class="vote-item-group">
 				<?php if( empty(session()->get('_old_input.vote-items')) ){ ?>
 					<div class="vote-item">
@@ -41,6 +64,17 @@
 				<i class="fas fa-plus-square" @click="add" v-if="vote_item_count + items.length < 4"></i>
 				<i class="fas fa-minus-square" @click="del" v-if="vote_item_count + items.length > 1"></i>
 			</div>
+
+			<label class="form-title">有効</label>
+			<div class="form-item">
+				{{ Form::checkbox('is_invalid', '', []) }}
+			</div>
+			<?php if( $errors->has('is_invalid') ){ ?>
+				<?php foreach($errors->get('is_invalid') as $errorMessage){ ?>
+					<div class="error-message">{{ $errorMessage }}</div>
+				<?php } ?>
+			<?php } ?>
+
 			{{ Form::submit('登録', ['class'=>'btn add']) }}
 			{{ Form::close() }}
 		</div>

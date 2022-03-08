@@ -35,14 +35,20 @@ class ThemesController extends Controller
 	{
 		if( $request->isMethod('post') ){
 			$getData = $request->all();
-			$themeRequest = new ThemeRequest();
+			if( empty($getData['start_date_time'] == false) ){
+				$getData['start_date_time'] = $getData['start_date_time'].' '.(empty($getData['start_time']) ? '00:00' : $getData['start_time']);
+			}
+			if( empty($getData['end_date_time'] == false) ){
+				$getData['end_date_time'] = $getData['end_date_time'].' '.(empty($getData['end_time']) ? '00:00' : $getData['end_time']);
+			}
+			$getData['is_invalid'] = !empty($getData['is_invalid']);
 
+			$themeRequest = new ThemeRequest();
 			$validator = Validator::make($getData, $themeRequest->rules(), $themeRequest->messages());
-			if( empty($validator) == false ) {
-				session()->flash('flash_error_message', '投稿に失敗しました');
+			if( $validator->fails() ) {
+				session()->flash('flash_error_message', '入力エラーがあります。');
 				return redirect()
 					->route('Themes.edit')
-					->with(compact('getData'))
 					->withErrors($validator)
 					->withInput()
 				;
@@ -53,6 +59,9 @@ class ThemesController extends Controller
 				$entTheme = Theme::create([
 					'user_id' => '1',
 					'body' => $getData['body'],
+					'start_date_time' => $getData['start_date_time'],
+					'end_date_time' => $getData['end_date_time'],
+					'is_invalid' => $getData['is_invalid'],
 				]);
 				foreach($getData['vote-items'] as $key => $vote_item){
 					Vote::create([

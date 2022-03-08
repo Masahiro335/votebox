@@ -9,5 +9,5 @@ class Theme extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','body','is_deleted'];
+    protected $fillable = ['user_id','body','start_date_time','end_date_time','is_invalid','is_deleted'];
 }
