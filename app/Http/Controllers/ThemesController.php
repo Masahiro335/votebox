@@ -9,7 +9,7 @@ use App\Http\Requests\ThemeRequest;
 use \App\Models\Theme;
 use \App\Models\Vote;
 
-class ThemesController extends Controller
+class ThemesController extends AppController
 {
 
 
@@ -20,7 +20,12 @@ class ThemesController extends Controller
 	 */
 	public function index()
 	{
-		return view('top');
+		$queryThemes = Theme::get()
+			->where('is_deleted', false)
+			->where('is_invalid', false)
+		;
+
+		return view('top', ['queryThemes' => $queryThemes]);
 	}
 
 

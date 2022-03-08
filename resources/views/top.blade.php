@@ -4,14 +4,16 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item">
-			<div class="name">テスト君</div>
-			<div class="body">
-				好きな色は？
-			</div>
-			<div class="graph-open">開く</div>
-			<div class="graph">
-				<canvas id="graph1"></canvas>
-			</div>
+			<?php foreach($queryThemes as $entTheme){ ?>
+				<div class="name">{{ $entTheme->user->name }}</div>
+				<div class="body">
+					{{ nl2br($entTheme->body) }}
+				</div>
+				<div class="graph-open">開く</div>
+				<div class="graph">
+					<canvas id="graph1"></canvas>
+				</div>
+			<?php } ?>
 		</div>
 	</div>
 </div>

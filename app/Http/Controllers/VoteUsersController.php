@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class VoteUsersController extends Controller
+class VoteUsersController extends AppController
 {
     //
 }
