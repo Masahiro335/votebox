@@ -104,6 +104,8 @@ new Vue({
 				$('input[name^="vote-items"]:last').remove();
 				this.vote_item_count = this.vote_item_count - 1;
 			}
+
+			//エラーメッセージの削除
 			if( $('.error-message').length > 0){
 				$('.error-message:last').remove();
 			}

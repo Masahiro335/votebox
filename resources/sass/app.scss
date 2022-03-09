@@ -154,7 +154,10 @@ input[name^="vote-items"] {
 .body {
 	margin: 20px 0;
 }
-.graph {
-	display: none;
+.graph-content {
+	margin: auto;
+	.graph {
+		//display: none;
+	}
 }
   

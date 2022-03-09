@@ -11439,6 +11439,6 @@ input[name^=vote-items] {
   margin: 20px 0;
 }
 
-.graph {
-  display: none;
+.graph-content {
+  margin: auto;
 }
