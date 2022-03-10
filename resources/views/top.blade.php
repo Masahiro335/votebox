@@ -9,10 +9,9 @@
 				<div class="body">
 					{{ nl2br($entTheme->body) }}
 				</div>
-				<graph-component></graph-component>
+				<graph-component :theme_id="<?= $entTheme->id ?>"></graph-component>
 			</div>
 		<?php } ?>
 	</div>
 </div>
-
 @endsection

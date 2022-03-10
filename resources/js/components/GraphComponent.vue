@@ -15,6 +15,7 @@ export default {
 			open_count: 0,
         }
     },
+	props: ['theme_id'],
 	methods: {
 		open: function (e) {
 			if( this.open_count == 0 ){

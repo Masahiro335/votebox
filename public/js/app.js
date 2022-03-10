@@ -5313,6 +5313,7 @@ __webpack_require__.r(__webpack_exports__);
       open_count: 0
     };
   },
+  props: ['theme_id'],
   methods: {
     open: function open(e) {
       if (this.open_count == 0) {

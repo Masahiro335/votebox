@@ -11361,8 +11361,14 @@ header li {
 }
 .btn.graph-open {
   margin: auto;
+  margin-bottom: 20px;
   background-color: #2445b1;
   width: 50%;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  color: #fff;
 }
 
 .wrapper {
