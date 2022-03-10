@@ -5307,23 +5307,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      is_open: false,
+      open_count: 0
+    };
+  },
   methods: {
     open: function open(e) {
-      var data = {
-        labels: ["ワンピース", "ドラゴンボール", "銀魂", "黒子のバスケ", "その他"],
-        datasets: [{
-          label: '投票数',
-          hoverBackgroundColor: "rgba(255,99,132,0.3)",
-          data: [25, 19, 30, 11, 13]
-        }]
-      };
-      var canvas = e.currentTarget.nextElementSibling.firstElementChild;
-      var chart = new Chart(canvas, {
-        type: 'bar',
-        //グラフの種類
-        data: data //表示するデータ
+      if (this.open_count == 0) {
+        var data = {
+          labels: ["ワンピース", "ドラゴンボール", "銀魂", "黒子のバスケ", "その他"],
+          datasets: [{
+            label: '投票数',
+            hoverBackgroundColor: "rgba(255,99,132,0.3)",
+            data: [25, 19, 30, 11, 13]
+          }]
+        };
+        var canvas = e.currentTarget.nextElementSibling.firstElementChild;
+        var chart = new Chart(canvas, {
+          type: 'bar',
+          //グラフの種類
+          data: data //表示するデータ
 
-      });
+        });
+      }
+
+      this.is_open = !this.is_open;
+      this.open_count++;
     }
   }
 });
@@ -28064,20 +28075,24 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "graph-content" }, [
     _c("div", { staticClass: "btn graph-open", on: { click: _vm.open } }, [
-      _vm._v("開く"),
+      _vm._v(_vm._s(_vm.is_open ? "非表示" : "表示")),
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "graph" }, [
+      _c("canvas", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.is_open,
+            expression: "is_open",
+          },
+        ],
+      }),
+    ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "graph" }, [_c("canvas")])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
