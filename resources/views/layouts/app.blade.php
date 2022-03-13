@@ -15,11 +15,11 @@
 	<body>
 		<header>
 			<h1>
-				<a href="{{ url('/') }}">VOTEBOX</a>
+				<a href="{{ route('Top') }}">VOTEBOX</a>
 			</h1>
 			<nav class="header-nav">
 				<ul>
-					<li><a href="#">ENTRY</a></li>
+					<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
 					<li><a href="#">LOGIN</a></li>
 				</ul>
 			</nav>
@@ -34,7 +34,7 @@
 				{{ session('flash_error_message') }}
 			</div>
 		@endif
-		<a href="{{ url('themes/edit') }}" class="btn-new">投稿</a>
+		<a href="{{ route('Themes.edit') }}" class="btn-new">投稿</a>
 		@yield('content')
 		<footer>
 			

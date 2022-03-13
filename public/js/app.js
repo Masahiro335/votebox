@@ -5319,7 +5319,19 @@ __webpack_require__.r(__webpack_exports__);
       var canvas = e.currentTarget.nextElementSibling.firstElementChild;
 
       if (this.open_count == 0) {
+        $('body').css('cursor', 'progress');
+        $('body').css('pointer-events', 'none');
         axios.get('/themes/graph/' + this.theme_id, {}).then(function (response) {
+          var options = {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  max: 1,
+                  min: 0
+                }
+              }]
+            }
+          };
           var chartData = {
             labels: response.data.vote_name,
             datasets: [{
@@ -5330,12 +5342,17 @@ __webpack_require__.r(__webpack_exports__);
           };
           var chart = new Chart(canvas, {
             type: 'bar',
-            data: chartData
+            data: chartData,
+            options: options
           });
         })["catch"](function (error) {
           alert('情報の取得に失敗しました。');
+          $('body').css('cursor', 'default');
+          $('body').css('pointer-events', 'auto');
           return false;
         });
+        $('body').css('cursor', 'default');
+        $('body').css('pointer-events', 'auto');
       }
 
       this.is_open = !this.is_open;
@@ -28093,6 +28110,7 @@ var render = function () {
             expression: "is_open",
           },
         ],
+        attrs: { width: "400px", height: "200px" },
       }),
     ]),
   ])

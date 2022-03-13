@@ -121,7 +121,7 @@ class ThemesController extends AppController
 		$data = [];
 		foreach($entTheme->votes as $entVote){
 			$data['vote_name'][] = $entVote->name;
-			$data['vote_coount'][] = count($entVote->vote_users);
+			$data['vote_coount'][] = empty($entVote->vote_users) ? 0 : count($entVote->vote_users);
 		}
 
 		return response()->json($data);

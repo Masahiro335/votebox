@@ -5,7 +5,7 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item">
-			{{ Form::open(['url' => '/themes/edit']) }} 
+			{{ Form::open(['url' => route('Users.edit') ]) }} 
 			<label class="form-title">開始日時</label>
 			<div class="form-item">
 				{{ Form::date('start_date_time', date('Y-m-d'), ['min' => date('Y-m-d')]) }}

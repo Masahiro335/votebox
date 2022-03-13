@@ -11365,6 +11365,11 @@ header li {
   background-color: #2445b1;
   width: 50%;
 }
+@media only screen and (max-width: 750px) {
+  .btn.graph-open {
+    width: 90%;
+  }
+}
 
 .btn:hover {
   opacity: 0.9;
@@ -11447,4 +11452,9 @@ input[name^=vote-items] {
 
 .graph-content {
   margin: auto;
+}
+
+input[name=name], input[name=password] {
+  width: 300px;
+  height: 40px;
 }
