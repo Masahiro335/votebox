@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','ThemesController@index')->name('Top');
 Route::match(['get', 'post'], '/themes/edit/{id?}','ThemesController@edit')->name('Themes.edit');
+Route::get('/themes/graph/{id?}','ThemesController@graph')->name('Graph');

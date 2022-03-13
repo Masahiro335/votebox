@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    protected $fillable = ['theme_id','name','sort_number','is_deleted'];
+	protected $fillable = ['theme_id','name','sort_number','is_deleted'];
+
+	public function theme()
+	{
+		return $this->belongsTo(Theme::class)->where('is_deleted', false);
+	}
+
+	public function vote_users()
+	{
+		return $this->hasMany(VoteUser::class)->where('is_deleted', false);
+	}
 }

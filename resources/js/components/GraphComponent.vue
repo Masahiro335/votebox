@@ -19,20 +19,27 @@ export default {
 	methods: {
 		open: function (e) {
 			if( this.open_count == 0 ){
-				var data = {
-					labels: ["ワンピース", "ドラゴンボール", "銀魂", "黒子のバスケ", "その他"],
-					datasets: [
-						{
+				axios
+				.get('/themes/graph/'+this.theme_id, {})
+				.then(response => {
+					alert(response.data);
+					var data = {
+						labels: ["ワンピース", "ドラゴンボール", "銀魂", "黒子のバスケ", "その他"],
+						datasets: [{
 							label: '投票数',
 							hoverBackgroundColor: "rgba(255,99,132,0.3)",
 							data: [25, 19, 30, 11, 13],
-						}
-					]
-				}
-				var canvas = e.currentTarget.nextElementSibling.firstElementChild;
-				var chart = new Chart(canvas, {
-					type: 'bar',  //グラフの種類
-					data: data,  //表示するデータ
+						}]
+					}
+					var canvas = e.currentTarget.nextElementSibling.firstElementChild;
+					var chart = new Chart(canvas, {
+						type: 'bar',  //グラフの種類
+						data: data,  //表示するデータ
+					});
+				})
+				.catch(error => {
+					alert('sippai');
+					alert(error.error);
 				});
 			}
 			this.is_open = !this.is_open;

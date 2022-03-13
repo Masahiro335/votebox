@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoteUser extends Model
 {
-    use HasFactory;
+	use HasFactory;
+
+	public function vote()
+	{
+		return $this->belongsTo(Theme::class)->where('is_deleted', false);
+	}
 }
