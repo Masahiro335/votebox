@@ -5316,27 +5316,25 @@ __webpack_require__.r(__webpack_exports__);
   props: ['theme_id'],
   methods: {
     open: function open(e) {
+      var canvas = e.currentTarget.nextElementSibling.firstElementChild;
+
       if (this.open_count == 0) {
         axios.get('/themes/graph/' + this.theme_id, {}).then(function (response) {
-          alert(response.data);
-          var data = {
-            labels: ["ワンピース", "ドラゴンボール", "銀魂", "黒子のバスケ", "その他"],
+          var chartData = {
+            labels: response.data.vote_name,
             datasets: [{
               label: '投票数',
               hoverBackgroundColor: "rgba(255,99,132,0.3)",
-              data: [25, 19, 30, 11, 13]
+              data: response.data.vote_coount
             }]
           };
-          var canvas = e.currentTarget.nextElementSibling.firstElementChild;
           var chart = new Chart(canvas, {
             type: 'bar',
-            //グラフの種類
-            data: data //表示するデータ
-
+            data: chartData
           });
         })["catch"](function (error) {
-          alert('sippai');
-          alert(error.error);
+          alert('情報の取得に失敗しました。');
+          return false;
         });
       }
 

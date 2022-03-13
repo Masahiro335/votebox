@@ -18,6 +18,6 @@ class Vote extends Model
 
 	public function vote_users()
 	{
-		return $this->hasMany(VoteUser::class)->where('is_deleted', false);
+		return $this->hasMany(VoteUser::class);
 	}
 }

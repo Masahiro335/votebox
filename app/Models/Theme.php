@@ -15,4 +15,9 @@ class Theme extends Model
 	{
 		return $this->belongsTo(User::class)->where('is_deleted', false);
 	}
+
+	public function votes()
+	{
+		return $this->hasmany(Vote::class)->where('is_deleted', false);
+	}
 }

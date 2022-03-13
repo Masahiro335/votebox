@@ -109,17 +109,13 @@ class ThemesController extends AppController
 	{
 		if( $request->ajax() == false ) return redirect()->route('Top');
 		if( empty($id) ){
-			return response()->json([
-				'error' => '情報の取得に失敗しました。'
-			], 400);
+			return response()->json('情報の取得に失敗しました。', 400);
 		}
 		$entTheme = Theme::where('Themes.id', $id)
 			->first()
 		;
 		if( empty($entTheme) ){
-			return response()->json([
-				'error' => '情報の取得に失敗しました。'
-			], 400);
+			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
 		$data = [];
@@ -128,8 +124,6 @@ class ThemesController extends AppController
 			$data['vote_coount'][] = count($entVote->vote_users);
 		}
 
-		return response()->json([ 
-			'data' => '成功'
-		]);
+		return response()->json($data);
 	}
 }
