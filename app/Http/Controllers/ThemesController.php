@@ -41,7 +41,7 @@ class ThemesController extends AppController
 	 */
 	public function edit(Request $request, $id = null)
 	{
-		if( $request->isMethod('post') ){
+		if( $request->isMethod('post') || $request->isMethod('put') ){
 			$getData = $request->all();
 			if( empty($getData['start_date_time'] == false) ){
 				$getData['start_date_time'] = $getData['start_date_time'].' '.(empty($getData['start_time']) ? '00:00' : $getData['start_time']);
