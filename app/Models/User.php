@@ -9,6 +9,8 @@ class User extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','password','is_deleted'];
+
     public function themes()
     {
         return $this->hasMany(Theme::class)->orderBy('created_at', 'desc')->where('is_deleted', false);
