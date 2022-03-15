@@ -11329,7 +11329,7 @@ header {
 header h1, header .h1 {
   margin: 0;
   padding: 0;
-  font-size: 20px;
+  font-size: 25px;
 }
 header a {
   text-decoration: none;
@@ -11344,8 +11344,8 @@ header ul {
   display: flex;
 }
 header li {
-  margin: 0 0 0 15px;
-  font-size: 14px;
+  margin: 0 0 0 22px;
+  font-size: 17px;
 }
 
 .btn {
@@ -11392,6 +11392,10 @@ header li {
   margin-bottom: 30px;
 }
 .item .name {
+  margin-bottom: 20px;
+}
+.item .title {
+  font-size: 20px;
   margin-bottom: 20px;
 }
 

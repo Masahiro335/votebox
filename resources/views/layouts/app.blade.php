@@ -20,7 +20,7 @@
 			<nav class="header-nav">
 				<ul>
 					<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
-					<li><a href="#">LOGIN</a></li>
+					<li><a href="{{ route('Login') }}">LOGIN</a></li>
 				</ul>
 			</nav>
 		</header>

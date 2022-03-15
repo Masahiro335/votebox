@@ -39,7 +39,7 @@ class UsersController extends AppController
 				'password' => Hash::make($getData['password']),
 			]);
 
-			if( empty($entUser) == false ){
+			if( empty($entUser->id) == false ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
 				return redirect()->route('Top');	
 			}

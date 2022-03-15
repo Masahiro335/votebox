@@ -5,10 +5,11 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item">
+			<div class="title">ENTRY</div>
 			{{ Form::open(['url' => route('Users.edit') ]) }} 
-			<label class="form-title">ユーザー名</label>
+			<label class="form-title">名前</label>
 			<div class="form-item">
-				{{ Form::text('name', '', ['placeholder' => 'ユーザー名']) }}
+				{{ Form::text('name', '', ['placeholder' => '名前']) }}
 			</div>
 			<ul class="help-text">
 				<li>20文字以内で入力して下さい。</li>
