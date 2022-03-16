@@ -111,9 +111,8 @@ class ThemesController extends AppController
 		if( empty($id) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
-		$entTheme = Theme::where('Themes.id', $id)
-			->first()
-		;
+
+		$entTheme = Theme::where('Themes.id', $id)->first();
 		if( empty($entTheme) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}

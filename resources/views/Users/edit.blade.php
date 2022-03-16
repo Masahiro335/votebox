@@ -9,7 +9,7 @@
 			{{ Form::open(['url' => route('Users.edit') ]) }} 
 			<label class="form-title">名前</label>
 			<div class="form-item">
-				{{ Form::text('name', '', ['placeholder' => '名前']) }}
+				{{ Form::text('name', '', ['placeholder' => '名前', 'required' => true]) }}
 			</div>
 			<ul class="help-text">
 				<li>20文字以内で入力して下さい。</li>
@@ -23,7 +23,7 @@
 
 			<label class="form-title">パスワード</label>
 			<div class="form-item">
-				{{ Form::password('password') }}
+				{{ Form::password('password', ['required' => true]) }}
 			</div>
 			<ul class="help-text">
 				<li>8文字以上で記入して下さい。</li>
