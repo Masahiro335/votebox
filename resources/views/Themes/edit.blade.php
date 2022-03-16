@@ -6,9 +6,9 @@
 	<div class="content">
 		<div class="item">
 			{{ Form::open(['url' => route('Users.edit') ]) }} 
-			<label class="form-title">開始日時</label>
+			<label class="form-title required">開始日時</label>
 			<div class="form-item">
-				{{ Form::date('start_date_time', date('Y-m-d'), ['min' => date('Y-m-d')]) }}
+				{{ Form::date('start_date_time', date('Y-m-d'), ['min' => date('Y-m-d'), 'required' => true]) }}
 				{{ Form::time('start_time', date('H:i'), []) }}
 			</div>
 			<?php if( $errors->has('start_date_time') ){ ?>
@@ -17,9 +17,9 @@
 				<?php } ?>
 			<?php } ?>
 
-			<label class="form-title">終了日時</label>
+			<label class="form-title required">終了日時</label>
 			<div class="form-item">
-				{{ Form::date('end_date_time', date('Y-m-d',strtotime('+3 day')), ['min' => date('Y-m-d')]) }}
+				{{ Form::date('end_date_time', date('Y-m-d',strtotime('+3 day')), ['min' => date('Y-m-d'), 'required' => true]) }}
 				{{ Form::time('end_time', date('H:i'), []) }}
 			</div>
 			<?php if( $errors->has('end_date_time') ){ ?>
@@ -28,9 +28,9 @@
 				<?php } ?>
 			<?php } ?>
 
-			<label class="form-title">お題</label>
+			<label class="form-title required">お題</label>
 			<div class="form-item">
-				{{ Form::textarea('body', '', ['placeholder' => 'お題を記入してください。']) }}
+				{{ Form::textarea('body', '', ['placeholder' => 'お題を記入してください。', 'required' => true]) }}
 			</div>
 			<?php if( $errors->has('body') ){ ?>
 				<?php foreach($errors->get('body') as $errorMessage){ ?>
@@ -38,16 +38,16 @@
 				<?php } ?>
 			<?php } ?>
 
-			<label class="form-title">投票項目</label>
+			<label class="form-title required">投票項目</label>
 			<div class="vote-item-group">
 				<?php if( empty(session()->get('_old_input.vote-items')) ){ ?>
 					<div class="vote-item">
-						{{ Form::text('vote-items[]', '', []) }}
+						{{ Form::text('vote-items[]', '', ['required' => true]) }}
 					</div>
 				<?php }else{ ?>
 					<?php foreach(session()->get('_old_input.vote-items') as $key => $voteItem){ ?>
 						<div class="vote-item">
-							{{ Form::text('vote-items[]', '', []) }}
+							{{ Form::text('vote-items[]', '', ['required' => true]) }}
 							<?php if( $errors->has('vote-items.'.$key) ){ ?>
 								<?php foreach($errors->get('vote-items.'.$key) as $errorMessage){ ?>
 									<div class="error-message">{{ $errorMessage }}</div>
@@ -57,7 +57,7 @@
 					<?php } ?>
 				<?php } ?>
 				<div class="vote-item-add" v-for="(text,index) in items">
-					{{ Form::text('vote-items[]', '', []) }}
+					{{ Form::text('vote-items[]', '', ['required' => true]) }}
 				</div>
 			</div>
 			<div class="vote-edit">

@@ -7,7 +7,7 @@
 		<div class="item">
 			<div class="title">ENTRY</div>
 			{{ Form::open(['url' => route('Users.edit') ]) }} 
-			<label class="form-title">名前</label>
+			<label class="form-title required">名前</label>
 			<div class="form-item">
 				{{ Form::text('name', '', ['placeholder' => '名前', 'required' => true]) }}
 			</div>
@@ -21,7 +21,7 @@
 				<?php } ?>
 			<?php } ?>
 
-			<label class="form-title">パスワード</label>
+			<label class="form-title required">パスワード</label>
 			<div class="form-item">
 				{{ Form::password('password', ['required' => true]) }}
 			</div>

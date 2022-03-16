@@ -11399,6 +11399,16 @@ header li {
   margin-bottom: 20px;
 }
 
+.form-title.required::after {
+  content: "必須";
+  color: white;
+  margin-left: 5px;
+  background: #ff5c5c;
+  margin-top: -4px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .form-item {
   margin: 10px 0;
 }

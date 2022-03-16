@@ -36,7 +36,7 @@ class ThemesController extends AppController
 	 * テーマの投稿処理
 	 * 
 	 * @author　matsubara
-	 * @param $request Request
+	 * @param Request $request
 	 * @param $id テーマID
 	 */
 	public function edit(Request $request, $id = null)
@@ -102,7 +102,7 @@ class ThemesController extends AppController
 	 * グラフの作成
 	 * 
 	 * @author　matsubara
-	 * @param $request Request
+	 * @param Request $request
 	 * @param $id テーマID
 	 */
 	public function graph(Request $request, $id )

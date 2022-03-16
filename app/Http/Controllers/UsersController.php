@@ -15,7 +15,7 @@ class UsersController extends AppController
 	 * ユーザー登録処理
 	 * 
 	 * @author　matsubara
-	 * @param $request Request
+	 * @param Request $request
 	 * @param $id ユーザーID
 	 */
 	public function edit(Request $request, $id = null)

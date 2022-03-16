@@ -14,7 +14,7 @@ class LoginController extends AppController
 	 * ログイン
 	 * 
 	 * @author　matsubara
-	 * @param $request Request
+	 * @param Request $request
 	 */
 	public function login(Request $request)
 	{
@@ -29,7 +29,10 @@ class LoginController extends AppController
 				;
 			}
 
-			$entUser = User::where('Users.name', $getData['name'])->first();
+			$entUser = User::where('Users.name', $getData['name'])
+				->where('is_deleted', false)
+				->first()
+			;
 			if( empty($entUser) ){
 				session()->flash('flash_error_message', '名前かパスワードが一致しませんでした。');
 				return redirect()
@@ -40,8 +43,10 @@ class LoginController extends AppController
 
 			// パスワードの確認
 			if ( Hash::check($getData['password'], $entUser->password) ) {
-				session()->flash('flash_message', 'ログインに成功しました。');
-				return redirect()->route('Top');
+				if( empty($this->LoginSession($entUser)) == false ){
+					session()->flash('flash_message', 'ログインに成功しました。');
+					return redirect()->route('Top');
+				};
 			}
 
 			session()->flash('flash_error_message', '名前かパスワードが一致しませんでした。');

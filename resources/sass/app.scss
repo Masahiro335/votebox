@@ -123,6 +123,17 @@ a {
 		margin-bottom: 20px;
 	}
 }
+.form-title {
+	&.required::after {
+		content: "必須";
+		color: rgb(255, 255, 255);
+		margin-left: 5px;
+		background: rgb(255, 92, 92);
+		margin-top: -4px;
+		display: inline-block;
+		vertical-align: middle;
+	}
+}
 .form-item {
 	margin: 10px 0;
 }
