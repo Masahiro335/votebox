@@ -43,7 +43,7 @@ class LoginController extends AppController
 
 			// パスワードの確認
 			if ( Hash::check($getData['password'], $entUser->password) ) {
-				if( empty($this->LoginSession($entUser)) == false ){
+				if( $this->LoginSession($entUser) ){
 					session()->flash('flash_message', 'ログインに成功しました。');
 					return redirect()->route('Top');
 				};
