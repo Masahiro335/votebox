@@ -28,6 +28,8 @@ class ThemesController extends AppController
 			->get()
 		;
 
+		var_dump(@$this->Auth);
+
 		return view('top', ['queryThemes' => $queryThemes]);
 	}
 

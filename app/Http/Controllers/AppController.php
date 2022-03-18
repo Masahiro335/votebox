@@ -10,6 +10,11 @@ use \App\Models\User;
 */
 class AppController extends Controller
 {
+	//コンストラクタ
+	public function __construct()
+    {
+    }
+
 	/**
 	 * ログインセッションに保存
 	 * 
