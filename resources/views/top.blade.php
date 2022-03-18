@@ -3,7 +3,7 @@
 @section('content')
 <div class="wrapper">
 	<div class="content" id="app">
-		<?= var_dump(session()->get('Auth')); ?>
+		<?= var_dump($Auth); ?>
 		<?php if( $queryThemes->isEmpty() == false ){ ?>
 			<?php foreach($queryThemes as $entTheme){ ?>
 				<div class="item">

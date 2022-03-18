@@ -18,7 +18,7 @@ class ThemesController extends AppController
 	 * 
 	 * @author　matsubara
 	 */
-	public function index()
+	public function index(Request $request)
 	{
 		$queryThemes = Theme::orderBy('Themes.created_at', 'desc')
 			->where('Themes.is_deleted', false)
@@ -28,7 +28,7 @@ class ThemesController extends AppController
 			->get()
 		;
 
-		var_dump(@$this->Auth);
+		var_dump($request->Auth);
 
 		return view('top', ['queryThemes' => $queryThemes]);
 	}
