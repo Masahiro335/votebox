@@ -24,6 +24,7 @@ class ThemeRequest extends FormRequest
 	public function rules()
 	{
 		return [
+			'user_id' => ['required'],
 			'body' => ['required','max:100'],
 			'vote-items.*' => ['required','max:10'],
 			'start_date_time' =>  ['required','date_format:Y-m-d H:i','after:yesterday'],
@@ -36,6 +37,7 @@ class ThemeRequest extends FormRequest
 	public function messages()
 	{
 		return [
+			'user_id.required' => 'ログインは必須項目です。',
 			'body.required' => 'お題は必須項目です。',
 			'body.max' => '100文字以内で入力して下さい。',
 			'vote-items.*.required' => '投票項目は必須項目です。',
