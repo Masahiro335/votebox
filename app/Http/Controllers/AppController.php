@@ -37,10 +37,18 @@ class AppController extends Controller
 		$userData = $entUser->setHidden(['password', 'is_deleted','updated_at','created_at'])->toArray();
 
 		session()->put('Auth', $userData);
-		//セッションが保存されていない場合
-		if( empty(session()->has('Auth')) ) return false;
+		return !empty(session()->has('Auth'));
+	}
 
-		return true;
+	/**
+	 * ログインセッションの破棄
+	 * 
+	 * @author　matsubara
+	 * @return bool true:成功 false:失敗
+	 */
+	public function LoginSessionOut(){
+		session()->forget('Auth');
+		return empty(session()->has('Auth'));
 	}
 
 }

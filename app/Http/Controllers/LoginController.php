@@ -46,7 +46,7 @@ class LoginController extends AppController
 				if( $this->LoginSession($entUser) ){
 					session()->flash('flash_message', 'ログインに成功しました。');
 					return redirect()->route('Top');
-				};
+				}
 			}
 
 			session()->flash('flash_error_message', '名前かパスワードが一致しませんでした。');
@@ -57,5 +57,20 @@ class LoginController extends AppController
 		}
 
 		return view('/login',['title' => 'ログイン']);
+	}
+
+
+	/**
+	 * ログアウト
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 */
+	public function Logout(Request $request)
+	{
+		if( $this->LoginSessionOut() ) session()->flash('flash_message', 'ログアウトに成功しました。');
+		else session()->flash('flash_error_message', 'ログアウトに失敗しました。');
+
+		return redirect()->route('Top');
 	}
 }

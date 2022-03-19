@@ -24,7 +24,7 @@
 						<li><a href="{{ route('Login') }}">LOGIN</a></li>
 					<?php }else{ ?>
 						<li><a href="{{ route('Users.edit') }}">MYPAGE</a></li>
-						<li><a href="{{ route('Login') }}">LOGOUT</a></li>
+						<li><a href="{{ route('Logout') }}" onclick="return confirm('本当にログアウトしますか？')">LOGOUT</a></li>
 					<?php } ?>
 				</ul>
 			</nav>

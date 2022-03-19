@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','ThemesController@index')->name('Top');
 Route::match(['get', 'post'], '/login','LoginController@login')->name('Login');
+Route::get('/logout','LoginController@logout')->name('Logout');
 Route::match(['get', 'post', 'put'], '/themes/edit/{id?}','ThemesController@edit')->name('Themes.edit');
 Route::get('/themes/graph/{id?}','ThemesController@graph')->name('Graph');
 Route::match(['get', 'post', 'put'], '/users/edit/{id?}','UsersController@edit')->name('Users.edit');
