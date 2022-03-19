@@ -39,7 +39,11 @@
 				{{ session('flash_error_message') }}
 			</div>
 		@endif
-		<a href="{{ route('Themes.edit') }}" class="btn-new">投稿</a>
+		<?php if( empty($Auth) ){ ?>
+			<a href="{{ route('Login') }}" class="btn-new" onclick="return confirm('ログインをして下さい。')">投稿</a>
+		<?php }else{ ?>
+			<a href="{{ route('Themes.edit') }}" class="btn-new">投稿</a>
+		<?php } ?>
 		@yield('content')
 		<footer>
 			
