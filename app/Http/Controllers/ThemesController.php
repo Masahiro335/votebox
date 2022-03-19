@@ -18,7 +18,7 @@ class ThemesController extends AppController
 	 * 
 	 * @author　matsubara
 	 */
-	public function index(Request $request)
+	public function index()
 	{
 		$queryThemes = Theme::orderBy('Themes.created_at', 'desc')
 			->where('Themes.is_deleted', false)
@@ -27,8 +27,6 @@ class ThemesController extends AppController
 			->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
 			->get()
 		;
-
-		var_dump($request->Auth);
 
 		return view('top', ['queryThemes' => $queryThemes]);
 	}
@@ -67,7 +65,7 @@ class ThemesController extends AppController
 				DB::beginTransaction();
 
 				$entTheme = Theme::create([
-					'user_id' => '1',
+					'user_id' => $request->Auth['id'],
 					'body' => $getData['body'],
 					'start_date_time' => $getData['start_date_time'],
 					'end_date_time' => $getData['end_date_time'],

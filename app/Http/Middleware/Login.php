@@ -34,12 +34,13 @@ class Login
 			;
 			if( (new \App\Http\Controllers\AppController())->LoginSession($entUser) ){
                 $Auth = session()->get('Auth');
-                $request->merge(['Auth' => $Auth]);
 			}
-
-            //ビューでも反映
-            $this->viewFactory->share('Auth', $Auth);
 		}
+
+        //コントローラに反映
+        $request->merge(['Auth' => $Auth]);
+        //ビューに反映
+        $this->viewFactory->share('Auth', $Auth);
 
         return $next($request);
     }

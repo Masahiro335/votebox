@@ -19,8 +19,13 @@
 			</h1>
 			<nav class="header-nav">
 				<ul>
-					<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
-					<li><a href="{{ route('Login') }}">LOGIN</a></li>
+					<?php if( empty($Auth) ){ ?>
+						<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
+						<li><a href="{{ route('Login') }}">LOGIN</a></li>
+					<?php }else{ ?>
+						<li><a href="{{ route('Users.edit') }}">MYPAGE</a></li>
+						<li><a href="{{ route('Login') }}">LOGOUT</a></li>
+					<?php } ?>
 				</ul>
 			</nav>
 		</header>
