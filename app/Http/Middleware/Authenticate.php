@@ -14,9 +14,6 @@ class Authenticate extends Middleware
 	 */
 	protected function redirectTo($request)
 	{
-	   if( empty($request->Auth) ){
-			session()->flash('flash_error_message', 'ログインして下さい。');
-			return redirect()->route('Top');
-	   }
+		
 	}
 }

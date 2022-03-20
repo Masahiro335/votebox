@@ -15,16 +15,16 @@
 	<body>
 		<header>
 			<h1>
-				<a href="{{ route('Top') }}">VOTEBOX</a>
+				<a href="{{ route('top') }}">VOTEBOX</a>
 			</h1>
 			<nav class="header-nav">
 				<ul>
 					<?php if( empty($Auth) ){ ?>
 						<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
-						<li><a href="{{ route('Login') }}">LOGIN</a></li>
+						<li><a href="{{ route('login') }}">LOGIN</a></li>
 					<?php }else{ ?>
 						<li><a href="{{ route('Users.edit') }}">MYPAGE</a></li>
-						<li><a href="{{ route('Logout') }}" onclick="return confirm('本当にログアウトしますか？')">LOGOUT</a></li>
+						<li><a href="{{ route('logout') }}" onclick="return confirm('本当にログアウトしますか？')">LOGOUT</a></li>
 					<?php } ?>
 				</ul>
 			</nav>
@@ -40,7 +40,7 @@
 			</div>
 		@endif
 		<?php if( empty($Auth) ){ ?>
-			<a href="{{ route('Login') }}" class="btn-new" onclick="return confirm('ログインをして下さい。')">投稿</a>
+			<a href="{{ route('login') }}" class="btn-new" onclick="return confirm('ログインをして下さい。')">投稿</a>
 		<?php }else{ ?>
 			<a href="{{ route('Themes.edit') }}" class="btn-new">投稿</a>
 		<?php } ?>

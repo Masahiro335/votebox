@@ -41,7 +41,7 @@ class UsersController extends AppController
 
 			if( empty($entUser->id) == false ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
-				return redirect()->route('Top');	
+				return redirect()->route('top');	
 			}
 	
 			session()->flash('flash_error_message', '入力エラーがあります。');

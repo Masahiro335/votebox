@@ -25,10 +25,8 @@ class ThemesController extends AppController
 			->where('Themes.is_invalid', false)
 			->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
 			->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
-			->when( $request, function ($query, $request) {
-				if( empty($request->Auth) ) return false;
-	
-				return $query->where('Themes.user_id', '<>', $request->Auth['id']);
+			->when($Auth = $request->Auth, function ($query, $Auth) {
+				return $query->where('Themes.user_id', '<>', $Auth['id']);
 			})
 			->get()
 		;
@@ -46,7 +44,7 @@ class ThemesController extends AppController
 	 */
 	public function graph(Request $request, $id )
 	{
-		if( $request->ajax() == false ) return redirect()->route('Top');
+		if( $request->ajax() == false ) return redirect()->route('top');
 		if( empty($id) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}

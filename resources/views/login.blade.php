@@ -6,7 +6,7 @@
 	<div class="content">
 		<div class="item">
 			<div class="title">LOGIN</div>
-			{{ Form::open(['url' => route('Login') ]) }} 
+			{{ Form::open(['url' => route('login') ]) }} 
 			<label class="form-title required">名前</label>
 			<div class="form-item">
 				{{ Form::text('name', '', ['required' => true]) }}

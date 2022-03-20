@@ -91,7 +91,7 @@ class ThemesController extends AppMyController
 			}
 
 			session()->flash('flash_message', 'お題を投稿しました');
-			return redirect()->route('Top');
+			return redirect()->route('top');
 		}
 
 		return view('Mypage/Themes/edit',['title' => 'お題の登録']);
