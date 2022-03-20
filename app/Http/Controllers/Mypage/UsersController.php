@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Mypage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +9,7 @@ use App\Http\Requests\UserRequest;
 use \App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UsersController extends AppController
+class UsersController extends AppMyController
 {
 	/**
 	 * ユーザー登録処理
@@ -18,7 +18,7 @@ class UsersController extends AppController
 	 * @param Request $request
 	 * @param $id ユーザーID
 	 */
-	public function edit(Request $request, $id = null)
+	public function edit(Request $request, $id)
 	{
 		if( $request->isMethod('post') || $request->isMethod('put') ){
 			$getData = $request->all();
@@ -52,6 +52,6 @@ class UsersController extends AppController
 			;
 		}
 
-		return view('users/edit',['title' => 'ユーザーの登録']);
+		return view('mypage/users/edit',['title' => 'ユーザーの登録']);
 	}
 }

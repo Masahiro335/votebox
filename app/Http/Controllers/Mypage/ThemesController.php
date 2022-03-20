@@ -94,7 +94,7 @@ class ThemesController extends AppMyController
 			return redirect()->route('top');
 		}
 
-		return view('Mypage/Themes/edit',['title' => 'お題の登録']);
+		return view('mypage/themes/edit',['title' => 'お題の登録']);
 	}
 
 }

@@ -11326,6 +11326,11 @@ header {
   display: flex;
   align-items: center;
 }
+@media only screen and (max-width: 750px) {
+  header {
+    padding: 10px;
+  }
+}
 header h1, header .h1 {
   margin: 0;
   padding: 0;
@@ -11379,8 +11384,18 @@ header li {
 .wrapper {
   margin-top: 100px;
 }
+@media only screen and (max-width: 750px) {
+  .wrapper {
+    margin-top: 10px;
+  }
+}
 .wrapper .content {
-  padding: 50px 13%;
+  padding: 50px 20%;
+}
+@media only screen and (max-width: 750px) {
+  .wrapper .content {
+    padding: 20px 10px;
+  }
 }
 
 .item {

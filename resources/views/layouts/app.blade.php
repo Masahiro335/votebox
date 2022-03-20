@@ -20,7 +20,7 @@
 			<nav class="header-nav">
 				<ul>
 					<?php if( empty($Auth) ){ ?>
-						<li><a href="{{ route('Users.edit') }}">ENTRY</a></li>
+						<li><a href="{{ route('register') }}">ENTRY</a></li>
 						<li><a href="{{ route('login') }}">LOGIN</a></li>
 					<?php }else{ ?>
 						<li><a href="{{ route('Users.edit') }}">MYPAGE</a></li>
@@ -48,5 +48,10 @@
 		<footer>
 			
 		</footer>
+		<script>
+			$(function(){
+				$('body').on('click', '.flash-message', function(){ $(this).hide(); })
+			});
+		</script>
 	</body>
 </html>

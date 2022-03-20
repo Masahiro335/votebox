@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/','ThemesController@index')->name('top');
+Route::match(['get', 'post'], '/register','LoginController@register')->name('register');
 Route::match(['get', 'post'], '/login','LoginController@login')->name('login');
 Route::get('/logout','LoginController@logout')->name('logout');
 Route::get('/themes/graph/{id?}','ThemesController@graph')->name('graph');
-Route::match(['get', 'post', 'put'], '/users/edit/{id?}','UsersController@edit')->name('Users.edit');
 
 //マイページ：ログイン必須
 Route::prefix('mypage')->middleware('login_check')->group(function () {
     Route::match(['get', 'post', 'put'], '/themes/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
+    Route::match(['get', 'post', 'put'], '/users/edit/{id?}','Mypage\UsersController@edit')->name('Users.edit');
 });
