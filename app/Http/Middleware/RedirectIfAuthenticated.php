@@ -19,10 +19,11 @@ class RedirectIfAuthenticated
 	 */
 	public function handle(Request $request, Closure $next, ...$guards)
 	{
-		if( empty($request->Auth) ){
-			session()->flash('flash_error_message', 'ログインして下さい。');
-			return redirect()->route('login');
-		}
+		foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                return redirect(RouteServiceProvider::HOME);
+            }
+        }
 
 		return $next($request);
 	}

@@ -20,6 +20,6 @@ Route::get('/themes/graph/{id?}','ThemesController@graph')->name('graph');
 Route::match(['get', 'post', 'put'], '/users/edit/{id?}','UsersController@edit')->name('Users.edit');
 
 //マイページ：ログイン必須
-Route::prefix('mypage')->middleware('guest')->group(function () {
+Route::prefix('mypage')->middleware('login_check')->group(function () {
     Route::match(['get', 'post', 'put'], '/themes/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
 });
