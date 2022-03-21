@@ -11292,6 +11292,11 @@ textarea.form-control-lg {
 
 a {
   text-decoration: none;
+  color: #4b4b4b;
+}
+
+ul {
+  list-style: none;
 }
 
 body {
@@ -11348,9 +11353,14 @@ header ul {
   margin: 0;
   display: flex;
 }
-header li {
+header ul li {
   margin: 0 0 0 22px;
   font-size: 17px;
+}
+@media only screen and (min-width: 960px) {
+  header ul li {
+    font-size: 20px;
+  }
 }
 
 .btn {
@@ -11491,5 +11501,10 @@ input[name=name], input[name=password] {
 
 ul.help-text {
   color: #9e9e9e;
-  margin: 0;
+  margin: 10px 0;
+}
+
+ul.mypage-menu li {
+  margin: 17px;
+  font-size: 18px;
 }

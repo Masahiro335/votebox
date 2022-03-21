@@ -17,14 +17,16 @@ class ThemesController extends AppMyController
 	 * 一覧画面
 	 * 
 	 * @author　matsubara
+	 * @param Request $request
 	 */
-	public function index()
+	public function index(Request $request)
 	{
 		$queryThemes = Theme::orderBy('Themes.created_at', 'desc')
 			->where('Themes.is_deleted', false)
 			->where('Themes.is_invalid', false)
 			->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
 			->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
+			->where('Themes.user_id', $request->Auth['id'])
 			->get()
 		;
 

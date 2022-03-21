@@ -16,9 +16,8 @@ class UsersController extends AppMyController
 	 * 
 	 * @author　matsubara
 	 * @param Request $request
-	 * @param $id ユーザーID
 	 */
-	public function edit(Request $request, $id)
+	public function edit(Request $request)
 	{
 		if( $request->isMethod('post') || $request->isMethod('put') ){
 			$getData = $request->all();

@@ -28,6 +28,10 @@ $media-sp: 750px;
 }
 a {
 	text-decoration: none;
+	color: #4b4b4b;
+}
+ul {
+	list-style: none;
 }
  body {
 	margin: 0;
@@ -59,7 +63,7 @@ a {
 	align-items: center;
 	@include sp{
 		padding: 10px;
-	} 
+	}
 	h1 {
 		margin: 0; padding: 0;
 		font-size: 25px;
@@ -75,10 +79,13 @@ a {
 		list-style: none;
 		margin: 0;
 		display: flex;
-	}
-	li {
-		margin: 0 0 0 22px;
-		font-size: 17px;
+		li {
+			margin: 0 0 0 22px;
+			font-size: 17px;
+			@include pc{
+				font-size: 20px;
+			} 
+		}
 	}
  }
  .btn {
@@ -197,5 +204,11 @@ input[name="name"], input[name="password"] {
 }
 ul.help-text {
 	color: #9e9e9e;
-	margin: 0;
+	margin: 10px 0;
+}
+ul.mypage-menu {
+	li {
+		margin: 17px;
+		font-size: 18px;
+	}
 }

@@ -17,6 +17,7 @@ class ThemesController extends AppController
 	 * TOP画面
 	 * 
 	 * @author　matsubara
+	 * @param Request $request
 	 */
 	public function index(Request $request)
 	{

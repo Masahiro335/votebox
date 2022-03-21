@@ -23,8 +23,8 @@
 						<li><a href="{{ route('register') }}">ENTRY</a></li>
 						<li><a href="{{ route('login') }}">LOGIN</a></li>
 					<?php }else{ ?>
-						<li><a href="{{ route('Users.edit') }}">MYPAGE</a></li>
-						<li><a href="{{ route('logout') }}" onclick="return confirm('本当にログアウトしますか？')">LOGOUT</a></li>
+						<li><a href="{{ route('mypage.top') }}">MYPAGE</a></li>
+						<li><a href="{{ route('menu') }}">MENU</a></li>
 					<?php } ?>
 				</ul>
 			</nav>

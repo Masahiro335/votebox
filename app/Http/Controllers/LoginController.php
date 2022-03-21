@@ -47,7 +47,7 @@ class LoginController extends AppController
 			if ( Hash::check($getData['password'], $entUser->password) ) {
 				if( $this->loginSession($entUser) ){
 					session()->flash('flash_message', 'ログインに成功しました。');
-					return redirect()->route('top');
+					return redirect()->route('mypage.top');
 				}
 			}
 
