@@ -11397,7 +11397,7 @@ header ul li {
 }
 
 .wrapper {
-  margin-top: 100px;
+  margin-top: 40px;
 }
 @media only screen and (max-width: 750px) {
   .wrapper {
@@ -11512,4 +11512,34 @@ ul.help-text {
 ul.mypage-menu li {
   margin: 17px;
   font-size: 18px;
+}
+
+.search-group {
+  text-align: center;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+.search-group input[name=search] {
+  width: 80%;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.tab-group {
+  display: flex;
+  justify-content: center;
+}
+.tab-group .tab {
+  padding: 10px 0;
+  width: 100%;
+  border: solid;
+  border-color: #4b4b4b;
+  cursor: pointer;
+}
+.tab-group .tab.active {
+  background-color: #f9141a78;
+}
+
+label.tab input {
+  display: none;
 }

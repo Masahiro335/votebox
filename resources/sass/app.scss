@@ -116,7 +116,7 @@ ul {
 	color: #fff;
 }
  .wrapper {
-	margin-top: 100px;
+	margin-top: 40px;
 	@include sp{
 		margin-top: 10px;
 	} 
@@ -213,5 +213,34 @@ ul.mypage-menu {
 	li {
 		margin: 17px;
 		font-size: 18px;
+	}
+}
+.search-group {
+	text-align: center;
+	padding: 0 10px;
+	margin-bottom: 20px;
+	input[name="search"] {
+		width: 80%;
+		padding: 10px 0;
+		margin-bottom: 20px;
+	}
+}
+.tab-group {
+	display: flex;
+	justify-content: center;
+	.tab {
+		padding: 10px 0;
+		width: 100%;
+		border: solid;
+		border-color: #4b4b4b;
+		cursor: pointer;
+		&.active {
+			background-color: #f9141a78;
+		}
+	}
+}
+label.tab {
+	input{
+		display: none;
 	}
 }

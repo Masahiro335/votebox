@@ -34,9 +34,20 @@ class ThemesController extends AppController
 			$queryThemes->where('Themes.user_id', '<>', $request->Auth['id']);
 		}
 
+		$is_close = false;
+
+		if( empty($request->input('is_close')) == false ){
+			$is_close = true;
+		}
+
+		//検索
+		if( empty($request->input('search')) == false ){
+			//$queryThemes->where('Themes.body', '<>', $request->Auth['id']);
+		}
+
 		$queryThemes = $queryThemes->get();
 
-		return view('top', ['queryThemes' => $queryThemes]);
+		return view('top', compact('queryThemes', 'is_close'));
 	}
 
 
