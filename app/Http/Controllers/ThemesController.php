@@ -21,28 +21,13 @@ class ThemesController extends AppController
 	 */
 	public function index(Request $request)
 	{
-		$queryThemes = Theme::query()
-			->where('Themes.is_deleted', false)
-			->where('Themes.is_invalid', false)
-			->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
-			->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
-			->orderBy('Themes.created_at', 'desc')
-		;
+		$queryThemes = Theme::querytop($request);
+
+		$is_close = !empty($request->input('is_close'));
 
 		//ログインの場合
 		if( empty($request->Auth) == false ){
 			$queryThemes->where('Themes.user_id', '<>', $request->Auth['id']);
-		}
-
-		$is_close = false;
-
-		if( empty($request->input('is_close')) == false ){
-			$is_close = true;
-		}
-
-		//検索
-		if( empty($request->input('search')) == false ){
-			//$queryThemes->where('Themes.body', '<>', $request->Auth['id']);
 		}
 
 		$queryThemes = $queryThemes->get();

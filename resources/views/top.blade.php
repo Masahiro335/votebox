@@ -7,8 +7,8 @@
 			{{ Form::open(['method'=>'get', 'url' => route('top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', '', ['placeholder' => '検索']) }}
 				<div class="tab-group">
-					<label class="tab"><input type="checkbox" name="is_close" <?= empty($is_close) ? 'checked="checked"' : '' ?> value="0">募集中</label>
-					<label class="tab"><input type="checkbox" name="is_close" <?= empty($is_close) ? '' : 'checked="checked"' ?> value="1">募集終了</label>
+					<label class="tab"> {{Form::checkbox('is_close', '0', empty($is_close), [])}} 募集中</label>
+					<label class="tab"> {{Form::checkbox('is_close', '1', !empty($is_close), [])}} 募集終了</label>
 				</div>
 			{{ Form::close() }}
 		</div>

@@ -21,14 +21,14 @@ class ThemesController extends AppMyController
 	 */
 	public function index(Request $request)
 	{
-		$queryThemes = Theme::query()
-			->where('Themes.is_deleted', false)
-			->where('Themes.is_invalid', false)
-			->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
-			->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
-			->where('Themes.user_id', $request->Auth['id'])
-			->orderBy('Themes.created_at', 'desc')
-		;
+		$queryThemes = Theme::querytop($request);
+
+		$is_close = !empty($request->input('is_close'));
+
+		//ログインの場合
+		if( empty($request->Auth) == false ){
+			$queryThemes->where('Themes.user_id', $request->Auth['id']);
+		}
 
 		$queryThemes = $queryThemes->get();
 
