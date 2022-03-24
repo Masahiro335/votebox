@@ -4,7 +4,11 @@
 <div class="wrapper">
 	<div class="content" id="app">
 		<div class="search-group">
-			{{ Form::open(['method'=>'get', 'url' => route('top'), 'class' => 'search-form' ]) }} 
+			<?php if( Request::route()->getPrefix() == '/mypage' ){ ?>
+				{{ Form::open(['method'=>'get', 'url' => route('mypage.top'), 'class' => 'search-form' ]) }} 
+			<?php }else{ ?>
+				{{ Form::open(['method'=>'get', 'url' => route('top'), 'class' => 'search-form' ]) }}
+			<?php } ?>
 				{{ Form::text('search', '', ['placeholder' => '検索']) }}
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('is_close', '0', empty($is_close), [])}} 募集中</label>
