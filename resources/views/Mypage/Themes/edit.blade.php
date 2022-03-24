@@ -82,19 +82,18 @@
 </div>
 
 <script>
-$(function(){
 new Vue({
-    el: '.item',
+	el: '.item',
 	data: {
 		items: [],
 		//デフォルトの投票項目の数
 		vote_item_count: $('.vote-item input[name^="vote-items"]').length,
 	},
-    methods: {
-        add: function(){
+	methods: {
+		add: function(){
 			this.items.push('').val();
-        },
-        del: function(){
+		},
+		del: function(){
 			//追加したダミーを削除
 			if( this.items.length > 0 ){
 				this.items.pop();
@@ -109,9 +108,8 @@ new Vue({
 			if( $('.error-message').length > 0){
 				$('.error-message:last').remove();
 			}
-        },
-    }
+		},
+	}
 })
-});
 </script>
 @endsection

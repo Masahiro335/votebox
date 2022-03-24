@@ -7,8 +7,8 @@
 			{{ Form::open(['method'=>'get', 'url' => route('top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', '', ['placeholder' => '検索']) }}
 				<div class="tab-group">
-					<label class="tab"><input type="checkbox" name="is_active" <?= empty($is_close) ? 'checked="checked"' : '' ?>>募集中</label>
-					<label class="tab"><input type="checkbox" name="is_close" <?= empty($is_close) ? '' : 'checked="checked"' ?>>募集終了</label>
+					<label class="tab"><input type="checkbox" name="is_close" <?= empty($is_close) ? 'checked="checked"' : '' ?> value="0">募集中</label>
+					<label class="tab"><input type="checkbox" name="is_close" <?= empty($is_close) ? '' : 'checked="checked"' ?> value="1">募集終了</label>
 				</div>
 			{{ Form::close() }}
 		</div>
@@ -28,16 +28,21 @@
 
 <script>
 $(function(){
-	$('body').on('change', 'label.tab input', function(){ 
+	$('label.tab input').parent().css('background-color','#0000');
+	$('label.tab input:checked').parent().css('background-color','#f9141a78');
+
+	$('body').on('click', 'label.tab input', function(){ 
 		var $this = $(this);
-		alert($this.prop('checked'));
-		if( $this.prop('checked') == true ){
-			$this.parent().css('background-color','#f9141a78');
-		}else{
-			$this.parent().css('background-color','#0000');
-		}
+		if( $this.prop('checked') == false ) return false;
+
+		$('label.tab input').prop('checked', false);
+		$this.prop('checked', true);
+
+		$('label.tab input').parent().css('background-color','#0000');
+		$('label.tab input:checked').parent().css('background-color','#f9141a78');
+
 		$form = $('.search-form');
-		//$form.submit();
+		$form.submit();
 	})
 });
 </script>	

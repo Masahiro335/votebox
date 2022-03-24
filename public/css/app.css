@@ -11540,6 +11540,6 @@ ul.mypage-menu li {
   background-color: #f9141a78;
 }
 
-label.tab input {
+label.tab input[type=checkbox] {
   display: none;
 }
