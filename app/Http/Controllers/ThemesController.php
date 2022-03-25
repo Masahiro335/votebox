@@ -23,7 +23,10 @@ class ThemesController extends AppController
 	{
 		$queryThemes = Theme::querytop($request);
 
-		$is_close = !empty($request->input('is_close'));
+		$type_id = 10;
+		if( empty($request->input('type_id')) == false ){
+			$type_id = $request->input('type_id');
+		}
 
 		//ログインの場合
 		if( empty($request->Auth) == false ){
@@ -32,7 +35,7 @@ class ThemesController extends AppController
 
 		$queryThemes = $queryThemes->get();
 
-		return view('top', compact('queryThemes', 'is_close'));
+		return view('top', compact('queryThemes', 'type_id'));
 	}
 
 

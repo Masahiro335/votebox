@@ -47,13 +47,17 @@ class Theme extends Model
 		$query = $this->scopeQueryBasic($query);
 
 		//募集中
-		if( empty($request->input('is_close')) ){
+		if( empty($request->input('type_id')) || $request->input('type_id') == 10){
 			$query
 				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
 				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
 			;
-		}else{
+		//募集終了
+		}elseif($request->input('type_id') == 20){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
+		//募集予定
+		}else{
+			$query->whereDate('Themes.start_date_time', '>', date('Y-m-d') );
 		}
 
 		//検索

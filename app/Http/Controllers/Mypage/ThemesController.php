@@ -23,7 +23,10 @@ class ThemesController extends AppMyController
 	{
 		$queryThemes = Theme::querytop($request);
 
-		$is_close = !empty($request->input('is_close'));
+		$type_id = 10;
+		if( empty($request->input('type_id')) == false ){
+			$type_id = $request->input('type_id');
+		}
 
 		//ログインの場合
 		if( empty($request->Auth) == false ){
@@ -32,7 +35,7 @@ class ThemesController extends AppMyController
 
 		$queryThemes = $queryThemes->get();
 
-		return view('top', ['queryThemes' => $queryThemes]);
+		return view('top', compact('queryThemes', 'type_id'));
 	}
 
 
@@ -53,7 +56,7 @@ class ThemesController extends AppMyController
 			if( empty($getData['end_date_time'] == false) ){
 				$getData['end_date_time'] = $getData['end_date_time'].' '.(empty($getData['end_time']) ? '00:00' : $getData['end_time']);
 			}
-			$getData['is_invalid'] = !empty($getData['is_invalid']);
+			$is_invalid = empty($getData['is_invalid']);
 
 			$themeRequest = new ThemeRequest();
 			$validator = Validator::make($getData, $themeRequest->rules(), $themeRequest->messages());
@@ -73,7 +76,7 @@ class ThemesController extends AppMyController
 					'body' => $getData['body'],
 					'start_date_time' => $getData['start_date_time'],
 					'end_date_time' => $getData['end_date_time'],
-					'is_invalid' => $getData['is_invalid'],
+					'is_invalid' => $is_invalid,
 				]);
 				foreach($getData['vote-items'] as $key => $vote_item){
 					Vote::create([

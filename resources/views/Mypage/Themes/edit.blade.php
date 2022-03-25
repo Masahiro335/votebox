@@ -44,6 +44,9 @@
 					<div class="vote-item">
 						{{ Form::text('vote-items[]', '', ['required' => true]) }}
 					</div>
+					<div class="vote-item">
+						{{ Form::text('vote-items[]', '', ['required' => true]) }}
+					</div>
 				<?php }else{ ?>
 					<?php foreach(session()->get('_old_input.vote-items') as $key => $voteItem){ ?>
 						<div class="vote-item">
@@ -62,12 +65,14 @@
 			</div>
 			<div class="vote-edit">
 				<i class="fas fa-plus-square" @click="add" v-if="vote_item_count + items.length < 4"></i>
-				<i class="fas fa-minus-square" @click="del" v-if="vote_item_count + items.length > 1"></i>
+				<i class="fas fa-minus-square" @click="del" v-if="vote_item_count + items.length > 2"></i>
 			</div>
 
-			<label class="form-title">有効</label>
 			<div class="form-item">
-				{{ Form::checkbox('is_invalid', '', []) }}
+				<label class="form-title">
+					{{ Form::checkbox('is_invalid', '', []) }}
+					有効
+				</label>
 			</div>
 			<?php if( $errors->has('is_invalid') ){ ?>
 				<?php foreach($errors->get('is_invalid') as $errorMessage){ ?>

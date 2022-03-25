@@ -11,8 +11,11 @@
 			<?php } ?>
 				{{ Form::text('search', '', ['placeholder' => '検索']) }}
 				<div class="tab-group">
-					<label class="tab"> {{Form::checkbox('is_close', '0', empty($is_close), [])}} 募集中</label>
-					<label class="tab"> {{Form::checkbox('is_close', '1', !empty($is_close), [])}} 募集終了</label>
+					<label class="tab"> {{Form::checkbox('type_id', '10', $type_id == 10, [])}} 募集中</label>
+					<label class="tab"> {{Form::checkbox('type_id', '20', $type_id == 20, [])}} 募集終了</label>
+					<?php if( Request::route()->getPrefix() == '/mypage' ){ ?>
+						<label class="tab"> {{Form::checkbox('type_id', '30', $type_id == 30, [])}} 募集予定</label>
+					<?php } ?>
 				</div>
 			{{ Form::close() }}
 		</div>
