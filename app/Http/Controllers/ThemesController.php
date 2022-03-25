@@ -35,7 +35,10 @@ class ThemesController extends AppController
 
 		$queryThemes = $queryThemes->get();
 
-		return view('top', compact('queryThemes', 'type_id'));
+		//検索キーワード
+		$search = $request->input('search');
+
+		return view('top', compact('queryThemes', 'type_id', 'search'));
 	}
 
 
