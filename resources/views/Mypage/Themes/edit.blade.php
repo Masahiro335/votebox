@@ -70,7 +70,7 @@
 
 			<div class="form-item">
 				<label class="form-title">
-					{{ Form::checkbox('is_invalid', '', []) }}
+					{{Form::checkbox('is_invalid', '1', true, [])}}
 					有効
 				</label>
 			</div>

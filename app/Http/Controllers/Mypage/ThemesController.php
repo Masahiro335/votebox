@@ -60,6 +60,7 @@ class ThemesController extends AppMyController
 
 			$themeRequest = new ThemeRequest();
 			$validator = Validator::make($getData, $themeRequest->rules(), $themeRequest->messages());
+
 			if( $validator->fails() ) {
 				session()->flash('flash_error_message', '入力エラーがあります。');
 				return redirect()
