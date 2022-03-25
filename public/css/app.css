@@ -11504,7 +11504,7 @@ input[name=name], input[name=password] {
   height: 40px;
 }
 
-ul.help-text {
+.help-text {
   color: #9e9e9e;
   margin: 10px 0;
 }

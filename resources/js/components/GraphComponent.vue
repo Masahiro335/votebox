@@ -15,7 +15,7 @@ export default {
 			open_count: 0,
         }
     },
-	props: ['theme_id'],
+	props: ['theme_id', 'auth_id'],
 	methods: {
 		open: function (e) {
 			var canvas = e.currentTarget.nextElementSibling.firstElementChild;

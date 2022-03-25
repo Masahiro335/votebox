@@ -26,7 +26,11 @@
 					<div class="body">
 						<?= nl2br(htmlspecialchars($entTheme->body)) ?>
 					</div>
-					<graph-component :theme_id="<?= $entTheme->id ?>"></graph-component>
+					<?php if( empty($Auth) ){ ?>
+						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('register') }}" style="color:blue;">ログイン</a>して下さい。</div>
+					<?php }else{ ?>
+						<graph-component :theme_id="<?= $entTheme->id ?>" :auth_id="<?= $Auth->id ?>"></graph-component>
+					<?php } ?>
 				</div>
 			<?php } ?>
 		<?php } ?>

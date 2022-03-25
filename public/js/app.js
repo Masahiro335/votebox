@@ -5313,7 +5313,7 @@ __webpack_require__.r(__webpack_exports__);
       open_count: 0
     };
   },
-  props: ['theme_id'],
+  props: ['theme_id', 'auth_id'],
   methods: {
     open: function open(e) {
       var canvas = e.currentTarget.nextElementSibling.firstElementChild;
