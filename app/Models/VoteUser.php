@@ -13,4 +13,9 @@ class VoteUser extends Model
 	{
 		return $this->belongsTo(Theme::class)->where('is_deleted', false);
 	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class)->where('is_deleted', false);
+	}
 }

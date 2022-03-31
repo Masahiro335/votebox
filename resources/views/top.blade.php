@@ -27,9 +27,13 @@
 						<?= nl2br(htmlspecialchars($entTheme->body)) ?>
 					</div>
 					<?php if( empty($Auth) ){ ?>
-						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('register') }}" style="color:blue;">ログイン</a>して下さい。</div>
+						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
 					<?php }else{ ?>
-						<graph-component :theme_id="<?= $entTheme->id ?>" :auth_id="<?= $Auth->id ?>"></graph-component>
+						<graph-component 
+							:theme_id = "<?= $entTheme->id ?>" 
+							:auth_id = "<?= $Auth['id']; ?>"
+							:is_vote = "<?= $entTheme->isVote( $Auth ) ?>"
+						></graph-component>
 					<?php } ?>
 				</div>
 			<?php } ?>

@@ -15,7 +15,7 @@ export default {
 			open_count: 0,
         }
     },
-	props: ['theme_id', 'auth_id'],
+	props: ['theme_id', 'auth_id', 'is_vote'],
 	methods: {
 		open: function (e) {
 			var canvas = e.currentTarget.nextElementSibling.firstElementChild;
@@ -24,39 +24,43 @@ export default {
 				$('body').css('cursor', 'progress');
 				$('body').css('pointer-events', 'none');
 
-				axios
-				.get('/themes/graph/'+this.theme_id, {})
-				.then(function(response) {
-					var options = {
-						scales: {
-							yAxes : [{
-								ticks : {
-									max : 1,    
-									min : 0
-								}
+				if( this.is_vote == 1 ){
+					axios
+					.get('/themes/graph/'+this.theme_id, {})
+					.then(function(response) {
+						var options = {
+							scales: {
+								yAxes : [{
+									ticks : {
+										max : 1,    
+										min : 0
+									}
+								}]
+							}
+						};
+						var chartData = {
+							labels: response.data.vote_name,
+							datasets: [{
+								label: '投票数',
+								hoverBackgroundColor: "rgba(255,99,132,0.3)",
+								data: response.data.vote_coount,
 							}]
 						}
-					};
-					var chartData = {
-						labels: response.data.vote_name,
-						datasets: [{
-							label: '投票数',
-							hoverBackgroundColor: "rgba(255,99,132,0.3)",
-							data: response.data.vote_coount,
-						}]
-					}
-					var chart = new Chart(canvas, {
-						type: 'bar',
-						data: chartData,
-						options: options,
+						var chart = new Chart(canvas, {
+							type: 'bar',
+							data: chartData,
+							options: options,
+						});
+					})
+					.catch(function (error) {
+						alert('情報の取得に失敗しました。');
+						$('body').css('cursor', 'default');
+						$('body').css('pointer-events', 'auto');
+						return false;
 					});
-				})
-				.catch(function (error) {
-					alert('情報の取得に失敗しました。');
-					$('body').css('cursor', 'default');
-					$('body').css('pointer-events', 'auto');
-					return false;
-				});
+				}else{
+
+				}
 				$('body').css('cursor', 'default');
 				$('body').css('pointer-events', 'auto');
 			}
