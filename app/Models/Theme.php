@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
 
 class Theme extends Model
 {
@@ -86,13 +87,18 @@ class Theme extends Model
 	 */
 	public function isVote($Auth)
 	{
-		if( 
-			$this->start_date_time > date('Y-m-d')
-			|| $this->end_date_time < date('Y-m-d')
-		){
+		
+		//募集終了はできない
+		if( new Datetime($this->end_date_time) < new Datetime(date('Y-m-d').' 23:59:59.9999') ){
 			return '0';
 		}
 
+		//自身は投票できない
+		if($this->user_id == $Auth['id']){
+			return '0';
+		}
+
+		//一度投票したのは投票できない
 		foreach($this->votes as $entVote){
 			if( empty($entVote->vote_users) == false ){
 				foreach($entVote->vote_users as $entVoteUser){

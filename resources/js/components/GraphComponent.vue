@@ -1,8 +1,11 @@
 <template>
  	<div class="graph-content">
 		<div class="btn graph-open" v-on:click="open">{{ is_open ? '非表示' : '表示' }}</div>
-		<div class="graph">
+		<div class="graph" v-if="!is_vote">
 			<canvas v-show="is_open" width="400px" height="200px"></canvas>
+		</div>
+		<div class="vote-group" v-if="is_vote">
+			
 		</div>
 	</div>
 </template>
@@ -24,7 +27,8 @@ export default {
 				$('body').css('cursor', 'progress');
 				$('body').css('pointer-events', 'none');
 
-				if( this.is_vote == 1 ){
+				//グラフの表示
+				if( this.is_vote == 0 ){
 					axios
 					.get('/themes/graph/'+this.theme_id, {})
 					.then(function(response) {
@@ -35,7 +39,7 @@ export default {
 										max : 1,    
 										min : 0
 									}
-								}]
+								}],
 							}
 						};
 						var chartData = {

@@ -29,6 +29,7 @@
 					<?php if( empty($Auth) ){ ?>
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
 					<?php }else{ ?>
+						<?= $entTheme->isVote( $Auth ) ?>
 						<graph-component 
 							:theme_id = "<?= $entTheme->id ?>" 
 							:auth_id = "<?= $Auth['id']; ?>"

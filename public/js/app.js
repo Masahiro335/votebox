@@ -5306,6 +5306,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5320,9 +5323,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.open_count == 0) {
         $('body').css('cursor', 'progress');
-        $('body').css('pointer-events', 'none');
+        $('body').css('pointer-events', 'none'); //グラフの表示
 
-        if (this.is_vote == 1) {
+        if (this.is_vote == 0) {
           axios.get('/themes/graph/' + this.theme_id, {}).then(function (response) {
             var options = {
               scales: {
@@ -28104,19 +28107,23 @@ var render = function () {
       _vm._v(_vm._s(_vm.is_open ? "非表示" : "表示")),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "graph" }, [
-      _c("canvas", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.is_open,
-            expression: "is_open",
-          },
-        ],
-        attrs: { width: "400px", height: "200px" },
-      }),
-    ]),
+    !_vm.is_vote
+      ? _c("div", { staticClass: "graph" }, [
+          _c("canvas", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.is_open,
+                expression: "is_open",
+              },
+            ],
+            attrs: { width: "400px", height: "200px" },
+          }),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.is_vote ? _c("div", { staticClass: "vote-group" }) : _vm._e(),
   ])
 }
 var staticRenderFns = []
