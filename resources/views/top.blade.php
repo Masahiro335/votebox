@@ -28,8 +28,16 @@
 					</div>
 					<?php if( empty($Auth) ){ ?>
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
+					<?php }elseif( $type_id == 30 ){ ?>
+						投票名
+						<div class="vote-group">
+							<?php foreach($entTheme->votes as $entVote){?>
+								<div class="vote-name">
+									{{ $entVote->name }}
+								</div>
+							<?php } ?>
+						</div>
 					<?php }else{ ?>
-						<?= $entTheme->isVote( $Auth ) ?>
 						<graph-component 
 							:theme_id = "<?= $entTheme->id ?>" 
 							:auth_id = "<?= $Auth['id']; ?>"

@@ -11543,3 +11543,13 @@ ul.mypage-menu li {
 label.tab input[type=checkbox] {
   display: none;
 }
+
+.vote-group {
+  display: flex;
+}
+.vote-group .vote-name {
+  background-color: #f9141a78;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}

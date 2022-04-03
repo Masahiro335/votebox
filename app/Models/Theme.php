@@ -93,7 +93,7 @@ class Theme extends Model
 			return '0';
 		}
 
-		//自身は投票できない
+		//自身の投稿は投票できない
 		if($this->user_id == $Auth['id']){
 			return '0';
 		}

@@ -63,7 +63,7 @@ export default {
 						return false;
 					});
 				}else{
-
+					
 				}
 				$('body').css('cursor', 'default');
 				$('body').css('pointer-events', 'auto');
