@@ -166,7 +166,10 @@ class ThemesController extends AppMyController
 		}
 
 		$data = [];
-		foreach($entTheme->votes as $entVote) $data['vote_name'][] = $entVote->name;
+		foreach($entTheme->votes as $key => $entVote){
+			$data[$key]['vote_id'] = $entVote->id;
+			$data[$key]['vote_name'] = $entVote->name;
+		}
 
 		return response()->json($data);
 	}

@@ -5311,12 +5311,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       is_open: false,
       open_count: 0,
-      vote_names: {}
+      votes: {}
     };
   },
   props: ['theme_id', 'auth_id', 'is_vote'],
@@ -5338,10 +5342,10 @@ __webpack_require__.r(__webpack_exports__);
             $('body').css('cursor', 'default');
             $('body').css('pointer-events', 'auto');
             return false;
-          });
+          }); //投票項目の表示
         } else {
           axios.get('mypage/themes/vote-itme/' + this.theme_id, {}).then(function (response) {
-            _this.vote_names = response.data.vote_name;
+            _this.votes = response.data;
           })["catch"](function (error) {
             alert('情報の取得に失敗しました。');
             $('body').css('cursor', 'default');
@@ -5356,6 +5360,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.is_open = !this.is_open;
       this.open_count++;
+    },
+    vote: function vote(vote_id) {
+      alert();
     }
   }
 }); //グラフの作成
@@ -28146,10 +28153,28 @@ var render = function () {
       ? _c(
           "div",
           { staticClass: "vote-group" },
-          _vm._l(_vm.vote_names, function (vote_name, index) {
-            return _c("div", { key: index, staticClass: "vote-item-name" }, [
-              _vm._v("\n\t\t\t\t" + _vm._s(vote_name) + "\n\t\t\t"),
-            ])
+          _vm._l(_vm.votes, function (vote, index) {
+            return _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.is_open,
+                    expression: "is_open",
+                  },
+                ],
+                key: index,
+                staticClass: "vote",
+                on: {
+                  click: function ($event) {
+                    return vote(vote.vote_id)
+                  },
+                },
+              },
+              [_vm._v("\n\t\t\t\t" + _vm._s(vote.vote_name) + "\n\t\t\t")]
+            )
           }),
           0
         )

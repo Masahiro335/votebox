@@ -5,8 +5,12 @@
 			<canvas v-show="is_open" width="400px" height="200px"></canvas>
 		</div>
 		<div class="vote-group" v-if="is_vote">
-			<div class="vote-item-name"  v-for="(vote_name, index) in vote_names" :key=index>
-				{{ vote_name }}
+			<div 
+				class="vote" v-for="(vote, index) in votes" :key=index 
+				v-show="is_open"
+				v-on:click="vote( vote.vote_id )"
+			>
+				{{ vote.vote_name }}
 			</div>
 		</div>
 	</div>
@@ -18,7 +22,7 @@ export default {
         return{
             is_open: false,
 			open_count: 0,
-			vote_names: {},
+			votes: {},
         }
     },
 	props: ['theme_id', 'auth_id', 'is_vote'],
@@ -43,11 +47,12 @@ export default {
 						$('body').css('pointer-events', 'auto');
 						return false;
 					});
+				//投票項目の表示
 				}else{
 					axios
 					.get('mypage/themes/vote-itme/'+this.theme_id, {})
 					.then(response => {
-						this.vote_names = response.data.vote_name
+						this.votes = response.data
 					})
 					.catch(error => {
 						alert('情報の取得に失敗しました。');
@@ -61,6 +66,9 @@ export default {
 			}
 			this.is_open = !this.is_open;
 			this.open_count++;
+		},
+		vote: function ( vote_id ) {
+			alert();
 		}
 	}
 }
