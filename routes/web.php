@@ -17,11 +17,11 @@ Route::get('/','ThemesController@index')->name('top');
 Route::match(['get', 'post'], '/register','LoginController@register')->name('register');
 Route::match(['get', 'post'], '/login','LoginController@login')->name('login');
 Route::get('/logout','LoginController@logout')->name('logout');
-Route::get('/themes/graph/{id?}','ThemesController@graph')->name('graph');
 
 //マイページ：ログイン必須
 Route::prefix('mypage')->middleware('login_check')->group(function () {
     Route::get('/','Mypage\ThemesController@index')->name('mypage.top');
+    Route::get('/themes/graph/{id?}','Mypage\ThemesController@graph')->name('graph');
     Route::get('/menu', function() { return view('mypage/menu',['title' => 'マイページ']); })->name('menu');
     Route::match(['get', 'post', 'put'], '/themes/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
     Route::match(['get', 'post', 'put'], '/users/edit','Mypage\UsersController@edit')->name('Users.edit');

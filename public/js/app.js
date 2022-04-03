@@ -5326,7 +5326,7 @@ __webpack_require__.r(__webpack_exports__);
         $('body').css('pointer-events', 'none'); //グラフの表示
 
         if (this.is_vote == 0) {
-          axios.get('/themes/graph/' + this.theme_id, {}).then(function (response) {
+          axios.get('mypage/themes/graph/' + this.theme_id, {}).then(function (response) {
             var options = {
               scales: {
                 yAxes: [{
