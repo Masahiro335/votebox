@@ -127,12 +127,46 @@ class ThemesController extends AppMyController
 		if( empty($entTheme) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
+		//投票できる場合は、グラフ非表示
+		if( $entTheme->isVote( $request->Auth ) == 1 ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
 
 		$data = [];
 		foreach($entTheme->votes as $entVote){
 			$data['vote_name'][] = $entVote->name;
 			$data['vote_coount'][] = empty($entVote->vote_users) ? 0 : count($entVote->vote_users);
 		}
+
+		return response()->json($data);
+	}
+
+
+	/**
+	 * 投票項目を取得
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 * @param $id テーマID
+	 */
+	public function voteItem(Request $request, $id )
+	{
+		if( $request->ajax() == false ) return redirect()->route('top');
+		if( empty($id) ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+
+		$entTheme = Theme::where('Themes.id', $id)->first();
+		if( empty($entTheme) ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+		//投票できない場合は、投票項目を非表示
+		if( $entTheme->isVote( $request->Auth ) == 0 ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+
+		$data = [];
+		foreach($entTheme->votes as $entVote) $data['vote_name'][] = $entVote->name;
 
 		return response()->json($data);
 	}

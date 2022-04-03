@@ -5309,16 +5309,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       is_open: false,
-      open_count: 0
+      open_count: 0,
+      vote_names: {}
     };
   },
   props: ['theme_id', 'auth_id', 'is_vote'],
   methods: {
     open: function open(e) {
+      var _this = this;
+
       var canvas = e.currentTarget.nextElementSibling.firstElementChild;
 
       if (this.open_count == 0) {
@@ -5327,36 +5332,23 @@ __webpack_require__.r(__webpack_exports__);
 
         if (this.is_vote == 0) {
           axios.get('mypage/themes/graph/' + this.theme_id, {}).then(function (response) {
-            var options = {
-              scales: {
-                yAxes: [{
-                  ticks: {
-                    max: 1,
-                    min: 0
-                  }
-                }]
-              }
-            };
-            var chartData = {
-              labels: response.data.vote_name,
-              datasets: [{
-                label: '投票数',
-                hoverBackgroundColor: "rgba(255,99,132,0.3)",
-                data: response.data.vote_coount
-              }]
-            };
-            var chart = new Chart(canvas, {
-              type: 'bar',
-              data: chartData,
-              options: options
-            });
+            graph(response, canvas);
           })["catch"](function (error) {
             alert('情報の取得に失敗しました。');
             $('body').css('cursor', 'default');
             $('body').css('pointer-events', 'auto');
             return false;
           });
-        } else {}
+        } else {
+          axios.get('mypage/themes/vote-itme/' + this.theme_id, {}).then(function (response) {
+            _this.vote_names = response.data.vote_name;
+          })["catch"](function (error) {
+            alert('情報の取得に失敗しました。');
+            $('body').css('cursor', 'default');
+            $('body').css('pointer-events', 'auto');
+            return false;
+          });
+        }
 
         $('body').css('cursor', 'default');
         $('body').css('pointer-events', 'auto');
@@ -5366,7 +5358,34 @@ __webpack_require__.r(__webpack_exports__);
       this.open_count++;
     }
   }
-});
+}); //グラフの作成
+
+function graph(response, canvas) {
+  var options = {
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 1,
+          min: 0
+        }
+      }]
+    }
+  };
+  var chartData = {
+    labels: response.data.vote_name,
+    datasets: [{
+      label: '投票数',
+      hoverBackgroundColor: "rgba(255,99,132,0.3)",
+      data: response.data.vote_coount
+    }]
+  };
+  var chart = new Chart(canvas, {
+    type: 'bar',
+    data: chartData,
+    options: options
+  });
+  return true;
+}
 
 /***/ }),
 
@@ -28123,7 +28142,18 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.is_vote ? _c("div", { staticClass: "vote-group" }) : _vm._e(),
+    _vm.is_vote
+      ? _c(
+          "div",
+          { staticClass: "vote-group" },
+          _vm._l(_vm.vote_names, function (vote_name, index) {
+            return _c("div", { key: index, staticClass: "vote-item-name" }, [
+              _vm._v("\n\t\t\t\t" + _vm._s(vote_name) + "\n\t\t\t"),
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
