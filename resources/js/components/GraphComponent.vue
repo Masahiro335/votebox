@@ -1,16 +1,15 @@
 <template>
  	<div class="graph-content">
-		<div class="btn graph-open" v-on:click="open">{{ is_open ? '非表示' : '表示' }}</div>
-		<div class="graph" v-if="!is_vote">
-			<canvas v-show="is_open" width="400px" height="200px"></canvas>
-		</div>
-		<div class="vote-group" v-if="is_vote">
+		<div class="btn graph-open" v-on:click="open">{{ is_vote == 0 ? (is_open ? '非表示' : 'グラフを見る') : (is_open ? '非表示' : '投票') }}</div>
+
+		<div class="vote-group" v-show="is_open">
+			<canvas v-show="is_vote == 0"></canvas>
 			<div 
-				class="vote" v-for="(vote, index) in votes" :key=index 
-				v-show="is_open"
-				v-on:click="vote( vote.vote_id )"
+				class="vote" v-for="(vote_item, index) in vote_items" :key=index 
+				v-show="is_vote == 1"
+				v-on:click="vote( vote_item.vote_id )"
 			>
-				{{ vote.vote_name }}
+				{{ vote_item.vote_name }}
 			</div>
 		</div>
 	</div>
@@ -22,13 +21,13 @@ export default {
         return{
             is_open: false,
 			open_count: 0,
-			votes: {},
+			vote_items: {},
         }
     },
 	props: ['theme_id', 'auth_id', 'is_vote'],
 	methods: {
-		open: function (e) {
-			var canvas = e.currentTarget.nextElementSibling.firstElementChild;
+		open: function () {
+			var canvas = $('canvas');
 
 			if( this.open_count == 0 ){
 				$('body').css('cursor', 'progress');
@@ -38,7 +37,7 @@ export default {
 				if( this.is_vote == 0 ){
 					axios
 					.get('mypage/themes/graph/'+this.theme_id, {})
-					.then(function(response) {
+					.then(response => {
 						graph(response, canvas);
 					})
 					.catch(error => {
@@ -50,9 +49,9 @@ export default {
 				//投票項目の表示
 				}else{
 					axios
-					.get('mypage/themes/vote-itme/'+this.theme_id, {})
+					.get('mypage/themes/vote-item/'+this.theme_id, {})
 					.then(response => {
-						this.votes = response.data
+						this.vote_items = response.data
 					})
 					.catch(error => {
 						alert('情報の取得に失敗しました。');
@@ -67,8 +66,21 @@ export default {
 			this.is_open = !this.is_open;
 			this.open_count++;
 		},
-		vote: function ( vote_id ) {
-			alert();
+		vote: function( vote_id ) {
+			var canvas = $('canvas');
+
+			axios
+			.get('mypage/themes/vote/'+vote_id, {})
+			.then(response => {
+				this.is_vote = 0;
+				graph(response, canvas);
+			})
+			.catch(error => {
+				alert('情報の取得に失敗しました。');
+				$('body').css('cursor', 'default');
+				$('body').css('pointer-events', 'auto');
+				return false;
+			});
 		}
 	}
 }

@@ -5314,21 +5314,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       is_open: false,
       open_count: 0,
-      votes: {}
+      vote_items: {}
     };
   },
   props: ['theme_id', 'auth_id', 'is_vote'],
   methods: {
-    open: function open(e) {
+    open: function open() {
       var _this = this;
 
-      var canvas = e.currentTarget.nextElementSibling.firstElementChild;
+      var canvas = $('canvas');
 
       if (this.open_count == 0) {
         $('body').css('cursor', 'progress');
@@ -5344,8 +5343,8 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }); //投票項目の表示
         } else {
-          axios.get('mypage/themes/vote-itme/' + this.theme_id, {}).then(function (response) {
-            _this.votes = response.data;
+          axios.get('mypage/themes/vote-item/' + this.theme_id, {}).then(function (response) {
+            _this.vote_items = response.data;
           })["catch"](function (error) {
             alert('情報の取得に失敗しました。');
             $('body').css('cursor', 'default');
@@ -5362,7 +5361,18 @@ __webpack_require__.r(__webpack_exports__);
       this.open_count++;
     },
     vote: function vote(vote_id) {
-      alert();
+      var _this2 = this;
+
+      var canvas = $('canvas');
+      axios.get('mypage/themes/vote/' + vote_id, {}).then(function (response) {
+        _this2.is_vote = 0;
+        graph(response, canvas);
+      })["catch"](function (error) {
+        alert('情報の取得に失敗しました。');
+        $('body').css('cursor', 'default');
+        $('body').css('pointer-events', 'auto');
+        return false;
+      });
     }
   }
 }); //グラフの作成
@@ -28130,55 +28140,70 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "graph-content" }, [
     _c("div", { staticClass: "btn graph-open", on: { click: _vm.open } }, [
-      _vm._v(_vm._s(_vm.is_open ? "非表示" : "表示")),
+      _vm._v(
+        _vm._s(
+          _vm.is_vote == 0
+            ? _vm.is_open
+              ? "非表示"
+              : "グラフを見る"
+            : _vm.is_open
+            ? "非表示"
+            : "投票"
+        )
+      ),
     ]),
     _vm._v(" "),
-    !_vm.is_vote
-      ? _c("div", { staticClass: "graph" }, [
-          _c("canvas", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.is_open,
-                expression: "is_open",
-              },
-            ],
-            attrs: { width: "400px", height: "200px" },
-          }),
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.is_vote
-      ? _c(
-          "div",
-          { staticClass: "vote-group" },
-          _vm._l(_vm.votes, function (vote, index) {
-            return _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.is_open,
-                    expression: "is_open",
-                  },
-                ],
-                key: index,
-                staticClass: "vote",
-                on: {
-                  click: function ($event) {
-                    return vote(vote.vote_id)
-                  },
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.is_open,
+            expression: "is_open",
+          },
+        ],
+        staticClass: "vote-group",
+      },
+      [
+        _c("canvas", {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.is_vote == 0,
+              expression: "is_vote == 0",
+            },
+          ],
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.vote_items, function (vote_item, index) {
+          return _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.is_vote == 1,
+                  expression: "is_vote == 1",
+                },
+              ],
+              key: index,
+              staticClass: "vote",
+              on: {
+                click: function ($event) {
+                  return _vm.vote(vote_item.vote_id)
                 },
               },
-              [_vm._v("\n\t\t\t\t" + _vm._s(vote.vote_name) + "\n\t\t\t")]
-            )
-          }),
-          0
-        )
-      : _vm._e(),
+            },
+            [_vm._v("\n\t\t\t\t" + _vm._s(vote_item.vote_name) + "\n\t\t\t")]
+          )
+        }),
+      ],
+      2
+    ),
   ])
 }
 var staticRenderFns = []

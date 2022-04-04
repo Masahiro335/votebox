@@ -20,10 +20,14 @@ Route::get('/logout','LoginController@logout')->name('logout');
 
 //マイページ：ログイン必須
 Route::prefix('mypage')->middleware('login_check')->group(function () {
-    Route::get('/','Mypage\ThemesController@index')->name('mypage.top');
-    Route::get('/themes/graph/{id?}','Mypage\ThemesController@graph')->name('graph');
-    Route::get('/themes/vote-itme/{id?}','Mypage\ThemesController@voteItem')->name('voteItem');
-    Route::get('/menu', function() { return view('mypage/menu',['title' => 'マイページ']); })->name('menu');
-    Route::match(['get', 'post', 'put'], '/themes/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
-    Route::match(['get', 'post', 'put'], '/users/edit','Mypage\UsersController@edit')->name('Users.edit');
+	Route::get('/','Mypage\ThemesController@index')->name('mypage.top');
+	Route::get('/menu', function() { return view('mypage/menu',['title' => 'マイページ']); })->name('menu');
+	Route::match(['get', 'post', 'put'], '/users/edit','Mypage\UsersController@edit')->name('Users.edit');
+	///投票関連
+	Route::prefix('themes')->group(function () {
+		Route::get('/graph/{id?}','Mypage\ThemesController@graph')->name('graph');
+		Route::get('/vote-item/{id?}','Mypage\ThemesController@voteItem')->name('voteItem');
+		Route::get('/vote/{id?}','Mypage\ThemesController@vote')->name('vote');
+		Route::match(['get', 'post', 'put'], '/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
+	});
 });

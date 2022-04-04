@@ -119,9 +119,6 @@ class ThemesController extends AppMyController
 	public function graph(Request $request, $id )
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
-		if( empty($id) ){
-			return response()->json('情報の取得に失敗しました。', 400);
-		}
 
 		$entTheme = Theme::where('Themes.id', $id)->first();
 		if( empty($entTheme) ){
@@ -152,9 +149,6 @@ class ThemesController extends AppMyController
 	public function voteItem(Request $request, $id )
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
-		if( empty($id) ){
-			return response()->json('情報の取得に失敗しました。', 400);
-		}
 
 		$entTheme = Theme::where('Themes.id', $id)->first();
 		if( empty($entTheme) ){
@@ -169,6 +163,36 @@ class ThemesController extends AppMyController
 		foreach($entTheme->votes as $key => $entVote){
 			$data[$key]['vote_id'] = $entVote->id;
 			$data[$key]['vote_name'] = $entVote->name;
+		}
+
+		return response()->json($data);
+	}
+
+
+	/**
+	 * 選択した投票項目に投票する
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 * @param $vote_id 投票ID
+	 */
+	public function vote(Request $request, $vote_id )
+	{
+		if( $request->ajax() == false ) return redirect()->route('top');
+
+		$entVote = Vote::where('Votes.id', $vote_id)->first();
+		if( empty($entVote) ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+		//投票できない場合は、return
+		if( $entVote->theme->isVote( $request->Auth ) == 0 ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+
+		$data = [];
+		foreach($entVote->theme->votes as $vote){
+			$data['vote_name'][] = $vote->name;
+			$data['vote_coount'][] = empty($vote->vote_users) ? 0 : count($vote->vote_users);
 		}
 
 		return response()->json($data);
