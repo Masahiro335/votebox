@@ -15,11 +15,11 @@
 				<li>20文字以内で入力して下さい。</li>
 				<li>半角英数字のみで記入して下さい。</li>
 			</ul>
-			<?php if( $errors->has('name') ){ ?>
-				<?php foreach($errors->get('name') as $errorMessage){ ?>
+			@if( $errors->has('name') )
+				@foreach($errors->get('name') as $errorMessage)
 					<div class="error-message">{{ $errorMessage }}</div>
-				<?php } ?>
-			<?php } ?>
+				@endforeach
+			@endif
 
 			<label class="form-title required">パスワード</label>
 			<div class="form-item">
@@ -30,11 +30,11 @@
 				<li>20文字以内で記入して下さい。</li>
 				<li>半角英数字のみで記入して下さい。</li>
 			</ul>
-			<?php if( $errors->has('password') ){ ?>
-				<?php foreach($errors->get('password') as $errorMessage){ ?>
+			@if( $errors->has('password') )
+				@foreach($errors->get('password') as $errorMessage)
 					<div class="error-message">{{ $errorMessage }}</div>
-				<?php } ?>
-			<?php } ?>
+				@endforeach
+			@endif
 
 			{{ Form::submit('登録', ['class'=>'btn add']) }}
 			{{ Form::close() }}

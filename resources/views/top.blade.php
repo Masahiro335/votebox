@@ -19,16 +19,16 @@
 				</div>
 			{{ Form::close() }}
 		</div>
-		<?php if( $queryThemes->isEmpty() == false ){ ?>
-			<?php foreach($queryThemes as $entTheme){ ?>
+		@if( $queryThemes->isEmpty() == false )
+			@foreach($queryThemes as $entTheme)
 				<div class="item">
 					<div class="name">{{ $entTheme->user->name }}</div>
 					<div class="body">
 						<?= nl2br(htmlspecialchars($entTheme->body)) ?>
 					</div>
-					<?php if( empty($Auth) ){ ?>
+					@if( empty($Auth) )
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
-					<?php }elseif( $type_id == 30 ){ ?>
+					@elseif( $type_id == 30 )
 						投票名
 						<div class="vote-group">
 							<?php foreach($entTheme->votes as $entVote){?>
@@ -37,16 +37,16 @@
 								</div>
 							<?php } ?>
 						</div>
-					<?php }else{ ?>
+					@else
 						<graph-component 
 							:theme_id = "<?= $entTheme->id ?>" 
 							:auth_id = "<?= $Auth['id']; ?>"
 							:is_vote = "<?= $entTheme->isVote( $Auth ) ?>"
 						></graph-component>
-					<?php } ?>
+					@endif
 				</div>
-			<?php } ?>
-		<?php } ?>
+			@endforeach
+		@endif
 	</div>
 </div>
 
