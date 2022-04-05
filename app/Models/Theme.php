@@ -108,4 +108,33 @@ class Theme extends Model
 		}
 		return true;
 	}
+
+
+	/**
+	 * グラフのデータを出力
+	 *
+	 * @param Entity $Auth ログイン情報
+	 * @return array $data グラフのデータ
+	 */
+	public function graphData( $Auth )
+	{
+		$data = [];
+		foreach($this->votes as $key => $entVote){
+			$data['vote_name'][] = $entVote->name;
+			$data['vote_coount'][] = empty($entVote->vote_users) ? 0 : count($entVote->vote_users);
+			$data['is_vote'][] = false;
+			//ユーザーが投票したかどうか
+			foreach($entVote->vote_users as $entVoteUser){
+				if( $entVoteUser->user_id == $Auth['id'] ){
+					$data['is_vote'][$key] = true;
+				}
+			}
+			//投票最大値を取得
+			if( empty($data['coount_max']) || count($entVote->vote_users) > $data['coount_max'] ){
+				$data['coount_max'] = count($entVote->vote_users);
+			}
+		}
+
+		return $data;
+	}
 }

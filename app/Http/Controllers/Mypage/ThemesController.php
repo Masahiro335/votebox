@@ -130,11 +130,8 @@ class ThemesController extends AppMyController
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
-		$data = [];
-		foreach($entTheme->votes as $entVote){
-			$data['vote_name'][] = $entVote->name;
-			$data['vote_coount'][] = empty($entVote->vote_users) ? 0 : count($entVote->vote_users);
-		}
+		//グラフのデータ
+		$data = $entTheme->graphData( $request->Auth );
 
 		return response()->json($data);
 	}
@@ -160,6 +157,7 @@ class ThemesController extends AppMyController
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
+		//投票項目を取得
 		$data = [];
 		foreach($entTheme->votes as $key => $entVote){
 			$data[$key]['vote_id'] = $entVote->id;
@@ -200,11 +198,8 @@ class ThemesController extends AppMyController
 
 		$entTheme = Theme::where('Themes.id', $entVote->theme->id)->first();
 
-		$data = [];
-		foreach($entTheme->votes as $vote){
-			$data['vote_name'][] = $vote->name;
-			$data['vote_coount'][] = empty($vote->vote_users) ? 0 : count($vote->vote_users);
-		}
+		//グラフのデータ
+		$data = $entTheme->graphData();
 
 		return response()->json($data);
 	}
