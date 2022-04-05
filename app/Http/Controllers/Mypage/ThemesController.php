@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ThemeRequest;
 use \App\Models\Theme;
 use \App\Models\Vote;
+use \App\Models\VoteUser;
 
 class ThemesController extends AppMyController
 {
 
 
 	/**
-	 * 一覧画面
+	 * マイページTOP
 	 * 
 	 * @author　matsubara
 	 * @param Request $request
@@ -125,7 +126,7 @@ class ThemesController extends AppMyController
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 		//投票できる場合は、グラフ非表示
-		if( $entTheme->isVote( $request->Auth ) == 1 ){
+		if( $entTheme->isVote( $request->Auth ) == true ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
@@ -155,7 +156,7 @@ class ThemesController extends AppMyController
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 		//投票できない場合は、投票項目を非表示
-		if( $entTheme->isVote( $request->Auth ) == 0 ){
+		if( $entTheme->isVote( $request->Auth ) == false ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
@@ -184,13 +185,23 @@ class ThemesController extends AppMyController
 		if( empty($entVote) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
-		//投票できない場合は、return
-		if( $entVote->theme->isVote( $request->Auth ) == 0 ){
+		//投票できない場合
+		if( $entVote->theme->isVote( $request->Auth ) == false ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
+		$entVoteUser = VoteUser::create([
+			'user_id' => $request->Auth['id'],
+			'vote_id' => $entVote->id,
+		]);
+		if( empty($entVoteUser) ){
+			return response()->json('情報の取得に失敗しました。', 400);
+		}
+
+		$entTheme = Theme::where('Themes.id', $entVote->theme->id)->first();
+
 		$data = [];
-		foreach($entVote->theme->votes as $vote){
+		foreach($entTheme->votes as $vote){
 			$data['vote_name'][] = $vote->name;
 			$data['vote_coount'][] = empty($vote->vote_users) ? 0 : count($vote->vote_users);
 		}

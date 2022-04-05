@@ -83,29 +83,29 @@ class Theme extends Model
 	 * 投票できる状態かお題か確認する
 	 *
 	 * @param Entity $Auth ログイン情報
-	 * @return int 1:投票できる　0:できない
+	 * @return bool ture:投票できる　false:できない
 	 */
 	public function isVote($Auth)
 	{
 		
 		//募集終了はできない
-		if( new Datetime($this->end_date_time) < new Datetime(date('Y-m-d').' 23:59:59.9999') ){
-			return '0';
+		if( new Datetime($this->end_date_time) <= new Datetime(date('Y-m-d').' 23:59:59.9999') ){
+			return false;
 		}
 
 		//自身の投稿は投票できない
 		if($this->user_id == $Auth['id']){
-			return '0';
+			return false;
 		}
 
 		//一度投票したのは投票できない
 		foreach($this->votes as $entVote){
 			if( empty($entVote->vote_users) == false ){
 				foreach($entVote->vote_users as $entVoteUser){
-					if( $entVoteUser->user_id == $Auth['id'] ) return '0';
+					if( $entVoteUser->user_id == $Auth['id'] ) return false;
 				}
 			}
 		}
-		return '1';
+		return true;
 	}
 }

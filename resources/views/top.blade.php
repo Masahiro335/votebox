@@ -41,7 +41,7 @@
 						<graph-component 
 							:theme_id = "<?= $entTheme->id ?>" 
 							:auth_id = "<?= $Auth['id']; ?>"
-							:is_vote = "<?= $entTheme->isVote( $Auth ) ?>"
+							:is_vote = "<?= $entTheme->isVote( $Auth ) ? 1 : 0 ?>"
 						></graph-component>
 					@endif
 				</div>

@@ -9,6 +9,8 @@ class VoteUser extends Model
 {
 	use HasFactory;
 
+	protected $fillable = ['user_id','vote_id'];
+
 	public function vote()
 	{
 		return $this->belongsTo(Theme::class)->where('is_deleted', false);
