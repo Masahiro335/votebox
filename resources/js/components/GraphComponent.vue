@@ -18,12 +18,12 @@
 <script>
 export default {
 	data() {
-        return{
-            is_open: false,
+		return{
+			is_open: false,
 			open_count: 0,
 			vote_items: {},
-        }
-    },
+		}
+	},
 	props: ['theme_id', 'auth_id', 'is_vote'],
 	methods: {
 		open: function () {
@@ -91,26 +91,32 @@ function graph(response, canvas) {
 		scales: {
 			yAxes : [{
 				ticks : {
-					max : 1,    
+					//投票の最大値
+					max : response.data.coount_max == 0 ? 1 : response.data.coount_max,    
 					min : 0
 				}
 			}],
 		}
 	};
-	var chartData = {
-		labels: response.data.vote_name,
-		datasets: [{
-			label: '投票数',
-			hoverBackgroundColor: "rgba(255,99,132,0.3)",
-			data: response.data.vote_coount,
-		}]
-	}
-	var chart = new Chart(canvas, {
-		type: 'bar',
-		data: chartData,
-		options: options,
+
+	//グラフのデータを取得
+	var dataset = [];
+	response.data.vote_name.forEach(function(vote_name, key) {
+		dataset[key] = {
+			label: vote_name,	//ラベル名
+			data: String(response.data.vote_coount[key]),	//投票数
+			//グラフの色。投票したグラフは赤色
+			backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)' 
+		};
 	});
 
-	return true;
+	var chart = new Chart(canvas, {
+		type: 'bar',
+		data: {
+			labels: ['投票結果'],
+			datasets: dataset,
+		},
+		options: options,
+	});
 }
 </script>
