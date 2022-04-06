@@ -137,4 +137,22 @@ class Theme extends Model
 
 		return $data;
 	}
+
+
+	/**
+	 * 募集終了までの日付または時間を出力
+	 *
+	 * @return string $voteLeftDay 募集終了までの日付または時間
+	 */
+	public function voteLeftDay()
+	{
+		$diff = (new DateTime($this->end_date_time))->diff(new DateTime(date('Y-m-d H:i:s')));
+
+		$voteLeftDay = $diff->format('%a').'日';
+		if( $voteLeftDay == '0日' ){
+			$voteLeftDay = $diff->format('%h').'時間';
+		}
+
+		return $voteLeftDay;
+	}
 }

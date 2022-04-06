@@ -4,24 +4,30 @@
 <div class="wrapper">
 	<div class="content" id="app">
 		<div class="search-group">
-			<?php if( Request::route()->getPrefix() == '/mypage' ){ ?>
-				{{ Form::open(['method'=>'get', 'url' => route('mypage.top'), 'class' => 'search-form' ]) }} 
-			<?php }else{ ?>
-				{{ Form::open(['method'=>'get', 'url' => route('top'), 'class' => 'search-form' ]) }}
-			<?php } ?>
+			{{ Form::open(['method'=>'get', 'url' => Request::route()->getPrefix() == '/mypage' ? route('mypage.top') : route('top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', $search, ['placeholder' => '検索']) }}
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('type_id', '10', $type_id == 10, [])}} 募集中</label>
 					<label class="tab"> {{Form::checkbox('type_id', '20', $type_id == 20, [])}} 募集終了</label>
-					<?php if( Request::route()->getPrefix() == '/mypage' ){ ?>
+					@if( Request::route()->getPrefix() == '/mypage' )
 						<label class="tab"> {{Form::checkbox('type_id', '30', $type_id == 30, [])}} 募集予定</label>
-					<?php } ?>
+					@endif
 				</div>
 			{{ Form::close() }}
 		</div>
 		@if( $queryThemes->isEmpty() == false )
 			@foreach($queryThemes as $entTheme)
 				<div class="item">
+					@if( $type_id == 10 )
+						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
+						<div class="period <?= !empty(strpos($voteLeftDay, '時間')) ? 'few-left' : '' ?>">
+							<?= 'あと'.$voteLeftDay.'で終了' ?>
+						</div>
+					@else
+						<div class="period">
+							{{ date('n月j日 G時i分', strtotime($entTheme->start_date_time)).' 〜 '.date('n月j日 G時i分', strtotime($entTheme->end_date_time)) }}
+						</div>
+					@endif
 					<div class="name">{{ $entTheme->user->name }}</div>
 					<div class="body">
 						<?= nl2br(htmlspecialchars($entTheme->body)) ?>

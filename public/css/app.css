@@ -11563,3 +11563,10 @@ label.tab input[type=checkbox] {
 .vote-group .vote:hover {
   background-color: #f9141a78;
 }
+
+.period {
+  margin-bottom: 15px;
+}
+.period.few-left {
+  color: #f9141a;
+}
