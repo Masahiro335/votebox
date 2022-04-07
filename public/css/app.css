@@ -11522,6 +11522,11 @@ ul.mypage-menu li {
 .search-group input[name=search] {
   width: 80%;
   padding: 10px 0;
+  margin-bottom: 10px;
+}
+.search-group select[name=sort] {
+  width: 80%;
+  padding: 10px 0;
   margin-bottom: 20px;
 }
 
@@ -11566,7 +11571,4 @@ label.tab input[type=checkbox] {
 
 .period {
   margin-bottom: 15px;
-}
-.period.few-left {
-  color: #f9141a;
 }

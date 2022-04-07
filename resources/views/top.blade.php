@@ -5,7 +5,8 @@
 	<div class="content" id="app">
 		<div class="search-group">
 			{{ Form::open(['method'=>'get', 'url' => Request::route()->getPrefix() == '/mypage' ? route('mypage.top') : route('top'), 'class' => 'search-form' ]) }} 
-				{{ Form::text('search', $search, ['placeholder' => '検索']) }}
+				{{ Form::text('search', $search, ['placeholder' => '検索']) }}</br>
+				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $sort]) }}</br>
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $type_id == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $type_id == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
@@ -20,8 +21,9 @@
 				<div class="item">
 					@if( $type_id == App\Models\Theme::TYPE['ACTIVE'] )
 						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
-						<div class="period <?= !empty(strpos($voteLeftDay, '時間')) ? 'few-left' : '' ?>">
-							<?= 'あと'.$voteLeftDay.'で終了' ?>
+						<div class="period">
+							<span <?= !empty(strpos($voteLeftDay, '時間')) ? 'style="color:#f9141a;"' : ''  ?>>あと{{ $voteLeftDay }}で終了</span></br>
+							{{ date('n月j日 G時i分', strtotime($entTheme->start_date_time)).' 〜 '.date('n月j日 G時i分', strtotime($entTheme->end_date_time)) }}
 						</div>
 					@else
 						<div class="period">
@@ -61,6 +63,7 @@ $(function(){
 	$('label.tab input').parent().css('background-color','#0000');
 	$('label.tab input:checked').parent().css('background-color','#f9141a78');
 
+	//ラベルを選択
 	$('body').on('click', 'label.tab input', function(){ 
 		var $this = $(this);
 		if( $this.prop('checked') == false ) return false;
@@ -71,6 +74,12 @@ $(function(){
 		$('label.tab input').parent().css('background-color','#0000');
 		$('label.tab input:checked').parent().css('background-color','#f9141a78');
 
+		$form = $('.search-form');
+		$form.submit();
+	})
+
+	//ソート選択
+	$('body').on('change', 'select[name="sort"]', function(){ 
 		$form = $('.search-form');
 		$form.submit();
 	})

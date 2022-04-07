@@ -222,6 +222,11 @@ ul.mypage-menu {
 	input[name="search"] {
 		width: 80%;
 		padding: 10px 0;
+		margin-bottom: 10px;
+	}
+	select[name="sort"] {
+		width: 80%;
+		padding: 10px 0;
 		margin-bottom: 20px;
 	}
 }
@@ -265,7 +270,4 @@ label.tab {
 }
 .period {
 	margin-bottom: 15px;
-	&.few-left {
-		color: #f9141a;
-	}
 }

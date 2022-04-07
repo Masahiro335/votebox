@@ -8,11 +8,18 @@ use DateTime;
 
 class Theme extends Model
 {
-    //お題の募集タイプ
-    const TYPE = [
-        'ACTIVE' => 10,
-        'CLOSE' => 20,
-        'PLAN' => 30,
+	//お題の募集タイプ
+	const TYPE = [
+		'ACTIVE' => 10,
+		'CLOSE' => 20,
+		'PLAN' => 30,
+	];
+
+	//お題のソートタイプ
+	const SORT = [
+		'10' => '最新順',
+		'20' => '終了順',
+		'30' => '開始順',
 	];
 
 	use HasFactory;
@@ -37,9 +44,9 @@ class Theme extends Model
 	 */
 	public function scopeQueryBasic($query)
 	{
-		return $query->where('Themes.is_deleted', false)
+		return $query
+			->where('Themes.is_deleted', false)
 			->where('Themes.is_invalid', false)
-			->orderBy('Themes.created_at', 'desc')
 		;
 	}
 
@@ -55,13 +62,13 @@ class Theme extends Model
 		$query = $this->scopeQueryBasic($query);
 
 		//募集中
-		if( empty($request->input('type_id')) || $request->input('type_id') == 10){
+		if( empty($request->input('type_id')) || $request->input('type_id') == $this::TYPE['ACTIVE']){
 			$query
 				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
 				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
 			;
 		//募集終了
-		}elseif($request->input('type_id') == 20){
+		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
 		//募集予定
 		}else{
@@ -81,6 +88,26 @@ class Theme extends Model
 					$query->orWhere('Themes.body', 'like', '%'.$keyWord.'%');
 				}
 			});
+		}
+
+		//ソート
+		if( empty($request->input('sort')) == false ){
+			switch($request->input('sort')){
+				case '10':
+					$query->orderBy('Themes.created_at', 'desc');
+					break;
+				case '20':
+					$query->orderBy('Themes.end_date_time', 'asc');
+					break;
+				case '30':
+					$query->orderBy('Themes.start_date_time', 'asc');
+					break;
+				default:
+					$query->orderBy('Themes.created_at', 'desc');
+					break;
+			}
+		}else{
+			$query->orderBy('Themes.created_at', 'desc');
 		}
 
 		return $query;

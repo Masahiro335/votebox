@@ -29,6 +29,11 @@ class ThemesController extends AppMyController
 			$type_id = $request->input('type_id');
 		}
 
+		$sort = '10';
+		if( empty($request->input('sort')) == false ){
+			$sort = $request->input('sort');
+		}
+
 		//ログインの場合
 		if( empty($request->Auth) == false ){
 			$queryThemes->where('Themes.user_id', $request->Auth['id']);
@@ -39,7 +44,7 @@ class ThemesController extends AppMyController
 		//検索キーワード
 		$search = $request->input('search');
 
-		return view('top', compact('queryThemes', 'type_id', 'search'));
+		return view('top', compact('queryThemes', 'type_id', 'search', 'sort'));
 	}
 
 
