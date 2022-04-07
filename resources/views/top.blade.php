@@ -7,10 +7,10 @@
 			{{ Form::open(['method'=>'get', 'url' => Request::route()->getPrefix() == '/mypage' ? route('mypage.top') : route('top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', $search, ['placeholder' => '検索']) }}
 				<div class="tab-group">
-					<label class="tab"> {{Form::checkbox('type_id', '10', $type_id == 10, [])}} 募集中</label>
-					<label class="tab"> {{Form::checkbox('type_id', '20', $type_id == 20, [])}} 募集終了</label>
+					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $type_id == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
+					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $type_id == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
 					@if( Request::route()->getPrefix() == '/mypage' )
-						<label class="tab"> {{Form::checkbox('type_id', '30', $type_id == 30, [])}} 募集予定</label>
+						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['PLAN'], $type_id == App\Models\Theme::TYPE['PLAN'], [])}} 募集予定</label>
 					@endif
 				</div>
 			{{ Form::close() }}
@@ -18,7 +18,7 @@
 		@if( $queryThemes->isEmpty() == false )
 			@foreach($queryThemes as $entTheme)
 				<div class="item">
-					@if( $type_id == 10 )
+					@if( $type_id == App\Models\Theme::TYPE['ACTIVE'] )
 						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
 						<div class="period <?= !empty(strpos($voteLeftDay, '時間')) ? 'few-left' : '' ?>">
 							<?= 'あと'.$voteLeftDay.'で終了' ?>
@@ -34,7 +34,7 @@
 					</div>
 					@if( empty($Auth) )
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
-					@elseif( $type_id == 30 )
+					@elseif( $type_id == App\Models\Theme::TYPE['PLAN'] )
 						投票名
 						<div class="vote-group">
 							<?php foreach($entTheme->votes as $entVote){?>

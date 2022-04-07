@@ -8,6 +8,13 @@ use DateTime;
 
 class Theme extends Model
 {
+    //お題の募集タイプ
+    const TYPE = [
+        'ACTIVE' => 10,
+        'CLOSE' => 20,
+        'PLAN' => 30,
+	];
+
 	use HasFactory;
 
 	protected $fillable = ['user_id','body','start_date_time','end_date_time','is_invalid','is_deleted'];

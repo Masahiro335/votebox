@@ -24,7 +24,7 @@ class ThemesController extends AppController
 	{
 		$queryThemes = Theme::querytop($request);
 
-		$type_id = 10;
+		$type_id = Theme::TYPE['ACTIVE'];
 		if( empty($request->input('type_id')) == false ){
 			$type_id = $request->input('type_id');
 		}
