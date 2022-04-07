@@ -15,7 +15,7 @@
 	<body>
 		<header>
 			<h1>
-				<a href="{{ route('top') }}" <?= Request::route()->getPrefix() == '/mypage' ? '' : 'style="color:#de7b7b;"' ?>>VOTEBOX</a>
+				<a href="{{ route('top') }}" <?= empty($is_mypage) ? 'style="color:#de7b7b;"' : '' ?>>VOTEBOX</a>
 			</h1>
 			<nav class="header-nav">
 				<ul>
@@ -23,7 +23,7 @@
 						<li><a href="{{ route('register') }}">ENTRY</a></li>
 						<li><a href="{{ route('login') }}">LOGIN</a></li>
 					<?php }else{ ?>
-						<li><a href="{{ route('mypage.top') }}" <?= Request::route()->getPrefix() == '/mypage' ? 'style="color:#de7b7b;"' : '' ?>>MYPAGE</a></li>
+						<li><a href="{{ route('mypage.top') }}" <?= empty($is_mypage) ? '' : 'style="color:#de7b7b;"' ?>>MYPAGE</a></li>
 						<li><a href="{{ route('menu') }}">MENU</a></li>
 					<?php } ?>
 				</ul>

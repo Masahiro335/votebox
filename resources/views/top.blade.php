@@ -4,13 +4,13 @@
 <div class="wrapper">
 	<div class="content" id="app">
 		<div class="search-group">
-			{{ Form::open(['method'=>'get', 'url' => Request::route()->getPrefix() == '/mypage' ? route('mypage.top') : route('top'), 'class' => 'search-form' ]) }} 
+			{{ Form::open(['method'=>'get', 'url' => empty($is_mypage) ? route('top') : route('mypage.top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', $search, ['placeholder' => '検索']) }}</br>
 				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $sort]) }}</br>
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $type_id == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $type_id == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
-					@if( Request::route()->getPrefix() == '/mypage' )
+					@if( empty($is_mypage) == false )
 						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['PLAN'], $type_id == App\Models\Theme::TYPE['PLAN'], [])}} 募集予定</label>
 					@endif
 				</div>
