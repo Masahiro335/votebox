@@ -189,4 +189,22 @@ class Theme extends Model
 
 		return $voteLeftDay;
 	}
+
+
+	/**
+	 * 投稿を編集できるかチェック
+	 * 条件：誰も投票していない状態
+	 * 
+	 * @return bool true:できる false:できない
+	 */
+	public function isEdit()
+	{
+		foreach($this->votes as $entVote){
+			if( count($entVote->vote_users) > 0 ){
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

@@ -30,10 +30,12 @@
 							{{ date('n月j日 G時i分', strtotime($entTheme->start_date_time)).' 〜 '.date('n月j日 G時i分', strtotime($entTheme->end_date_time)) }}
 						</div>
 					@endif
+
 					<div class="name">{{ $entTheme->user->name }}</div>
 					<div class="body">
 						<?= nl2br(htmlspecialchars($entTheme->body)) ?>
 					</div>
+				
 					@if( empty($Auth) )
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
 					@elseif( $type_id == App\Models\Theme::TYPE['PLAN'] )
@@ -51,6 +53,11 @@
 							:auth_id = "<?= $Auth['id']; ?>"
 							:is_vote = "<?= $entTheme->isVote( $Auth ) ? 1 : 0 ?>"
 						></graph-component>
+					@endif
+
+					@if( empty($is_mypage) == false && $entTheme->isEdit() )
+						<a href="{{ route('Themes.edit', ['id' => $entTheme->id])  }}" class="btn edit">変更</a>
+						<a href="" class="btn delete">削除</a>
 					@endif
 				</div>
 			@endforeach

@@ -8,8 +8,8 @@
 			{{ Form::open(['url' => route('Themes.edit') ]) }} 
 			<label class="form-title required">開始日時</label>
 			<div class="form-item">
-				{{ Form::date('start_date_time', date('Y-m-d'), ['min' => date('Y-m-d'), 'required' => true]) }}
-				{{ Form::time('start_time', date('H:i'), []) }}
+				{{ Form::date('start_date_time', empty($entTheme) ? date('Y-m-d',strtotime('+3 day')) : date('Y-m-d', strtotime($entTheme->start_date_time)), ['min' => date('Y-m-d'), 'required' => true]) }}
+				{{ Form::time('start_time', empty($entTheme) ? date('H:i') : date('H:i', strtotime($entTheme->start_date_time)), []) }}
 			</div>
 			@if( $errors->has('start_date_time') )
 				@foreach($errors->get('start_date_time') as $errorMessage)
@@ -19,8 +19,8 @@
 
 			<label class="form-title required">終了日時</label>
 			<div class="form-item">
-				{{ Form::date('end_date_time', date('Y-m-d',strtotime('+3 day')), ['min' => date('Y-m-d'), 'required' => true]) }}
-				{{ Form::time('end_time', date('H:i'), []) }}
+				{{ Form::date('end_date_time', empty($entTheme) ? date('Y-m-d',strtotime('+3 day')) : date('Y-m-d', strtotime($entTheme->end_date_time)), ['min' => date('Y-m-d'), 'required' => true]) }}
+				{{ Form::time('end_time', empty($entTheme) ? date('H:i') : date('H:i', strtotime($entTheme->end_date_time)), []) }}
 			</div>
 			@if( $errors->has('end_date_time') )
 				@foreach($errors->get('end_date_time') as $errorMessage)
@@ -30,7 +30,7 @@
 
 			<label class="form-title required">お題</label>
 			<div class="form-item">
-				{{ Form::textarea('body', '', ['placeholder' => 'お題を記入してください。', 'required' => true]) }}
+				{{ Form::textarea('body', empty($entTheme) ? '' : $entTheme->body, ['placeholder' => 'お題を記入してください。', 'required' => true]) }}
 			</div>
 			@if( $errors->has('body') )
 				@foreach($errors->get('body') as $errorMessage)
@@ -40,14 +40,8 @@
 
 			<label class="form-title required">投票項目</label>
 			<div class="vote-item-group">
-				@if( empty(session()->get('_old_input.vote-items')) )
-					<div class="vote-item">
-						{{ Form::text('vote-items[]', '', ['required' => true]) }}
-					</div>
-					<div class="vote-item">
-						{{ Form::text('vote-items[]', '', ['required' => true]) }}
-					</div>
-				@else
+				<?php //フォーム送信後 ?>
+				@if( empty(session()->get('_old_input.vote-items')) == false )
 					@foreach(session()->get('_old_input.vote-items') as $key => $voteItem)
 						<div class="vote-item">
 							{{ Form::text('vote-items[]', '', ['required' => true]) }}
@@ -58,6 +52,21 @@
 							@endif
 						</div>
 					@endforeach
+				<?php //編集 ?>
+				@elseif( empty($entTheme) == false )
+					@foreach($entTheme->votes as $key => $entVote)
+						<div class="vote-item">
+							{{ Form::text('vote-items[]', $entVote->name, ['required' => true]) }}
+						</div>
+					@endforeach
+				<?php //新規投稿 ?>
+				@else
+					<div class="vote-item">
+						{{ Form::text('vote-items[]', '', ['required' => true]) }}
+					</div>
+					<div class="vote-item">
+						{{ Form::text('vote-items[]', '', ['required' => true]) }}
+					</div>
 				@endif
 				<div class="vote-item-add" v-for="(text,index) in items">
 					{{ Form::text('vote-items[]', '', ['required' => true]) }}
@@ -70,7 +79,7 @@
 
 			<div class="form-item">
 				<label class="form-title">
-					{{Form::checkbox('is_invalid', '1', true, [])}}
+					{{Form::checkbox('is_invalid', '1', empty($entTheme) ? true : !$entTheme->is_invalid, [])}}
 					有効
 				</label>
 			</div>

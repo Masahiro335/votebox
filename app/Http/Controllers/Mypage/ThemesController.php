@@ -57,6 +57,22 @@ class ThemesController extends AppMyController
 	 */
 	public function edit(Request $request, $id = null)
 	{
+
+		//編集
+		if( empty($id) == false ){
+			$entTheme = Theme::find($id);
+			if( empty($entTheme) ){
+				session()->flash('flash_error_message', '情報の取得に失敗しました。');
+				return redirect()->route('top');
+			}
+			if( $entTheme->isEdit() == false ){
+				session()->flash('flash_error_message', 'この投稿は編集できる状態ではありません。');
+				return redirect()->route('top');
+			}
+		}else{
+			$entTheme = new Theme();	
+		}
+
 		if( $request->isMethod('post') || $request->isMethod('put') ){
 			$getData = $request->all();
 			if( empty($getData['start_date_time'] == false) ){
@@ -111,7 +127,7 @@ class ThemesController extends AppMyController
 			return redirect()->route('top');
 		}
 
-		return view('mypage/themes/edit',['title' => 'お題の登録']);
+		return view('mypage/themes/edit',['title' => 'お題の登録', 'entTheme' => $entTheme]);
 	}
 
 

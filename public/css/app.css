@@ -11379,6 +11379,14 @@ header ul li {
   margin-top: 10px;
   background-color: #f91462;
 }
+.btn.edit {
+  margin-top: 10px;
+  background-color: #2445b1;
+}
+.btn.delete {
+  margin-top: 10px;
+  background-color: #f91462;
+}
 .btn.graph-open {
   margin: auto;
   margin-bottom: 20px;
