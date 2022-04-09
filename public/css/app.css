@@ -11436,6 +11436,9 @@ header ul li {
   font-size: 20px;
   margin-bottom: 20px;
 }
+.item.invalid {
+  background-color: #eee;
+}
 
 .form-title.required::after {
   content: "必須";

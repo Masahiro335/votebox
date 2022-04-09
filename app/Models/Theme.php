@@ -44,10 +44,7 @@ class Theme extends Model
 	 */
 	public function scopeQueryBasic($query)
 	{
-		return $query
-			->where('Themes.is_deleted', false)
-			->where('Themes.is_invalid', false)
-		;
+		return $query->where('Themes.is_deleted', false);
 	}
 
 	/**
@@ -55,9 +52,10 @@ class Theme extends Model
 	 *
 	 * @param Query $query
 	 * @param Request $request
+	 * @param bool マイページかどうか
 	 * @return Query
 	 */
-	public function scopeQueryTOP($query, $request)
+	public function scopeQueryTOP($query, $request, $is_mypage = false)
 	{
 		$query = $this->scopeQueryBasic($query);
 
@@ -88,6 +86,17 @@ class Theme extends Model
 					$query->orWhere('Themes.body', 'like', '%'.$keyWord.'%');
 				}
 			});
+		}
+
+		//マイページ
+		if( $is_mypage ){
+			$query->where('Themes.user_id', $request->Auth['id']);
+		//TOP画面
+		}else{
+			$query->where('Themes.is_invalid', false);
+			if( empty($request->Auth) == false ){
+				$query->where('Themes.user_id', '<>', $request->Auth['id']);
+			}
 		}
 
 		//ソート

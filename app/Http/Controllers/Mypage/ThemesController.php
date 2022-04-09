@@ -22,7 +22,7 @@ class ThemesController extends AppMyController
 	 */
 	public function index(Request $request)
 	{
-		$queryThemes = Theme::querytop($request);
+		$queryThemes = Theme::querytop($request, true);
 
 		$type_id = Theme::TYPE['ACTIVE'];
 		if( empty($request->input('type_id')) == false ){
@@ -34,15 +34,10 @@ class ThemesController extends AppMyController
 			$sort = $request->input('sort');
 		}
 
-		//ログインの場合
-		if( empty($request->Auth) == false ){
-			$queryThemes->where('Themes.user_id', $request->Auth['id']);
-		}
-
-		$queryThemes = $queryThemes->get();
-
 		//検索キーワード
 		$search = $request->input('search');
+
+		$queryThemes = $queryThemes->get();
 
 		return view('top', compact('queryThemes', 'type_id', 'search', 'sort'));
 	}
@@ -65,11 +60,11 @@ class ThemesController extends AppMyController
 			$entTheme = Theme::find($id);
 			if( empty($entTheme) ){
 				session()->flash('flash_error_message', '情報の取得に失敗しました。');
-				return redirect()->route('top');
+				return redirect()->route('mypage.top');
 			}
 			if( $entTheme->isEdit() == false ){
 				session()->flash('flash_error_message', 'この投稿は編集できる状態ではありません。');
-				return redirect()->route('top');
+				return redirect()->route('mypage.top');
 			}	
 		}
 
@@ -135,10 +130,23 @@ class ThemesController extends AppMyController
 			}
 
 			session()->flash('flash_message', 'お題を投稿しました');
-			return redirect()->route('top');
+			return redirect()->route('mypage.top');
 		}
 
 		return view('mypage/themes/edit',['title' => 'お題の登録', 'entTheme' => $entTheme]);
+	}
+
+
+
+	/**
+	 * テーマの無効
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 * @param $id テーマID
+	 */
+	public function invalid(Request $request, $id = null)
+	{
 	}
 
 

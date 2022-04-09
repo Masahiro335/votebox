@@ -22,7 +22,7 @@ class ThemesController extends AppController
 	 */
 	public function index(Request $request)
 	{
-		$queryThemes = Theme::querytop($request);
+		$queryThemes = Theme::querytop($request, false);
 
 		$type_id = Theme::TYPE['ACTIVE'];
 		if( empty($request->input('type_id')) == false ){
@@ -32,11 +32,6 @@ class ThemesController extends AppController
 		$sort = '10';
 		if( empty($request->input('sort')) == false ){
 			$sort = $request->input('sort');
-		}
-
-		//ログインの場合
-		if( empty($request->Auth) == false ){
-			$queryThemes->where('Themes.user_id', '<>', $request->Auth['id']);
 		}
 
 		$queryThemes = $queryThemes->get();

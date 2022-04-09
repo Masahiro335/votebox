@@ -18,7 +18,8 @@
 		</div>
 		@if( $queryThemes->isEmpty() == false )
 			@foreach($queryThemes as $entTheme)
-				<div class="item">
+				<div class="item{{ empty($entTheme->is_invalid) ? '' : ' invalid' }}">
+					{{ empty($entTheme->is_invalid) ? '' : '無効' }}
 					@if( $type_id == App\Models\Theme::TYPE['ACTIVE'] )
 						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
 						<div class="period">
@@ -49,9 +50,9 @@
 						</div>
 					@else
 						<graph-component 
-							:theme_id = "<?= $entTheme->id ?>" 
-							:auth_id = "<?= $Auth['id']; ?>"
-							:is_vote = "<?= $entTheme->isVote( $Auth ) ? 1 : 0 ?>"
+							:theme_id = "{{ $entTheme->id }}" 
+							:auth_id = "{{  $Auth['id']; }}"
+							:is_vote = "{{ $entTheme->isVote( $Auth ) ? 1 : 0 }}"
 						></graph-component>
 					@endif
 
