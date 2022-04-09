@@ -37,7 +37,7 @@ class ThemesController extends AppMyController
 		//検索キーワード
 		$search = $request->input('search');
 
-		$queryThemes = $queryThemes->get();
+		$queryThemes = $queryThemes->paginate(20);
 
 		return view('top', compact('queryThemes', 'type_id', 'search', 'sort'));
 	}
@@ -58,7 +58,7 @@ class ThemesController extends AppMyController
 			$entTheme = new Theme();
 		}else{
 			$entTheme = Theme::find($id);
-			if( empty($entTheme) ){
+			if( empty($entTheme->id) ){
 				session()->flash('flash_error_message', '情報の取得に失敗しました。');
 				return redirect()->route('mypage.top');
 			}
@@ -150,12 +150,12 @@ class ThemesController extends AppMyController
 	public function invalid(Request $request, $id)
 	{
 		$entTheme = Theme::find($id);
-		if( empty($entTheme) ){
+		if( empty($entTheme->id) ){
 			session()->flash('flash_error_message', '情報の取得に失敗しました。');
 			return redirect()->route('mypage.top');
 		}
 		$entTheme->is_invalid = true;
-		$entTheme->update($request->only(['is_invalid']));
+		$entTheme->save();
 
 		session()->flash('flash_message', 'お題を無効にしました。');
 		return redirect()->route('mypage.top');
@@ -174,7 +174,7 @@ class ThemesController extends AppMyController
 		if( $request->ajax() == false ) return redirect()->route('top');
 
 		$entTheme = Theme::where('Themes.id', $id)->first();
-		if( empty($entTheme) ){
+		if( empty($entTheme->id) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 		//投票できる場合は、グラフ非表示

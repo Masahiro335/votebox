@@ -19,7 +19,7 @@
 		@if( $queryThemes->isEmpty() == false )
 			@foreach($queryThemes as $entTheme)
 				<div class="item{{ empty($entTheme->is_invalid) ? '' : ' invalid' }}">
-					{{ empty($entTheme->is_invalid) ? '' : '無効' }}
+					{{ empty($entTheme->is_invalid) ? '' : '無効状態' }}
 					@if( $type_id == App\Models\Theme::TYPE['ACTIVE'] )
 						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
 						<div class="period">
@@ -65,6 +65,8 @@
 				</div>
 			@endforeach
 		@endif
+
+		{{ $queryThemes->links() }}
 	</div>
 </div>
 

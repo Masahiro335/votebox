@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Pagination\Paginator;
 use App\Http\Requests\ThemeRequest;
 use \App\Models\Theme;
 
@@ -33,7 +32,7 @@ class TopController extends AppController
 			$sort = $request->input('sort');
 		}
 
-		$queryThemes = $queryThemes->get();
+		$queryThemes = $queryThemes->paginate(20);
 
 		//検索キーワード
 		$search = $request->input('search');
