@@ -5319,7 +5319,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       is_open: false,
       open_count: 0,
-      vote_items: {}
+      vote_names: {}
     };
   },
   props: ['theme_id', 'auth_id', 'is_vote'],
@@ -5343,8 +5343,8 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           }); //投票項目の表示
         } else {
-          axios.get('mypage/themes/vote-item/' + this.theme_id, {}).then(function (response) {
-            _this.vote_items = response.data;
+          axios.get('mypage/themes/vote-name/' + this.theme_id, {}).then(function (response) {
+            _this.vote_names = response.data;
           })["catch"](function (error) {
             alert('情報の取得に失敗しました。');
             $('body').css('cursor', 'default');
@@ -28185,7 +28185,7 @@ var render = function () {
           ],
         }),
         _vm._v(" "),
-        _vm._l(_vm.vote_items, function (vote_item, index) {
+        _vm._l(_vm.vote_names, function (vote_name, index) {
           return _c(
             "div",
             {
@@ -28201,11 +28201,11 @@ var render = function () {
               staticClass: "vote",
               on: {
                 click: function ($event) {
-                  return _vm.vote(vote_item.vote_id)
+                  return _vm.vote(vote_name.vote_id)
                 },
               },
             },
-            [_vm._v("\n\t\t\t\t" + _vm._s(vote_item.vote_name) + "\n\t\t\t")]
+            [_vm._v("\n\t\t\t\t" + _vm._s(vote_name.vote_name) + "\n\t\t\t")]
           )
         }),
       ],

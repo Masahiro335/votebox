@@ -5,11 +5,11 @@
 		<div class="vote-group" v-show="is_open">
 			<canvas v-show="is_vote == 0"></canvas>
 			<div 
-				class="vote" v-for="(vote_item, index) in vote_items" :key=index 
+				class="vote" v-for="(vote_name, index) in vote_names" :key=index 
 				v-show="is_vote == 1"
-				v-on:click="vote( vote_item.vote_id )"
+				v-on:click="vote( vote_name.vote_id )"
 			>
-				{{ vote_item.vote_name }}
+				{{ vote_name.vote_name }}
 			</div>
 		</div>
 	</div>
@@ -21,7 +21,7 @@ export default {
 		return{
 			is_open: false,
 			open_count: 0,
-			vote_items: {},
+			vote_names: {},
 		}
 	},
 	props: ['theme_id', 'auth_id', 'is_vote'],
@@ -49,9 +49,9 @@ export default {
 				//投票項目の表示
 				}else{
 					axios
-					.get('mypage/themes/vote-item/'+this.theme_id, {})
+					.get('mypage/themes/vote-name/'+this.theme_id, {})
 					.then(response => {
-						this.vote_items = response.data
+						this.vote_names = response.data
 					})
 					.catch(error => {
 						alert('情報の取得に失敗しました。');

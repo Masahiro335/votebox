@@ -58,8 +58,10 @@ class ThemesController extends AppMyController
 	public function edit(Request $request, $id = null)
 	{
 
-		//編集
-		if( empty($id) == false ){
+		//新規投稿
+		if( empty($id) ){
+			$entTheme = new Theme();
+		}else{
 			$entTheme = Theme::find($id);
 			if( empty($entTheme) ){
 				session()->flash('flash_error_message', '情報の取得に失敗しました。');
@@ -68,9 +70,7 @@ class ThemesController extends AppMyController
 			if( $entTheme->isEdit() == false ){
 				session()->flash('flash_error_message', 'この投稿は編集できる状態ではありません。');
 				return redirect()->route('top');
-			}
-		}else{
-			$entTheme = new Theme();	
+			}	
 		}
 
 		if( $request->isMethod('post') || $request->isMethod('put') ){
@@ -97,17 +97,28 @@ class ThemesController extends AppMyController
 			try {
 				DB::beginTransaction();
 
-				$entTheme = Theme::create([
-					'user_id' => $request->Auth['id'],
+				//保存データ
+				$saveData = [
 					'body' => $getData['body'],
 					'start_date_time' => $getData['start_date_time'],
 					'end_date_time' => $getData['end_date_time'],
-					'is_invalid' => $is_invalid,
-				]);
-				foreach($getData['vote-items'] as $key => $vote_item){
+					'is_invalid' => $is_invalid,	
+				];
+	
+				if( empty($id) ){
+					$entTheme = Theme::create( array_merge($saveData, ['user_id' => $request->Auth['id']]) );
+				}else{
+					$entTheme->update($saveData);
+				}
+
+				if( empty($id) == false){
+					Vote::query()->where('theme_id', $entTheme->id)->delete();
+				}
+
+				foreach($getData['vote_names'] as $key => $vote_name){
 					Vote::create([
 						'theme_id' => $entTheme->id,
-						'name' => $vote_item,
+						'name' => $vote_name,
 						'sort_number' => $key + 1,
 					]);
 				}
@@ -165,7 +176,7 @@ class ThemesController extends AppMyController
 	 * @param Request $request
 	 * @param $id テーマID
 	 */
-	public function voteItem(Request $request, $id )
+	public function voteName(Request $request, $id )
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
 

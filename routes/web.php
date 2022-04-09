@@ -26,7 +26,7 @@ Route::prefix('mypage')->middleware('login_check')->group(function () {
 	///投票関連
 	Route::prefix('themes')->group(function () {
 		Route::get('/graph/{id?}','Mypage\ThemesController@graph')->name('graph');
-		Route::get('/vote-item/{id?}','Mypage\ThemesController@voteItem')->name('voteItem');
+		Route::get('/vote-name/{id?}','Mypage\ThemesController@voteName')->name('voteName');
 		Route::get('/vote/{id?}','Mypage\ThemesController@vote')->name('vote');
 		Route::match(['get', 'post', 'put'], '/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
 	});

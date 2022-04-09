@@ -188,10 +188,10 @@ textarea[name="body"]{
 		height: 100px;
 	} 
 }
-input[name^="vote-items"] {
+input[name^="vote-names"] {
 	padding: 5px;
 }
-.vote-item, .vote-item-add {
+.vote-name, .vote-name-add {
 	margin: 5px 0;
 }
 .fa-plus-square, .fa-minus-square {

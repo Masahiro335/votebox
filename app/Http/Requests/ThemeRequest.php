@@ -25,8 +25,8 @@ class ThemeRequest extends FormRequest
 	{
 		return [
 			'body' => ['required','max:100'],
-			'vote-items' => ['required','array','between:2,4'],
-			'vote-items.*' => ['required','max:10'],
+			'vote_names' => ['required','array','between:2,4'],
+			'vote_names.*' => ['required','max:10'],
 			'start_date_time' =>  ['required','date_format:Y-m-d H:i','after:yesterday'],
 			'end_date_time' => ['required','date_format:Y-m-d H:i','after:start_date_time'],
 			'is_invalid' => ['boolean'],
@@ -39,9 +39,9 @@ class ThemeRequest extends FormRequest
 		return [
 			'body.required' => 'お題は必須項目です。',
 			'body.max' => '100文字以内で入力して下さい。',
-			'vote-items.between' => '投票項目は2~4つまでにして下さい。',
-			'vote-items.*.required' => '投票項目は必須項目です。',
-			'vote-items.*.max' => '10文字以内で入力して下さい。',
+			'vote_names.between' => '投票項目は2~4つまでにして下さい。',
+			'vote_names.*.required' => '投票項目は必須項目です。',
+			'vote_names.*.max' => '10文字以内で入力して下さい。',
 			'start_date_time.required' => '開始日時は必須項目です。',
 			'start_date_time.date_format' => '正しい入力をしてください。',
 			'start_date_time.after' => '今日より前の日付は記入できません。',
