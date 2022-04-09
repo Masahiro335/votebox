@@ -8,7 +8,7 @@
 			{{ Form::open(['url' => route('Themes.edit',['id' => empty($entTheme) ? null : $entTheme->id ]) ]) }} 
 			<label class="form-title required">開始日時</label>
 			<div class="form-item">
-				{{ Form::date('start_date_time', empty($entTheme->id) ? date('Y-m-d') : date('Y-m-d', strtotime($entTheme->start_date_time)), ['min' => date('Y-m-d'), 'required' => true]) }}
+				{{ Form::date('start_date_time', empty($entTheme->id) ? date('Y-m-d') : date('Y-m-d', strtotime($entTheme->start_date_time)), ['required' => true]) }}
 				{{ Form::time('start_time', empty($entTheme->id) ? date('H:i') : date('H:i', strtotime($entTheme->start_date_time)), []) }}
 			</div>
 			@if( $errors->has('start_date_time') )
@@ -19,7 +19,7 @@
 
 			<label class="form-title required">終了日時</label>
 			<div class="form-item">
-				{{ Form::date('end_date_time', empty($entTheme->id) ? date('Y-m-d',strtotime('+3 day')) : date('Y-m-d', strtotime($entTheme->end_date_time)), ['min' => date('Y-m-d'), 'required' => true]) }}
+				{{ Form::date('end_date_time', empty($entTheme->id) ? date('Y-m-d',strtotime('+3 day')) : date('Y-m-d', strtotime($entTheme->end_date_time)), ['required' => true]) }}
 				{{ Form::time('end_time', empty($entTheme->id) ? date('H:i') : date('H:i', strtotime($entTheme->end_date_time)), []) }}
 			</div>
 			@if( $errors->has('end_date_time') )

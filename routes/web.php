@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','ThemesController@index')->name('top');
+Route::get('/','TopController@index')->name('top');
 Route::match(['get', 'post'], '/register','LoginController@register')->name('register');
 Route::match(['get', 'post'], '/login','LoginController@login')->name('login');
 Route::get('/logout','LoginController@logout')->name('logout');
@@ -29,5 +29,6 @@ Route::prefix('mypage')->middleware('login_check')->group(function () {
 		Route::get('/vote-name/{id?}','Mypage\ThemesController@voteName')->name('voteName');
 		Route::get('/vote/{id?}','Mypage\ThemesController@vote')->name('vote');
 		Route::match(['get', 'post', 'put'], '/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
+		Route::get('/invalid/{id?}','Mypage\ThemesController@invalid')->name('Themes.invalid');
 	});
 });

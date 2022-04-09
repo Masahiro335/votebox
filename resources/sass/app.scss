@@ -97,17 +97,13 @@ ul {
 	 border-radius: 10px;
 	 text-align: center;
 	 cursor: pointer;
-	 &.add {
+	 &.add, &.invalid {
 		margin-top: 10px;
 		background-color:#f91462;
 	}
 	&.edit {
 		margin-top: 10px;
 		background-color:#2445b1;
-	}
-	&.delete {
-		margin-top: 10px;
-		background-color:#f91462;
 	}
 	&.graph-open {
 		margin: auto;

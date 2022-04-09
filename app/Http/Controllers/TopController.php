@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\Paginator;
 use App\Http\Requests\ThemeRequest;
 use \App\Models\Theme;
-use \App\Models\Vote;
 
-class ThemesController extends AppController
+class TopController extends AppController
 {
 
 

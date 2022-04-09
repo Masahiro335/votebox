@@ -11375,17 +11375,13 @@ header ul li {
   text-align: center;
   cursor: pointer;
 }
-.btn.add {
+.btn.add, .btn.invalid {
   margin-top: 10px;
   background-color: #f91462;
 }
 .btn.edit {
   margin-top: 10px;
   background-color: #2445b1;
-}
-.btn.delete {
-  margin-top: 10px;
-  background-color: #f91462;
 }
 .btn.graph-open {
   margin: auto;

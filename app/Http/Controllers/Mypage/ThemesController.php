@@ -129,7 +129,9 @@ class ThemesController extends AppMyController
 				;
 			}
 
-			session()->flash('flash_message', 'お題を投稿しました');
+			if( empty($id) ) session()->flash('flash_message', 'お題を投稿しました');
+			else session()->flash('flash_message', 'お題編集しました');
+
 			return redirect()->route('mypage.top');
 		}
 
@@ -145,8 +147,18 @@ class ThemesController extends AppMyController
 	 * @param Request $request
 	 * @param $id テーマID
 	 */
-	public function invalid(Request $request, $id = null)
+	public function invalid(Request $request, $id)
 	{
+		$entTheme = Theme::find($id);
+		if( empty($entTheme) ){
+			session()->flash('flash_error_message', '情報の取得に失敗しました。');
+			return redirect()->route('mypage.top');
+		}
+		$entTheme->is_invalid = true;
+		$entTheme->update($request->only(['is_invalid']));
+
+		session()->flash('flash_message', 'お題を無効にしました。');
+		return redirect()->route('mypage.top');
 	}
 
 

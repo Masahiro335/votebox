@@ -58,7 +58,9 @@
 
 					@if( empty($is_mypage) == false && $entTheme->isEdit() )
 						<a href="{{ route('Themes.edit', ['id' => $entTheme->id])  }}" class="btn edit">変更</a>
-						<a href="" class="btn delete">削除</a>
+						@if( empty($entTheme->is_invalid) )
+							<a href="{{ route('Themes.invalid', ['id' => $entTheme->id])  }}" class="btn invalid">無効</a>
+						@endif
 					@endif
 				</div>
 			@endforeach
