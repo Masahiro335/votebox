@@ -5318,8 +5318,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       is_open: false,
-      open_count: 0,
-      vote_names: {}
+      vote_names: {},
+      theme_id: this.theme_id,
+      open_count: 0
     };
   },
   props: ['theme_id', 'auth_id', 'is_vote'],
@@ -5327,12 +5328,12 @@ __webpack_require__.r(__webpack_exports__);
     open: function open() {
       var _this = this;
 
-      var canvas = $('canvas');
+      var canvas = $('canvas#' + this.theme_id);
+      $('body').css('cursor', 'progress');
+      $('body').css('pointer-events', 'none');
 
       if (this.open_count == 0) {
-        $('body').css('cursor', 'progress');
-        $('body').css('pointer-events', 'none'); //グラフの表示
-
+        //グラフの表示
         if (this.is_vote == 0) {
           axios.get('mypage/themes/graph/' + this.theme_id, {}).then(function (response) {
             graph(response, canvas);
@@ -5352,11 +5353,10 @@ __webpack_require__.r(__webpack_exports__);
             return false;
           });
         }
-
-        $('body').css('cursor', 'default');
-        $('body').css('pointer-events', 'auto');
       }
 
+      $('body').css('cursor', 'default');
+      $('body').css('pointer-events', 'auto');
       this.is_open = !this.is_open;
       this.open_count++;
     },
@@ -28183,6 +28183,7 @@ var render = function () {
               expression: "is_vote == 0",
             },
           ],
+          attrs: { id: _vm.theme_id },
         }),
         _vm._v(" "),
         _vm._l(_vm.vote_names, function (vote_name, index) {

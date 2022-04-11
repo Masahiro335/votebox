@@ -3,7 +3,7 @@
 		<div class="btn graph-open" v-on:click="open">{{ is_vote == 0 ? (is_open ? '非表示' : 'グラフを見る') : (is_open ? '非表示' : '投票') }}</div>
 
 		<div class="vote-group" v-show="is_open">
-			<canvas v-show="is_vote == 0"></canvas>
+			<canvas :id="theme_id" v-show="is_vote == 0"></canvas>
 			<div 
 				class="vote" v-for="(vote_name, index) in vote_names" :key=index 
 				v-show="is_vote == 1"
@@ -20,19 +20,20 @@ export default {
 	data() {
 		return{
 			is_open: false,
-			open_count: 0,
 			vote_names: {},
+			theme_id: this.theme_id,
+			open_count: 0,
 		}
 	},
 	props: ['theme_id', 'auth_id', 'is_vote'],
 	methods: {
 		open: function () {
-			var canvas = $('canvas');
+			var canvas = $('canvas#'+this.theme_id);
 
-			if( this.open_count == 0 ){
-				$('body').css('cursor', 'progress');
-				$('body').css('pointer-events', 'none');
+			$('body').css('cursor', 'progress');
+			$('body').css('pointer-events', 'none');
 
+			if(this.open_count == 0){
 				//グラフの表示
 				if( this.is_vote == 0 ){
 					axios
@@ -60,9 +61,10 @@ export default {
 						return false;
 					});
 				}
-				$('body').css('cursor', 'default');
-				$('body').css('pointer-events', 'auto');
 			}
+			$('body').css('cursor', 'default');
+			$('body').css('pointer-events', 'auto');
+
 			this.is_open = !this.is_open;
 			this.open_count++;
 		},
