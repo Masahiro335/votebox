@@ -239,7 +239,7 @@ class ThemesController extends AppMyController
 		$entTheme = Theme::where('Themes.id', $entVote->theme->id)->first();
 
 		//グラフのデータ
-		$data = $entTheme->graphData();
+		$data = $entTheme->graphData( $request->Auth );
 
 		return response()->json($data);
 	}

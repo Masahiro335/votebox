@@ -69,7 +69,7 @@ export default {
 			this.open_count++;
 		},
 		vote: function( vote_id ) {
-			var canvas = $('canvas');
+			var canvas = $('canvas#'+this.theme_id);
 
 			axios
 			.get('mypage/themes/vote/'+vote_id, {})

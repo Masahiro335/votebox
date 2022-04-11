@@ -5363,7 +5363,7 @@ __webpack_require__.r(__webpack_exports__);
     vote: function vote(vote_id) {
       var _this2 = this;
 
-      var canvas = $('canvas');
+      var canvas = $('canvas#' + this.theme_id);
       axios.get('mypage/themes/vote/' + vote_id, {}).then(function (response) {
         _this2.is_vote = 0;
         graph(response, canvas);
