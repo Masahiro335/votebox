@@ -20,7 +20,7 @@ class ThemesController extends AppMyController
 	 * @author　matsubara
 	 * @param Request $request
 	 */
-	public function index(Request $request)
+	public function top(Request $request)
 	{
 		$queryThemes = Theme::querytop($request, true);
 

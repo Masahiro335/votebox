@@ -16,8 +16,9 @@ class UsersController extends AppMyController
 	 * 
 	 * @author　matsubara
 	 * @param Request $request
+	 * @param int $id ユーザーID
 	 */
-	public function edit(Request $request)
+	public function edit(Request $request, $id)
 	{
 		if( $request->isMethod('post') || $request->isMethod('put') ){
 			$getData = $request->all();
@@ -27,7 +28,7 @@ class UsersController extends AppMyController
 			if( $validator->fails() ) {
 				session()->flash('flash_error_message', '入力エラーがあります。');
 				return redirect()
-					->route('Users.edit')
+					->route('Users.edit',['id' => $id])
 					->withErrors($validator)
 					->withInput()
 				;
@@ -45,12 +46,12 @@ class UsersController extends AppMyController
 	
 			session()->flash('flash_error_message', '入力エラーがあります。');
 			return redirect()
-				->route('Users.edit')
+				->route('Users.edit',['id' => $id])
 				->withErrors($validator)
 				->withInput()
 			;
 		}
 
-		return view('mypage/users/edit',['title' => 'ユーザーの登録']);
+		return view('/mypage/users/edit',['title' => 'ユーザー名変更']);
 	}
 }

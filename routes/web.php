@@ -20,15 +20,18 @@ Route::get('/logout','LoginController@logout')->name('logout');
 
 //マイページ：ログイン必須
 Route::prefix('mypage')->middleware('login_check')->group(function () {
-	Route::get('/','Mypage\ThemesController@index')->name('mypage.top');
+	Route::get('/','Mypage\ThemesController@top')->name('mypage.top');
 	Route::get('/menu', function() { return view('mypage/menu',['title' => 'マイページ']); })->name('menu');
-	Route::match(['get', 'post', 'put'], '/users/edit','Mypage\UsersController@edit')->name('Users.edit');
-	///投票関連
+	//投票関連
 	Route::prefix('themes')->group(function () {
-		Route::get('/graph/{id?}','Mypage\ThemesController@graph')->name('graph');
-		Route::get('/vote-name/{id?}','Mypage\ThemesController@voteName')->name('voteName');
-		Route::get('/vote/{id?}','Mypage\ThemesController@vote')->name('vote');
+		Route::get('/graph/{id}','Mypage\ThemesController@graph')->name('graph');
+		Route::get('/vote-name/{id}','Mypage\ThemesController@voteName')->name('voteName');
+		Route::get('/vote/{id}','Mypage\ThemesController@vote')->name('vote');
 		Route::match(['get', 'post', 'put'], '/edit/{id?}','Mypage\ThemesController@edit')->name('Themes.edit');
-		Route::get('/invalid/{id?}','Mypage\ThemesController@invalid')->name('Themes.invalid');
+		Route::get('/invalid/{id}','Mypage\ThemesController@invalid')->name('Themes.invalid');
+	});
+	//ユーザー関連
+	Route::prefix('users')->group(function () {
+		Route::match(['get', 'post', 'put'], '/edit/{id}','Mypage\UsersController@edit')->name('Users.edit');
 	});
 });
