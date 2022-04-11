@@ -4795,7 +4795,12 @@ textarea.form-control-lg {
 }
 
 .pagination {
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
   padding-left: 0;
   list-style: none;
 }

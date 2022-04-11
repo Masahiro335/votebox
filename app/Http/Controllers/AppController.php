@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\Factory;
 use \App\Models\User;
+use \App\Models\Theme;
 
 /*
  * 共通コントローラー
@@ -50,6 +51,32 @@ class AppController extends Controller
 	public function LoginSessionOut(){
 		session()->forget('Auth');
 		return empty(session()->has('Auth'));
+	}
+
+
+	/**
+	 * TOP画面に使用するデータ
+	 * 
+	 * @return bool true:できる false:できない
+	 */
+	public function topData($request)
+	{
+		$data = [];
+
+		$data['type_id'] = Theme::TYPE['ACTIVE'];
+		if( empty($request->input('type_id')) == false ){
+			$data['type_id'] = $request->input('type_id');
+		}
+
+		$data['sort'] = '10';
+		if( empty($request->input('sort')) == false ){
+			$data['sort'] = $request->input('sort');
+		}
+
+		//検索キーワード
+	    $data['search'] = $request->input('search');
+
+		return $data;
 	}
 
 }

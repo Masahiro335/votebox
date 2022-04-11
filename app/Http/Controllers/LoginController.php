@@ -37,14 +37,11 @@ class LoginController extends AppController
 			;
 			if( empty($entUser) ){
 				session()->flash('flash_error_message', '名前かパスワードが一致しませんでした。');
-				return redirect()
-					->route('login')
-					->withInput()
-				;
+				return redirect()->route('login');
 			}
 
 			// パスワードの確認
-			if ( Hash::check($getData['password'], $entUser->password) ) {
+			if( Hash::check($getData['password'], $entUser->password) ) {
 				if( $this->loginSession($entUser) ){
 					session()->flash('flash_message', 'ログインに成功しました。');
 					return redirect()->route('mypage.top');
@@ -52,10 +49,7 @@ class LoginController extends AppController
 			}
 
 			session()->flash('flash_error_message', '名前かパスワードが一致しませんでした。');
-			return redirect()
-				->route('login')
-				->withInput()
-			;
+			return redirect()->route('login');
 		}
 
 		return view('/login',['title' => 'ログイン']);

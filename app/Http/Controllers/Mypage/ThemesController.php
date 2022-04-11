@@ -24,22 +24,10 @@ class ThemesController extends AppMyController
 	{
 		$queryThemes = Theme::querytop($request, true);
 
-		$type_id = Theme::TYPE['ACTIVE'];
-		if( empty($request->input('type_id')) == false ){
-			$type_id = $request->input('type_id');
-		}
+		// TOP画面に使用するデータ
+		$data = $this->topData($request);
 
-		$sort = '10';
-		if( empty($request->input('sort')) == false ){
-			$sort = $request->input('sort');
-		}
-
-		//検索キーワード
-		$search = $request->input('search');
-
-		$queryThemes = $queryThemes->paginate(20);
-
-		return view('top', compact('queryThemes', 'type_id', 'search', 'sort'));
+		return view('top', compact('queryThemes', 'data'));
 	}
 
 

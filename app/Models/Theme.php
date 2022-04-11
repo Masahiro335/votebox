@@ -119,6 +119,8 @@ class Theme extends Model
 			$query->orderBy('Themes.created_at', 'desc');
 		}
 
+		$query = $query->paginate(20);
+
 		return $query;
 	}
 

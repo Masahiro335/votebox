@@ -5,13 +5,13 @@
 	<div class="content" id="app">
 		<div class="search-group">
 			{{ Form::open(['method'=>'get', 'url' => empty($is_mypage) ? route('top') : route('mypage.top'), 'class' => 'search-form' ]) }} 
-				{{ Form::text('search', $search, ['placeholder' => '検索']) }}</br>
-				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $sort]) }}</br>
+				{{ Form::text('search', $data['search'], ['placeholder' => '検索']) }}</br>
+				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $data['sort']]) }}</br>
 				<div class="tab-group">
-					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $type_id == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
-					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $type_id == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
+					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $data['type_id'] == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
+					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $data['type_id'] == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
 					@if( empty($is_mypage) == false )
-						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['PLAN'], $type_id == App\Models\Theme::TYPE['PLAN'], [])}} 募集予定</label>
+						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['PLAN'], $data['type_id'] == App\Models\Theme::TYPE['PLAN'], [])}} 募集予定</label>
 					@endif
 				</div>
 			{{ Form::close() }}
@@ -20,7 +20,7 @@
 			@foreach($queryThemes as $entTheme)
 				<div class="item{{ empty($entTheme->is_invalid) ? '' : ' invalid' }}">
 					{{ empty($entTheme->is_invalid) ? '' : '無効状態' }}
-					@if( $type_id == App\Models\Theme::TYPE['ACTIVE'] )
+					@if( $data['type_id'] == App\Models\Theme::TYPE['ACTIVE'] )
 						<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
 						<div class="period">
 							<span <?= !empty(strpos($voteLeftDay, '時間')) ? 'style="color:#f9141a;"' : ''  ?>>あと{{ $voteLeftDay }}で終了</span></br>
@@ -39,7 +39,7 @@
 				
 					@if( empty($Auth) )
 						<div class="help-text">※投票結果をご覧になりたい場合は<a href="{{ route('login') }}" style="color:blue;">ログイン</a>して下さい。</div>
-					@elseif( $type_id == App\Models\Theme::TYPE['PLAN'] )
+					@elseif( $data['type_id'] == App\Models\Theme::TYPE['PLAN'] )
 						投票名
 						<div class="vote-group">
 							<?php foreach($entTheme->votes as $entVote){?>
