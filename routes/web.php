@@ -32,6 +32,6 @@ Route::prefix('mypage')->middleware('login_check')->group(function () {
 	});
 	//ユーザー関連
 	Route::prefix('users')->group(function () {
-		Route::match(['get', 'post', 'put'], '/edit/{id}','Mypage\UsersController@edit')->name('Users.edit');
+		Route::match(['get', 'post', 'put'], '/edit','Mypage\UsersController@edit')->name('Users.edit');
 	});
 });

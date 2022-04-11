@@ -12,32 +12,37 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends AppMyController
 {
 	/**
-	 * ユーザー登録処理
+	 * ユーザー名の変更
 	 * 
 	 * @author　matsubara
 	 * @param Request $request
-	 * @param int $id ユーザーID
 	 */
-	public function edit(Request $request, $id)
+	public function edit(Request $request)
 	{
 		if( $request->isMethod('post') || $request->isMethod('put') ){
-			$getData = $request->all();
+			$name = $request->input('name');
+
+			if( $name == $request->Auth['name']){
+				session()->flash('flash_error_message', '名前が変更されておりません。');
+				return redirect()
+					->route('Users.edit')
+					->withInput()
+				;
+			}
 
 			$userRequest = new UserRequest();
-			$validator = Validator::make($getData, $userRequest->rules(), $userRequest->messages());
+			$validator = Validator::make(['name' => $name], $userRequest->ruleName(), $userRequest->messages());
 			if( $validator->fails() ) {
 				session()->flash('flash_error_message', '入力エラーがあります。');
 				return redirect()
-					->route('Users.edit',['id' => $id])
+					->route('Users.edit')
 					->withErrors($validator)
 					->withInput()
 				;
 			}
 
-			$entUser = User::create([
-				'name' => $getData['name'],
-				'password' => Hash::make($getData['password']),
-			]);
+			$entUser = User::find($request->Auth['id']);
+			$entUser->update(['name' => $name]);
 
 			if( empty($entUser->id) == false ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
@@ -46,7 +51,7 @@ class UsersController extends AppMyController
 	
 			session()->flash('flash_error_message', '入力エラーがあります。');
 			return redirect()
-				->route('Users.edit',['id' => $id])
+				->route('Users.edit')
 				->withErrors($validator)
 				->withInput()
 			;

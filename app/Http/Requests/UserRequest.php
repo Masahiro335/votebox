@@ -29,18 +29,26 @@ class UserRequest extends FormRequest
 		];
 	}
 
+	//ユーザー名の変更
+	public function ruleName()
+	{
+		return [
+			'name' => ['required','max:20','alpha_dash','unique:users'],
+		];
+	}
+
 	//バリデーションメッセージ
 	public function messages()
 	{
 		return [
 			'name.required' => 'ユーザー名は必須項目です。',
 			'name.max' => '20文字以内で入力して下さい。',
-            'name.alpha_dash' => '半角英数字のみで記入して下さい。',
-            'name.unique' => '既にこのユーザー名は登録されています。',
+			'name.alpha_dash' => '半角英数字のみで記入して下さい。',
+			'name.unique' => '既にこのユーザー名は登録されています。',
 			'password.required' => 'パスワードは必須項目です。',
 			'password.min' => '8文字以上で記入して下さい。',
-            'password.max' => '20文字以内で記入して下さい。',
-            'password.alpha_dash' => '半角英数字のみで記入して下さい。',
+			'password.max' => '20文字以内で記入して下さい。',
+			'password.alpha_dash' => '半角英数字のみで記入して下さい。',
 		];
 	}
 }

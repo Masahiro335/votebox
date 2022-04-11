@@ -101,7 +101,7 @@ new Vue({
 	data: {
 		items: [],
 		//デフォルトの投票項目の数
-		vote_item_count: $('.vote input[name^="vote_names"]').length,
+		vote_item_count: $('.vote-name input[name^="vote_names"]').length,
 	},
 	methods: {
 		add: function(){
