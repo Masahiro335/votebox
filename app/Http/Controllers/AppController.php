@@ -14,8 +14,8 @@ class AppController extends Controller
 {
 	//コンストラクタ
 	public function __construct()
-    {
-    }
+	{
+	}
 
 	/**
 	 * ログインセッションに保存
@@ -74,9 +74,25 @@ class AppController extends Controller
 		}
 
 		//検索キーワード
-	    $data['search'] = $request->input('search');
+		$data['search'] = $request->input('search');
 
 		return $data;
+	}
+
+
+	/**
+	 * 乱数を出力
+	 * 
+	 * @param int $length　桁数
+	 * @return int 乱数
+	 */
+	public function randomNumber($length = 4)
+	{
+		$max = pow(10, $length) - 1;
+		$rand = mt_rand(0, $max); 
+		$rand = sprintf('%0'. $length. 'd', $rand); //0埋め
+
+		return $rand;
 	}
 
 }

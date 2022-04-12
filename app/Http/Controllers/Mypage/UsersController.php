@@ -19,7 +19,7 @@ class UsersController extends AppMyController
 	 */
 	public function edit(Request $request)
 	{
-		if( $request->isMethod('post') || $request->isMethod('put') ){
+		if( $request->isMethod('post') ){
 			$name = $request->input('name');
 
 			if( $name == $request->Auth['name']){
@@ -46,7 +46,7 @@ class UsersController extends AppMyController
 
 			if( empty($entUser->id) == false ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
-				return redirect()->route('top');	
+				return redirect()->route('mypage.top');	
 			}
 	
 			session()->flash('flash_error_message', '入力エラーがあります。');
@@ -58,5 +58,51 @@ class UsersController extends AppMyController
 		}
 
 		return view('/mypage/users/edit',['title' => 'ユーザー名変更']);
+	}
+
+
+	/**
+	 * パスワードの確認
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 */
+	public function password(Request $request)
+	{
+		if( $request->isMethod('post') ){
+			$password = $request->input('password');
+			$entUser = User::find($request->Auth['id']);
+	
+			// パスワードの確認
+			if( Hash::check($password, $entUser->password) ) {
+				$randomNumber = $this->randomNumber();
+				session()->put('password_key', $randomNumber);
+
+				session()->flash('flash_message', 'パスワードを確認しました。');
+				return redirect()->route('Users.passwordEdit', ['password_key' => Hash::make($randomNumber)]);
+			}
+	
+			session()->flash('flash_error_message', 'パスワードが違います。');
+			return redirect()->route('Users.password');
+		}
+
+		return view('/mypage/users/password',['title' => 'パスワード確認']);
+	}
+
+
+	/**
+	 * パスワードの変更
+	 * 
+	 * @author　matsubara
+	 * @param Request $request
+	 */
+	public function passwordEdit(Request $request)
+	{
+		if( $request->query('password_key') != session()->put('password_key')){
+			session()->flash('flash_error_message', 'パスワードが違います。');
+			return redirect()->route('Users.password');
+		}
+
+		return view('/mypage/users/password',['title' => 'パスワード確認']);
 	}
 }
