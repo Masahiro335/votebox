@@ -37,6 +37,14 @@ class UserRequest extends FormRequest
 		];
 	}
 
+	//パスワードの変更
+	public function rulePassword()
+	{
+		return [
+			'password' => ['required','min:8','max:20','alpha_dash'],
+		];
+	}
+
 	//バリデーションメッセージ
 	public function messages()
 	{

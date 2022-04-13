@@ -5,8 +5,8 @@
 <div class="wrapper">
 	<div class="content">
 		<div class="item">
-			<div class="title">パスワード確認</div>
-			{{ Form::open(['url' => route('Users.password') ]) }} 
+			<div class="title">{{ empty($is_confirm) ? 'パスワード確認' : 'パスワード変更' }}</div>
+			{{ Form::open(['url' => empty($is_confirm) ? route('Users.password') : route('Users.passwordEdit',['password_key' => $password_key]) ]) }} 
 				<label class="form-title required">パスワード</label>
 				<div class="form-item">
 					{{ Form::password('password', ['required' => true]) }}
@@ -17,7 +17,7 @@
 					@endforeach
 				@endif
 
-				{{ Form::submit('確認', ['class'=>'btn add']) }}
+				{{ Form::submit(empty($is_confirm) ? '確認' : '変更', ['class'=>'btn add']) }}
 			{{ Form::close() }}
 			</br>
 

@@ -42,9 +42,7 @@ class UsersController extends AppMyController
 			}
 
 			$entUser = User::find($request->Auth['id']);
-			$entUser->update(['name' => $name]);
-
-			if( empty($entUser->id) == false ){
+			if( $entUser->update(['name' => $name]) ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
 				return redirect()->route('mypage.top');	
 			}
@@ -98,11 +96,32 @@ class UsersController extends AppMyController
 	 */
 	public function passwordEdit(Request $request)
 	{
-		if( $request->query('password_key') != session()->put('password_key')){
-			session()->flash('flash_error_message', 'パスワードが違います。');
+		// パスワードの確認
+		if( Hash::check(session()->get('password_key'), $request->query('password_key')) == false) {
+			session()->forget('password_key');
+			session()->flash('flash_error_message', 'パスワードの確認ができまでんでした。');
 			return redirect()->route('Users.password');
 		}
 
-		return view('/mypage/users/password',['title' => 'パスワード確認']);
+		//パスワードの変更
+		if( $request->isMethod('post') ){
+			$password = $request->input('password');
+
+			$userRequest = new UserRequest();
+			$validator = Validator::make(['password' => $password], $userRequest->rulePassword(), $userRequest->messages());
+			if( $validator->fails() ) {
+				session()->flash('flash_error_message', 'パスワードの変更に失敗しました。');
+				return redirect()->route('Users.passwordEdit', ['password_key' => $request->query('password_key')]);
+			}
+
+			$entUser = User::find($request->Auth['id']);
+			$entUser->update(['password' => Hash::make($password)]);
+
+			session()->flash('flash_message', 'パスワードを変更しました。');
+			session()->forget('password_key');
+			return redirect()->route('mypage.top');
+		}
+
+		return view('/mypage/users/password',['title' => 'パスワード変更', 'is_confirm' => true, 'password_key' => $request->query('password_key')]);
 	}
 }
