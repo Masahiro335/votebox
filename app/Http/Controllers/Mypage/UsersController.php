@@ -41,7 +41,7 @@ class UsersController extends AppMyController
 				;
 			}
 
-			$entUser = User::find($request->Auth['id']);
+			$entUser = User::find($request->Auth->id);
 			if( $entUser->update(['name' => $name]) ){
 				session()->flash('flash_message', 'ユーザーを登録しました。');
 				return redirect()->route('mypage.top');	
@@ -114,7 +114,7 @@ class UsersController extends AppMyController
 				return redirect()->route('Users.passwordEdit', ['password_key' => $request->query('password_key')]);
 			}
 
-			$entUser = User::find($request->Auth['id']);
+			$entUser = User::find($request->Auth->id);
 			$entUser->update(['password' => Hash::make($password)]);
 
 			session()->flash('flash_message', 'パスワードを変更しました。ログインをして下さい。');

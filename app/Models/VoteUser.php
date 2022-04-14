@@ -13,7 +13,7 @@ class VoteUser extends Model
 
 	public function vote()
 	{
-		return $this->belongsTo(Theme::class)->where('is_deleted', false);
+		return $this->belongsTo(Vote::class)->where('is_deleted', false);
 	}
 
 	public function user()
