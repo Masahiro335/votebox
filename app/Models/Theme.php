@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use \App\Models\User;
 use DateTime;
 
 class Theme extends Model
@@ -11,8 +12,9 @@ class Theme extends Model
 	//お題の募集タイプ
 	const TYPE = [
 		'ACTIVE' => 10,
-		'CLOSE' => 20,
-		'PLAN' => 30,
+		'VOTE' => 20,
+		'CLOSE' => 30,
+		'PLAN' => 40,
 	];
 
 	//お題のソートタイプ
@@ -65,6 +67,22 @@ class Theme extends Model
 				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
 				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
 			;
+
+			//TOP画面　ログインユーザーが投票していない投稿を表示
+			if( empty($is_mypage) && empty($request->Auth) == false ){
+	
+			}
+		//投票済
+		}elseif($request->input('type_id') == $this::TYPE['VOTE']){
+			$query
+				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
+				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
+			;
+
+			//TOP画面　ログインユーザーが投票済みの投稿を表示
+			if( empty($is_mypage) && empty($request->Auth) == false ){
+				
+			}
 		//募集終了
 		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
@@ -90,12 +108,12 @@ class Theme extends Model
 
 		//マイページ
 		if( $is_mypage ){
-			$query->where('Themes.user_id', $request->Auth['id']);
+			$query->where('Themes.user_id', $request->Auth->id);
 		//TOP画面
 		}else{
 			$query->where('Themes.is_invalid', false);
 			if( empty($request->Auth) == false ){
-				$query->where('Themes.user_id', '<>', $request->Auth['id']);
+				$query->where('Themes.user_id', '<>', $request->Auth->id);
 			}
 		}
 

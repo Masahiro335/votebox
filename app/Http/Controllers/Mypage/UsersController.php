@@ -22,7 +22,7 @@ class UsersController extends AppMyController
 		if( $request->isMethod('post') ){
 			$name = $request->input('name');
 
-			if( $name == $request->Auth['name']){
+			if( $name == $request->Auth->name){
 				session()->flash('flash_error_message', '名前が変更されておりません。');
 				return redirect()
 					->route('Users.edit')
@@ -69,7 +69,7 @@ class UsersController extends AppMyController
 	{
 		if( $request->isMethod('post') ){
 			$password = $request->input('password');
-			$entUser = User::find($request->Auth['id']);
+			$entUser = User::find($request->Auth->id);
 	
 			// パスワードの確認
 			if( Hash::check($password, $entUser->password) ) {
@@ -117,9 +117,9 @@ class UsersController extends AppMyController
 			$entUser = User::find($request->Auth['id']);
 			$entUser->update(['password' => Hash::make($password)]);
 
-			session()->flash('flash_message', 'パスワードを変更しました。');
-			session()->forget('password_key');
-			return redirect()->route('mypage.top');
+			session()->flash('flash_message', 'パスワードを変更しました。ログインをして下さい。');
+			$this->LoginSessionOut();
+			return redirect()->route('login');
 		}
 
 		return view('/mypage/users/password',['title' => 'パスワード変更', 'is_confirm' => true, 'password_key' => $request->query('password_key')]);

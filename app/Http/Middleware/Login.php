@@ -24,6 +24,7 @@ class Login
     public function handle(Request $request, Closure $next)
     {  
         $Auth = null;
+        $entUser = null;
 
 		//ログインセッション処理
 		if( empty(session()->has('Auth')) == false){
@@ -32,13 +33,14 @@ class Login
 				->where('is_deleted', false)
 				->first()
 			;
+            $entUser->setHidden(['password', 'is_deleted','updated_at','created_at']);
 			if( (new \App\Http\Controllers\AppController())->LoginSession($entUser) ){
                 $Auth = session()->get('Auth');
 			}
 		}
 
         //コントローラに反映
-        $request->merge(['Auth' => $Auth]);
+        $request->merge(['Auth' => $entUser]);
         //ビューに反映
         $this->viewFactory->share('Auth', $Auth);
 

@@ -89,7 +89,7 @@ class ThemesController extends AppMyController
 				];
 	
 				if( empty($id) ){
-					$entTheme = Theme::create( array_merge($saveData, ['user_id' => $request->Auth['id']]) );
+					$entTheme = Theme::create( array_merge($saveData, ['user_id' => $request->Auth->id]) );
 				}else{
 					$entTheme->update($saveData);
 				}
@@ -229,7 +229,7 @@ class ThemesController extends AppMyController
 		}
 
 		$entVoteUser = VoteUser::create([
-			'user_id' => $request->Auth['id'],
+			'user_id' => $request->Auth->id,
 			'vote_id' => $entVote->id,
 		]);
 		if( empty($entVoteUser) ){

@@ -9,6 +9,9 @@
 				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $data['sort']]) }}</br>
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $data['type_id'] == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
+					@if( empty($is_mypage) && empty($Auth) == false )
+						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['VOTE'], $data['type_id'] == App\Models\Theme::TYPE['VOTE'], [])}} 投票済み</label>
+					@endif
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['CLOSE'], $data['type_id'] == App\Models\Theme::TYPE['CLOSE'], [])}} 募集終了</label>
 					@if( empty($is_mypage) == false )
 						<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['PLAN'], $data['type_id'] == App\Models\Theme::TYPE['PLAN'], [])}} 募集予定</label>
