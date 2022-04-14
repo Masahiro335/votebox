@@ -20,8 +20,8 @@ class Theme extends Model
 	//お題のソートタイプ
 	const SORT = [
 		'10' => '最新順',
-		'20' => '終了順',
-		'30' => '開始順',
+		'20' => '終了日が短い順',
+		'30' => '終了日が長い順',
 	];
 
 	use HasFactory;
@@ -68,25 +68,17 @@ class Theme extends Model
 				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
 			;
 
-			//TOP画面　ログインユーザーが未投票の投稿を表示
+			//TOP画面　ログインユーザーが未投票を表示
 			if( empty($is_mypage) && empty($request->Auth) == false ){
 				$query->whereNotIn('Themes.id', $request->Auth->themeIdsVote());
 			}
-		//投票済
-		}elseif($request->input('type_id') == $this::TYPE['VOTE']){
-			$query
-				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
-				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
-			;
-
-			//TOP画面　ログインユーザーが投票済みの投稿を表示
-			if( empty($is_mypage) && empty($request->Auth) == false ){
-				$query->whereIn('Themes.id', $request->Auth->themeIdsVote());
-			}
+		//投票済み：TOP画面　ログインユーザーが投票済みを表示
+		}elseif($request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false){
+			$query->whereIn('Themes.id', $request->Auth->themeIdsVote());
 		//募集終了
 		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
-		//募集予定
+		//募集予定：マイページ
 		}else{
 			$query->whereDate('Themes.start_date_time', '>', date('Y-m-d') );
 		}
@@ -127,7 +119,7 @@ class Theme extends Model
 					$query->orderBy('Themes.end_date_time', 'asc');
 					break;
 				case '30':
-					$query->orderBy('Themes.start_date_time', 'asc');
+					$query->orderBy('Themes.end_date_time', 'desc');
 					break;
 				default:
 					$query->orderBy('Themes.created_at', 'desc');
