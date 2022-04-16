@@ -112,12 +112,15 @@ class Theme extends Model
 		//ソート
 		if( empty($request->input('sort')) == false ){
 			switch($request->input('sort')){
+				//最新順
 				case '10':
 					$query->orderBy('Themes.created_at', 'desc');
 					break;
+				//終了日が短い順
 				case '20':
 					$query->orderBy('Themes.end_date_time', 'asc');
 					break;
+				//終了日が長い順
 				case '30':
 					$query->orderBy('Themes.end_date_time', 'desc');
 					break;

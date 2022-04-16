@@ -34,7 +34,7 @@ return [
     //セッション時間を3日
     'lifetime' => env('SESSION_LIFETIME', 4320),
 
-    'expire_on_close' => false,
+    'expire_on_close' => true,
 
     /*
     |--------------------------------------------------------------------------

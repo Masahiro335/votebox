@@ -5319,7 +5319,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       is_open: false,
       vote_names: {},
-      theme_id: this.theme_id,
       open_count: 0
     };
   },

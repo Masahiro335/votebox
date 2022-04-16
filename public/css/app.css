@@ -4795,12 +4795,7 @@ textarea.form-control-lg {
 }
 
 .pagination {
-  display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  align-items: center;
   padding-left: 0;
   list-style: none;
 }
@@ -11473,8 +11468,8 @@ header ul li {
 }
 @media only screen and (max-width: 750px) {
   .btn-new {
-    padding: 30px;
-    font-size: 25px;
+    padding: 25px;
+    font-size: 20px;
   }
 }
 
