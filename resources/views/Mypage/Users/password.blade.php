@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="wrapper">
+<div class="wrapper" id="app">
 	<div class="content">
 		<div class="item">
 			<div class="title">{{ empty($is_confirm) ? 'パスワード確認' : 'パスワード変更' }}</div>

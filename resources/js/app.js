@@ -9,6 +9,8 @@ require('./bootstrap');
 window.Vue = require('vue').default;
 
 import GraphComponent from "./components/GraphComponent.vue";
+import PagingComponent from "./components/PagingComponent.vue";
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,6 +24,7 @@ import GraphComponent from "./components/GraphComponent.vue";
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('graph-component', GraphComponent);
+Vue.component('paging-component', PagingComponent);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +32,6 @@ Vue.component('graph-component', GraphComponent);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+const top = new Vue({
     el: '#app',
 });

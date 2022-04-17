@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrapper">
-	<div class="content" id="app">
+<div class="wrapper" id="app">
+	<div class="content">
 		<div class="item">
 			<ul class="mypage-menu">
 				<li><a href="{{ route('mypage.top') }}">投稿一覧</a></li>

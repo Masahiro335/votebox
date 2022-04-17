@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrapper">
-	<div class="content" id="app">
+<div class="wrapper" id="app">
+	<div class="content">
 		<div class="search-group">
 			{{ Form::open(['method'=>'get', 'url' => empty($is_mypage) ? route('top') : route('mypage.top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', $data['search'], ['placeholder' => '検索']) }}</br>
@@ -58,6 +58,8 @@
 							:is_vote = "{{ $entTheme->isVote( $Auth ) ? 1 : 0 }}"
 						></graph-component>
 					@endif
+
+					<paging-component></paging-component>
 
 					@if( empty($is_mypage) == false && $entTheme->isEdit() )
 						<a href="{{ route('Themes.edit', ['id' => $entTheme->id])  }}" class="btn edit">変更</a>

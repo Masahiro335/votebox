@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="wrapper">
+<div class="wrapper" id="app">
 	<div class="content">
 		<div class="item">
 			{{ Form::open(['url' => route('Themes.edit',['id' => empty($entTheme) ? null : $entTheme->id ]) ]) }} 
