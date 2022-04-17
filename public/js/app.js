@@ -5438,7 +5438,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      themes: {}
+      themes: {},
+      startScrollPosition: 0,
+      page: 2
     };
   },
   created: function created() {
@@ -5446,11 +5448,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     scroll: function scroll() {
-      var bottomPoint = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部になった場合
+      var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
-      if (bottomPoint <= window.scrollY) {
-        alert('OK');
+      if (window.scrollY > point * 0.9 && window.scrollY > this.startScrollPosition) {
+        this.themes = {
+          name: "Mike",
+          sex: "Male"
+        };
       }
+
+      this.startScrollPosition = window.scrollY;
     }
   }
 });
@@ -28358,6 +28365,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "add-item" },
     _vm._l(_vm.themes, function (theme, index) {
       return _c("div", { key: index, staticClass: "item" }, [
         _vm._v("\n\t\tOK\n\t"),

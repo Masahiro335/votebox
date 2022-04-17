@@ -59,8 +59,6 @@
 						></graph-component>
 					@endif
 
-					<paging-component></paging-component>
-
 					@if( empty($is_mypage) == false && $entTheme->isEdit() )
 						<a href="{{ route('Themes.edit', ['id' => $entTheme->id])  }}" class="btn edit">変更</a>
 						@if( empty($entTheme->is_invalid) )
@@ -69,6 +67,9 @@
 					@endif
 				</div>
 			@endforeach
+
+			<paging-component></paging-component>
+
 		@endif
 
 		{{ $queryThemes->links() }}
