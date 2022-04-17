@@ -5314,6 +5314,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5435,12 +5436,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       themes: {},
       startScrollPosition: 0,
-      page: 2
+      page: 2,
+      is_active: true,
+      is_loading: false
     };
   },
   created: function created() {
@@ -5451,6 +5458,7 @@ __webpack_require__.r(__webpack_exports__);
       var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
       if (window.scrollY > point * 0.9 && window.scrollY > this.startScrollPosition) {
+        this.is_loading = true;
         this.themes = {
           name: "Mike",
           sex: "Male"
@@ -28366,12 +28374,30 @@ var render = function () {
   return _c(
     "div",
     { staticClass: "add-item" },
-    _vm._l(_vm.themes, function (theme, index) {
-      return _c("div", { key: index, staticClass: "item" }, [
-        _vm._v("\n\t\tOK\n\t"),
-      ])
-    }),
-    0
+    [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.is_loading,
+              expression: "is_loading",
+            },
+          ],
+          staticClass: "loading",
+        },
+        [_c("img", { attrs: { src: "/img/svg/preloader.svg" } })]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.themes, function (theme, index) {
+        return _c("div", { key: index, staticClass: "item" }, [
+          _vm._v("\n\t\tOK\n\t"),
+        ])
+      }),
+    ],
+    2
   )
 }
 var staticRenderFns = []

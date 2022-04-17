@@ -11579,3 +11579,10 @@ label.tab input[type=checkbox] {
 .period {
   margin-bottom: 15px;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}

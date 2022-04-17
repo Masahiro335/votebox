@@ -68,6 +68,7 @@
 				</div>
 			@endforeach
 
+			<?php //ページング処理 ?>
 			<paging-component></paging-component>
 
 		@endif
