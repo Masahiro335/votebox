@@ -5432,14 +5432,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5453,16 +5445,23 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     window.addEventListener('scroll', this.scroll);
   },
+  props: ['is_mypage', 'search', 'sort', 'type_id'],
   methods: {
     scroll: function scroll() {
+      var _this = this;
+
       var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
       if (window.scrollY > point * 0.9 && window.scrollY > this.startScrollPosition) {
         this.is_loading = true;
-        this.themes = {
-          name: "Mike",
-          sex: "Male"
-        };
+        var url = (this.is_mypage == 0 ? '/' : '/mypage') + '?search=' + (this.search ? this.search : '') + '&sort=' + (this.sort ? this.sort : '') + '&type_id=' + (this.type_id ? this.type_id : '') + '&page=' + this.page;
+        axios.get(url, {}).then(function (response) {
+          _this.themes = response;
+          _this.page = _this.page + 1;
+        })["catch"](function (error) {
+          ;
+        });
+        this.is_loading = false;
       }
 
       this.startScrollPosition = window.scrollY;
@@ -28371,34 +28370,23 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "add-item" },
-    [
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.is_loading,
-              expression: "is_loading",
-            },
-          ],
-          staticClass: "loading",
-        },
-        [_c("img", { attrs: { src: "/img/svg/preloader.svg" } })]
-      ),
-      _vm._v(" "),
-      _vm._l(_vm.themes, function (theme, index) {
-        return _c("div", { key: index, staticClass: "item" }, [
-          _vm._v("\n\t\tOK\n\t"),
-        ])
-      }),
-    ],
-    2
-  )
+  return _c("div", { staticClass: "add-item" }, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.is_loading,
+            expression: "is_loading",
+          },
+        ],
+        staticClass: "loading",
+      },
+      [_c("img", { attrs: { src: "/img/svg/preloader.svg" } })]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
