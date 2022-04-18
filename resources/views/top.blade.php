@@ -21,6 +21,14 @@
 		</div>
 		@include('themes',['queryThemes' => $queryThemes, 'data' => $data])
 
+		<?php //ページング処理 ?>
+		<paging-component
+			:is_mypage = "{{ empty($is_mypage) ? 0 : 1 }}"
+			<?= empty($data['search']) ? null : ':search = '.$data['search'] ?>
+			<?= empty($data['sort']) ? null : ':sort = '.$data['sort'] ?>
+			<?= empty($data['type_id']) ? null : ':type_id = '.$data['type_id'] ?>
+		></paging-component>
+
 	</div>
 </div>
 

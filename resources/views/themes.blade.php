@@ -47,14 +47,6 @@
 		</div>
 	@endforeach
 
-	<?php //ページング処理 ?>
-	<paging-component
-		:is_mypage = 0
-		<?= empty($data['search']) ? null : ':search = '.$data['search'] ?>
-		<?= empty($data['sort']) ? null : ':sort = '.$data['sort'] ?>
-		<?= empty($data['type_id']) ? null : ':type_id = '.$data['type_id'] ?>
-	></paging-component>
-
 @else
 	<div class="item">
 		該当する投稿がありません。

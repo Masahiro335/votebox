@@ -24,12 +24,16 @@ class ThemesController extends AppMyController
 	{
 		$queryThemes = Theme::querytop($request, true);
 
-		if( $request->ajax() ){
-			return response();
-		}
-
 		// TOP画面に使用するデータ
 		$data = $this->topData($request);
+
+		if( $request->ajax() ){
+			if( count($queryThemes) > 0 ){
+				return view('themes', compact('queryThemes', 'data'));
+			}else{
+				return response()->json('0');
+			}
+		}
 
 		return view('top', compact('queryThemes', 'data'));
 	}

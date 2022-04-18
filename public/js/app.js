@@ -5435,7 +5435,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      themes: {},
       startScrollPosition: 0,
       page: 2,
       is_active: true,
@@ -5450,17 +5449,20 @@ __webpack_require__.r(__webpack_exports__);
     scroll: function scroll() {
       var _this = this;
 
+      if (!this.is_active) return false;
       var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
-      if (window.scrollY > point * 0.9 && window.scrollY > this.startScrollPosition) {
+      if (window.scrollY > point * 0.98 && window.scrollY > this.startScrollPosition) {
         this.is_loading = true;
         var url = (this.is_mypage == 0 ? '/' : '/mypage') + '?search=' + (this.search ? this.search : '') + '&sort=' + (this.sort ? this.sort : '') + '&type_id=' + (this.type_id ? this.type_id : '') + '&page=' + this.page;
         axios.get(url, {}).then(function (response) {
-          _this.themes = response;
-          _this.page = _this.page + 1;
-        })["catch"](function (error) {
-          ;
-        });
+          if (response.data == 0) {
+            _this.is_active = false;
+          } else {
+            $('.add-item').append(response.data);
+            _this.page++;
+          }
+        })["catch"](function (error) {});
         this.is_loading = false;
       }
 
