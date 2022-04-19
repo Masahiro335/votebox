@@ -39,7 +39,8 @@ export default {
 					axios
 					.get('mypage/themes/graph/'+this.theme_id, {})
 					.then(response => {
-						graph(response, canvas);
+						//グラフの作成
+						this.graph(response, canvas);
 					})
 					.catch(error => {
 						alert('情報の取得に失敗しました。');
@@ -75,7 +76,8 @@ export default {
 			.get('mypage/themes/vote/'+vote_id, {})
 			.then(response => {
 				this.is_vote = 0;
-				graph(response, canvas);
+				//グラフの作成
+				this.graph(response, canvas);
 			})
 			.catch(error => {
 				alert('情報の取得に失敗しました。');
@@ -83,42 +85,41 @@ export default {
 				$('body').css('pointer-events', 'auto');
 				return false;
 			});
+		},
+		graph: function(response, canvas) {
+			var options = {
+				scales: {
+					yAxes : [{
+						ticks : {
+							//投票の最大値
+							max : response.data.coount_max == 0 ? 1 : response.data.coount_max,    
+							min : 0
+						}
+					}],
+				}
+			};
+
+			//グラフのデータを取得
+			var dataset = [];
+			response.data.vote_name.forEach(function(vote_name, key) {
+				dataset[key] = {
+					label: vote_name,	//ラベル名
+					data: String(response.data.vote_coount[key]),	//投票数
+					//グラフの色。投票したグラフは赤色
+					backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)' 
+				};
+			});
+
+			var chart = new Chart(canvas, {
+				type: 'bar',
+				data: {
+					labels: ['投票結果'],
+					datasets: dataset,
+				},
+				options: options,
+			});
 		}
 	}
 }
 
-//グラフの作成
-function graph(response, canvas) {
-	var options = {
-		scales: {
-			yAxes : [{
-				ticks : {
-					//投票の最大値
-					max : response.data.coount_max == 0 ? 1 : response.data.coount_max,    
-					min : 0
-				}
-			}],
-		}
-	};
-
-	//グラフのデータを取得
-	var dataset = [];
-	response.data.vote_name.forEach(function(vote_name, key) {
-		dataset[key] = {
-			label: vote_name,	//ラベル名
-			data: String(response.data.vote_coount[key]),	//投票数
-			//グラフの色。投票したグラフは赤色
-			backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)' 
-		};
-	});
-
-	var chart = new Chart(canvas, {
-		type: 'bar',
-		data: {
-			labels: ['投票結果'],
-			datasets: dataset,
-		},
-		options: options,
-	});
-}
 </script>

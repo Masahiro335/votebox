@@ -5336,7 +5336,8 @@ __webpack_require__.r(__webpack_exports__);
         //グラフの表示
         if (this.is_vote == 0) {
           axios.get('mypage/themes/graph/' + this.theme_id, {}).then(function (response) {
-            graph(response, canvas);
+            //グラフの作成
+            _this.graph(response, canvas);
           })["catch"](function (error) {
             alert('情報の取得に失敗しました。');
             $('body').css('cursor', 'default');
@@ -5365,51 +5366,51 @@ __webpack_require__.r(__webpack_exports__);
 
       var canvas = $('canvas#' + this.theme_id);
       axios.get('mypage/themes/vote/' + vote_id, {}).then(function (response) {
-        _this2.is_vote = 0;
-        graph(response, canvas);
+        _this2.is_vote = 0; //グラフの作成
+
+        _this2.graph(response, canvas);
       })["catch"](function (error) {
         alert('情報の取得に失敗しました。');
         $('body').css('cursor', 'default');
         $('body').css('pointer-events', 'auto');
         return false;
       });
+    },
+    graph: function graph(response, canvas) {
+      var options = {
+        scales: {
+          yAxes: [{
+            ticks: {
+              //投票の最大値
+              max: response.data.coount_max == 0 ? 1 : response.data.coount_max,
+              min: 0
+            }
+          }]
+        }
+      }; //グラフのデータを取得
+
+      var dataset = [];
+      response.data.vote_name.forEach(function (vote_name, key) {
+        dataset[key] = {
+          label: vote_name,
+          //ラベル名
+          data: String(response.data.vote_coount[key]),
+          //投票数
+          //グラフの色。投票したグラフは赤色
+          backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)'
+        };
+      });
+      var chart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: ['投票結果'],
+          datasets: dataset
+        },
+        options: options
+      });
     }
   }
-}); //グラフの作成
-
-function graph(response, canvas) {
-  var options = {
-    scales: {
-      yAxes: [{
-        ticks: {
-          //投票の最大値
-          max: response.data.coount_max == 0 ? 1 : response.data.coount_max,
-          min: 0
-        }
-      }]
-    }
-  }; //グラフのデータを取得
-
-  var dataset = [];
-  response.data.vote_name.forEach(function (vote_name, key) {
-    dataset[key] = {
-      label: vote_name,
-      //ラベル名
-      data: String(response.data.vote_coount[key]),
-      //投票数
-      //グラフの色。投票したグラフは赤色
-      backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)'
-    };
-  });
-  var chart = new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels: ['投票結果'],
-      datasets: dataset
-    },
-    options: options
-  });
-}
+});
 
 /***/ }),
 
@@ -5424,7 +5425,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
 //
 //
 //
@@ -5449,10 +5449,10 @@ __webpack_require__.r(__webpack_exports__);
     scroll: function scroll() {
       var _this = this;
 
-      if (!this.is_active) return false;
+      if (!this.is_active || this.is_loading) return false;
       var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
-      if (window.scrollY > point * 0.98 && window.scrollY > this.startScrollPosition) {
+      if (window.scrollY >= point - 1 && window.scrollY > this.startScrollPosition) {
         this.is_loading = true;
         var url = (this.is_mypage == 0 ? '/' : '/mypage') + '?search=' + (this.search ? this.search : '') + '&sort=' + (this.sort ? this.sort : '') + '&type_id=' + (this.type_id ? this.type_id : '') + '&page=' + this.page;
         axios.get(url, {}).then(function (response) {
@@ -5460,6 +5460,7 @@ __webpack_require__.r(__webpack_exports__);
             _this.is_active = false;
           } else {
             $('.add-item').append(response.data);
+            $('.add-item').append($('<script type="module" src="./js/app.js"><\/script>'));
             _this.page++;
           }
         })["catch"](function (error) {});
@@ -5512,7 +5513,7 @@ Vue.component('paging-component', _components_PagingComponent_vue__WEBPACK_IMPOR
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var top = new Vue({
+var app = new Vue({
   el: '#app'
 });
 

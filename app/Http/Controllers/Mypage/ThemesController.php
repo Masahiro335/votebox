@@ -159,7 +159,7 @@ class ThemesController extends AppMyController
 
 
 	/**
-	 * グラフの作成
+	 * グラフのデータを取得
 	 * 
 	 * @author　matsubara
 	 * @param Request $request

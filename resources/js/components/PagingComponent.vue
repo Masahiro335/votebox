@@ -3,7 +3,6 @@
 	<div class="add-item">
 		<div v-show="is_loading" class="loading"><img src="/img/svg/preloader.svg"></div>
 	</div>
-
 </template>
 
 <script>
@@ -22,12 +21,12 @@ export default {
 	props: ['is_mypage', 'search', 'sort', 'type_id'],
   	methods: {
 		scroll() {
-			if( !this.is_active ) return false;
+			if( !this.is_active || this.is_loading ) return false;
 
 			var point = document.body.clientHeight - window.innerHeight;
 
 			//スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
-			if ( window.scrollY > point*0.98 && window.scrollY > this.startScrollPosition) {
+			if ( window.scrollY >= point-1 && window.scrollY > this.startScrollPosition ) {
 				this.is_loading = true;
 				var url = (this.is_mypage == 0 ? '/' : '/mypage')
 					+'?search='+(this.search ? this.search : '')
@@ -42,6 +41,7 @@ export default {
 						this.is_active = false;
 					}else{
 						$('.add-item').append(response.data);
+						$('.add-item').append($('<script type="module" src="./js/app.js"><\/script>'));
 						this.page++;
 					}
 				})

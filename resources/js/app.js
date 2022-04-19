@@ -32,6 +32,6 @@ Vue.component('paging-component', PagingComponent);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const top = new Vue({
+const app = new Vue({
     el: '#app',
 });
