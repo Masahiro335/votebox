@@ -98,7 +98,6 @@ export default {
 					}],
 				}
 			};
-
 			//グラフのデータを取得
 			var dataset = [];
 			response.data.vote_name.forEach(function(vote_name, key) {
@@ -109,7 +108,6 @@ export default {
 					backgroundColor: response.data.is_vote[key] == true ? 'rgba(244, 143, 177, 0.6)' : 'rgba(100, 181, 246, 0.6)' 
 				};
 			});
-
 			var chart = new Chart(canvas, {
 				type: 'bar',
 				data: {

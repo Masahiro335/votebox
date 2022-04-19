@@ -5452,18 +5452,23 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.is_active || this.is_loading) return false;
       var point = document.body.clientHeight - window.innerHeight; //スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
 
-      if (window.scrollY >= point - 1 && window.scrollY > this.startScrollPosition) {
+      if (window.scrollY > point - 1 && window.scrollY > this.startScrollPosition) {
         this.is_loading = true;
         var url = (this.is_mypage == 0 ? '/' : '/mypage') + '?search=' + (this.search ? this.search : '') + '&sort=' + (this.sort ? this.sort : '') + '&type_id=' + (this.type_id ? this.type_id : '') + '&page=' + this.page;
         axios.get(url, {}).then(function (response) {
           if (response.data == 0) {
             _this.is_active = false;
           } else {
-            $('.add-item').append(response.data);
-            $('.add-item').append($('<script type="module" src="./js/app.js"><\/script>'));
+            $('.add-item-group').append('<div class="add-item-' + (_this.page - 1) + '"></div>');
+            $('.add-item-' + (_this.page - 1)).append(response.data);
+            new Vue({
+              el: '.add-item-' + (_this.page - 1)
+            });
             _this.page++;
           }
-        })["catch"](function (error) {});
+        })["catch"](function (error) {
+          _this.is_active = false;
+        });
         this.is_loading = false;
       }
 
@@ -28373,7 +28378,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "add-item" }, [
+  return _c("div", { staticClass: "add-item-group" }, [
     _c(
       "div",
       {

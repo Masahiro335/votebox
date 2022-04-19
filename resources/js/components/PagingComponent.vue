@@ -1,6 +1,6 @@
 <!-- ページング処理 -->
 <template>
-	<div class="add-item">
+	<div class="add-item-group">
 		<div v-show="is_loading" class="loading"><img src="/img/svg/preloader.svg"></div>
 	</div>
 </template>
@@ -26,7 +26,7 @@ export default {
 			var point = document.body.clientHeight - window.innerHeight;
 
 			//スクロールの位置が最下部あたりになった場合 かつ 下スクロールをした場合
-			if ( window.scrollY >= point-1 && window.scrollY > this.startScrollPosition ) {
+			if( window.scrollY > point-1 && window.scrollY > this.startScrollPosition ) {
 				this.is_loading = true;
 				var url = (this.is_mypage == 0 ? '/' : '/mypage')
 					+'?search='+(this.search ? this.search : '')
@@ -40,13 +40,16 @@ export default {
 					if(response.data == 0){
 						this.is_active = false;
 					}else{
-						$('.add-item').append(response.data);
-						$('.add-item').append($('<script type="module" src="./js/app.js"><\/script>'));
+						$('.add-item-group').append('<div class="add-item-'+(this.page-1)+'"></div>');
+						$('.add-item-'+(this.page-1)).append(response.data);
+						new Vue({
+							el: '.add-item-'+(this.page-1)
+						})
 						this.page++;
 					}
 				})
 				.catch(error => {
-
+					this.is_active = false;
 				});
 				this.is_loading = false;
 			}
