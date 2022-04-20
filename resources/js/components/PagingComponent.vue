@@ -47,11 +47,12 @@ export default {
 						})
 						this.page++;
 					}
+					this.is_loading = false;
 				})
 				.catch(error => {
 					this.is_active = false;
+					this.is_loading = false;
 				});
-				this.is_loading = false;
 			}
 
 			this.startScrollPosition = window.scrollY;

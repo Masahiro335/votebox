@@ -5466,10 +5466,12 @@ __webpack_require__.r(__webpack_exports__);
             });
             _this.page++;
           }
+
+          _this.is_loading = false;
         })["catch"](function (error) {
           _this.is_active = false;
+          _this.is_loading = false;
         });
-        this.is_loading = false;
       }
 
       this.startScrollPosition = window.scrollY;

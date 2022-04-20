@@ -11,6 +11,15 @@
 				<div class="form-item">
 					{{ Form::password('password', ['required' => true]) }}
 				</div>
+
+				@if( empty($is_confirm) == false )
+					<ul class="help-text">
+						<li>8文字以上で記入して下さい。</li>
+						<li>20文字以内で記入して下さい。</li>
+						<li>半角英数字のみで記入して下さい。</li>
+					</ul>
+				@endif
+
 				@if( $errors->has('password') )
 					@foreach($errors->get('password') as $errorMessage)
 						<div class="error-message">{{ $errorMessage }}</div>

@@ -52,7 +52,7 @@ class LoginController extends AppController
 			return redirect()->route('login');
 		}
 
-		return view('/login',['title' => 'ログイン']);
+		return view('/Login/login',['title' => 'ログイン']);
 	}
 
 
@@ -96,7 +96,7 @@ class LoginController extends AppController
 			;
 		}
 
-		return view('/register',['title' => 'ユーザーの登録']);
+		return view('/Login/register',['title' => 'ユーザーの登録']);
 	}
 
 

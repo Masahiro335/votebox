@@ -11,6 +11,10 @@
 				<div class="form-item">
 					{{ Form::text('name', $Auth['name'], ['required' => true]) }}
 				</div>
+				<ul class="help-text">
+					<li>20文字以内で入力して下さい。</li>
+					<li>半角英数字のみで記入して下さい。</li>
+				</ul>
 				@if( $errors->has('name') )
 					@foreach($errors->get('name') as $errorMessage)
 						<div class="error-message">{{ $errorMessage }}</div>

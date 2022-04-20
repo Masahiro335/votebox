@@ -19,7 +19,7 @@
 				</div>
 			{{ Form::close() }}
 		</div>
-		@include('themes',['queryThemes' => $queryThemes, 'data' => $data])
+		@include('element/themes',['queryThemes' => $queryThemes, 'data' => $data])
 
 		<?php //ページング処理 ?>
 		<paging-component
