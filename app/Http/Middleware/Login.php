@@ -23,7 +23,6 @@ class Login
      */
     public function handle(Request $request, Closure $next)
     {  
-        $Auth = null;
         $entUser = null;
 
 		//ログインセッション処理
@@ -34,15 +33,15 @@ class Login
 				->first()
 			;
             $entUser->setHidden(['password', 'is_deleted','updated_at','created_at']);
-			if( (new \App\Http\Controllers\AppController())->LoginSession($entUser) ){
-                $Auth = session()->get('Auth');
-			}
+			if( (new \App\Http\Controllers\AppController())->LoginSession($entUser) == false ){
+                $entUser = null;
+            }
 		}
 
         //コントローラに反映
         $request->merge(['Auth' => $entUser]);
         //ビューに反映
-        $this->viewFactory->share('Auth', $Auth);
+        $this->viewFactory->share('Auth', $entUser);
 
         return $next($request);
     }

@@ -30,10 +30,10 @@
 						</div>
 					<?php } ?>
 				</div>
-			@else
+			@elseif( empty($is_mypage) || ( empty($is_mypage) == false && $entTheme->isEdit() == false ) )
 				<graph-component 
 					:theme_id = "{{ $entTheme->id }}" 
-					:auth_id = "{{  $Auth['id']; }}"
+					:auth_id = "{{  $Auth->id }}"
 					:is_vote = "{{ $entTheme->isVote( $Auth ) ? 1 : 0 }}"
 				></graph-component>
 			@endif

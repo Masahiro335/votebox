@@ -9,7 +9,7 @@
 			{{ Form::open(['url' => route('Users.edit') ]) }} 
 				<label class="form-title required">名前</label>
 				<div class="form-item">
-					{{ Form::text('name', $Auth['name'], ['required' => true]) }}
+					{{ Form::text('name', $Auth->name, ['required' => true]) }}
 				</div>
 				<ul class="help-text">
 					<li>20文字以内で入力して下さい。</li>

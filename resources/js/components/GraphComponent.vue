@@ -1,7 +1,7 @@
 <!-- グラフ　投票 -->
 <template>
  	<div class="graph-content">
-		<div class="btn graph-open" v-on:click="open">{{ is_vote == 0 ? (is_open ? '非表示' : 'グラフを見る') : (is_open ? '非表示' : '投票') }}</div>
+		<div class="btn graph-open" v-on:click="open">{{ is_vote == 0 ? (is_open ? '非表示' : 'グラフを見る') : (is_open ? '非表示' : '投票する') }}</div>
 
 		<div class="vote-group" v-show="is_open">
 			<canvas :id="theme_id" v-show="is_vote == 0"></canvas>
