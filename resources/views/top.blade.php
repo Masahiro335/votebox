@@ -6,7 +6,12 @@
 		<div class="search-group">
 			{{ Form::open(['method'=>'get', 'url' => empty($is_mypage) ? route('top') : route('mypage.top'), 'class' => 'search-form' ]) }} 
 				{{ Form::text('search', $data['search'], ['placeholder' => '検索']) }}</br>
-				{{ Form::select('sort', App\Models\Theme::SORT,['value' => $data['sort']]) }}</br>
+				@if( $data['type_id'] != App\Models\Theme::TYPE['VOTE'] )
+					{{ Form::select('sort', App\Models\Theme::SORT,['value' => $data['sort']]) }}
+				@else
+					{{ Form::select('sort', App\Models\Theme::VOTE_SORT,['value' => $data['sort']]) }}
+				@endif
+				</br>
 				<div class="tab-group">
 					<label class="tab"> {{Form::checkbox('type_id', App\Models\Theme::TYPE['ACTIVE'], $data['type_id'] == App\Models\Theme::TYPE['ACTIVE'], [])}} 募集中</label>
 					@if( empty($is_mypage) && empty($Auth) == false )
@@ -19,6 +24,7 @@
 				</div>
 			{{ Form::close() }}
 		</div>
+
 		@include('element/themes',['queryThemes' => $queryThemes, 'data' => $data])
 
 		<?php //ページング処理 ?>

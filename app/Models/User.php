@@ -18,7 +18,7 @@ class User extends Model
 
 	public function vote_users()
 	{
-		return $this->hasMany(VoteUser::class);
+		return $this->hasMany(VoteUser::class)->orderBy('created_at', 'desc');
 	}
 
 
@@ -27,7 +27,7 @@ class User extends Model
 	 *
 	 * @return array
 	 */
-	public function themeIdsVote()
+	public function themeIdsVoteUsers()
 	{
 		$themeIds = [];
 		if( empty($this->vote_users) == false ){

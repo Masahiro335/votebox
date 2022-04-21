@@ -20,8 +20,18 @@ class Theme extends Model
 	//お題のソートタイプ
 	const SORT = [
 		'10' => '最新順',
-		'20' => '終了日が短い順',
-		'30' => '終了日が長い順',
+		'20' => '終了日が早い順',
+		'30' => '終了日が遅い順',
+		'40' => '開始日が早い順',
+	];
+
+	//投票済みのソートタイプ
+	const VOTE_SORT = [
+		'10' => '最新順',
+		'50' => '投票順',
+		'20' => '終了日が早い順',
+		'30' => '終了日が遅い順',
+		'40' => '開始日が早い順',
 	];
 
 	use HasFactory;
@@ -70,11 +80,12 @@ class Theme extends Model
 
 			//TOP画面　ログインユーザーが未投票を表示
 			if( empty($is_mypage) && empty($request->Auth) == false ){
-				$query->whereNotIn('Themes.id', $request->Auth->themeIdsVote());
+				$query->whereNotIn('Themes.id', $request->Auth->themeIdsVoteUsers());
 			}
 		//投票済み：TOP画面　ログインユーザーが投票済みを表示
 		}elseif($request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false){
-			$query->whereIn('Themes.id', $request->Auth->themeIdsVote());
+			$themeIdsVoteUsers = $request->Auth->themeIdsVoteUsers();
+			$query->whereIn('Themes.id', $themeIdsVoteUsers);
 		//募集終了
 		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
@@ -116,13 +127,29 @@ class Theme extends Model
 				case '10':
 					$query->orderBy('Themes.created_at', 'desc');
 					break;
-				//終了日が短い順
+				//終了日が早い順
 				case '20':
 					$query->orderBy('Themes.end_date_time', 'asc');
 					break;
-				//終了日が長い順
+				//終了日が遅い順
 				case '30':
 					$query->orderBy('Themes.end_date_time', 'desc');
+					break;
+				//開始日が早い順
+				case '40':
+					$query->orderBy('Themes.start_date_time', 'asc');
+					break;
+				//投票
+				case '50':
+					//タブは「投票済み」の場合
+					if( $request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false ){
+						$themeIdsOrder = implode(',', $themeIdsVoteUsers);
+
+						$query->orderByRaw("FIELD(id, $themeIdsOrder)");
+
+					}else{
+						$query->orderBy('Themes.created_at', 'desc');
+					}
 					break;
 				default:
 					$query->orderBy('Themes.created_at', 'desc');
@@ -152,7 +179,7 @@ class Theme extends Model
 		}
 
 		//自身の投稿は投票できない
-		if($this->user_id == $Auth['id']){
+		if($this->user_id == $Auth->id ){
 			return false;
 		}
 
@@ -160,7 +187,7 @@ class Theme extends Model
 		foreach($this->votes as $entVote){
 			if( empty($entVote->vote_users) == false ){
 				foreach($entVote->vote_users as $entVoteUser){
-					if( $entVoteUser->user_id == $Auth['id'] ) return false;
+					if( $entVoteUser->user_id == $Auth->id ) return false;
 				}
 			}
 		}
@@ -183,7 +210,7 @@ class Theme extends Model
 			$data['is_vote'][] = false;
 			//ユーザーが投票したかどうか
 			foreach($entVote->vote_users as $entVoteUser){
-				if( $entVoteUser->user_id == $Auth['id'] ){
+				if( $entVoteUser->user_id == $Auth->id ){
 					$data['is_vote'][$key] = true;
 				}
 			}
