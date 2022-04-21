@@ -71,6 +71,17 @@ class Theme extends Model
 	{
 		$query = $this->scopeQueryBasic($query);
 
+		//マイページ
+		if( $is_mypage ){
+			$query->where('Themes.user_id', $request->Auth->id);
+		//TOP画面
+		}else{
+			$query->where('Themes.is_invalid', false);
+			if( empty($request->Auth) == false ){
+				$query->where('Themes.user_id', '<>', $request->Auth->id);
+			}
+		}
+
 		//募集中
 		if( empty($request->input('type_id')) || $request->input('type_id') == $this::TYPE['ACTIVE']){
 			$query
@@ -82,13 +93,17 @@ class Theme extends Model
 			if( empty($is_mypage) && empty($request->Auth) == false ){
 				$query->whereNotIn('Themes.id', $request->Auth->themeIdsVoteUsers());
 			}
+
 		//投票済み：TOP画面　ログインユーザーが投票済みを表示
 		}elseif($request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false){
 			$themeIdsVoteUsers = $request->Auth->themeIdsVoteUsers();
+
 			$query->whereIn('Themes.id', $themeIdsVoteUsers);
+
 		//募集終了
 		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
 			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
+
 		//募集予定：マイページ
 		}else{
 			$query->whereDate('Themes.start_date_time', '>', date('Y-m-d') );
@@ -104,20 +119,14 @@ class Theme extends Model
 			//お題の検索
 			$query->where(function ($query) use ($keyWords) {
 				foreach ($keyWords as $keyWord) {
-					$query->orWhere('Themes.body', 'like', '%'.$keyWord.'%');
+					$query
+						->orWhere('Themes.body', 'like', '%'.$keyWord.'%')
+						->orWhereHas('User', function ($q) use ($keyWord) {
+							$q->Where('name', 'like', '%'.$keyWord.'%');
+						})
+					;
 				}
 			});
-		}
-
-		//マイページ
-		if( $is_mypage ){
-			$query->where('Themes.user_id', $request->Auth->id);
-		//TOP画面
-		}else{
-			$query->where('Themes.is_invalid', false);
-			if( empty($request->Auth) == false ){
-				$query->where('Themes.user_id', '<>', $request->Auth->id);
-			}
 		}
 
 		//ソート
@@ -139,14 +148,13 @@ class Theme extends Model
 				case '40':
 					$query->orderBy('Themes.start_date_time', 'asc');
 					break;
-				//投票
+				//投票順
 				case '50':
-					//タブは「投票済み」の場合
+					//タブが「投票済み」の場合
 					if( $request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false ){
 						$themeIdsOrder = implode(',', $themeIdsVoteUsers);
 
 						$query->orderByRaw("FIELD(id, $themeIdsOrder)");
-
 					}else{
 						$query->orderBy('Themes.created_at', 'desc');
 					}
