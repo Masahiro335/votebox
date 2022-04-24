@@ -11462,14 +11462,15 @@ header ul li {
 }
 @media only screen and (min-width: 960px) {
   .btn-new {
-    padding: 50px;
+    padding: 50px 40px;
     font-size: 30px;
   }
 }
 @media only screen and (max-width: 750px) {
   .btn-new {
-    padding: 25px;
+    padding: 25px 20px;
     font-size: 20px;
+    bottom: 5%;
   }
 }
 

@@ -23,7 +23,7 @@
 						<li><a href="{{ route('register') }}">ENTRY</a></li>
 						<li><a href="{{ route('login') }}">LOGIN</a></li>
 					<?php }else{ ?>
-						<li><a href="{{ route('mypage.top') }}" <?= empty($is_mypage) ? '' : 'style="color:#de7b7b;"' ?>>MYPAGE</a></li>
+						<li><a href="{{ route('mypage.top') }}" <?= empty($is_mypage) ? '' : 'style="color:#de7b7b;"' ?>>MYPOST</a></li>
 						<li><a href="{{ route('menu') }}">MENU</a></li>
 					<?php } ?>
 				</ul>
@@ -40,9 +40,9 @@
 			</div>
 		@endif
 		<?php if( empty($Auth) ){ ?>
-			<a href="{{ route('login') }}" class="btn-new" onclick="return confirm('ログインをして下さい。')">投稿</a>
+			<a href="{{ route('login') }}" class="btn-new" onclick="return confirm('ログインをして下さい。')">POST</a>
 		<?php }else{ ?>
-			<a href="{{ route('Themes.edit') }}" class="btn-new">投稿</a>
+			<a href="{{ route('Themes.edit') }}" class="btn-new">POST</a>
 		<?php } ?>
 		@yield('content')
 		<footer>

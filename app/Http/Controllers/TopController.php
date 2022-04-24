@@ -27,7 +27,7 @@ class TopController extends AppController
 
 		if( $request->ajax() ){
 			if( count($queryThemes) > 0 ){
-				return view('themes', compact('queryThemes', 'data'));
+				return view('element/themes', compact('queryThemes', 'data'));
 			}else{
 				return response()->json('0');
 			}
