@@ -169,7 +169,7 @@ class ThemesController extends AppMyController
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
 
-		$entTheme = Theme::where('Themes.id', $id)->first();
+		$entTheme = Theme::where('themes.id', $id)->first();
 		if( empty($entTheme->id) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
@@ -196,7 +196,7 @@ class ThemesController extends AppMyController
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
 
-		$entTheme = Theme::where('Themes.id', $id)->first();
+		$entTheme = Theme::where('themes.id', $id)->first();
 		if( empty($entTheme) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
@@ -227,7 +227,7 @@ class ThemesController extends AppMyController
 	{
 		if( $request->ajax() == false ) return redirect()->route('top');
 
-		$entVote = Vote::where('Votes.id', $vote_id)->first();
+		$entVote = Vote::where('votes.id', $vote_id)->first();
 		if( empty($entVote) ){
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
@@ -244,7 +244,7 @@ class ThemesController extends AppMyController
 			return response()->json('情報の取得に失敗しました。', 400);
 		}
 
-		$entTheme = Theme::where('Themes.id', $entVote->theme->id)->first();
+		$entTheme = Theme::where('themes.id', $entVote->theme->id)->first();
 
 		//グラフのデータ
 		$data = $entTheme->graphData( $request->Auth );

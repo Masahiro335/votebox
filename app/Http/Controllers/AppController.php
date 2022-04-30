@@ -27,7 +27,7 @@ class AppController extends Controller
 	public function LoginSession( $entUser = null ){
 		if( empty($entUser) ) return false;
 
-		$entUser = User::where('Users.id', $entUser->id)
+		$entUser = User::where('users.id', $entUser->id)
 			->where('is_deleted', false)
 			->first()
 		;

@@ -56,7 +56,7 @@ class Theme extends Model
 	 */
 	public function scopeQueryBasic($query)
 	{
-		return $query->where('Themes.is_deleted', false);
+		return $query->where('themes.is_deleted', false);
 	}
 
 	/**
@@ -73,40 +73,40 @@ class Theme extends Model
 
 		//マイページ
 		if( $is_mypage ){
-			$query->where('Themes.user_id', $request->Auth->id);
+			$query->where('themes.user_id', $request->Auth->id);
 		//TOP画面
 		}else{
-			$query->where('Themes.is_invalid', false);
+			$query->where('themes.is_invalid', false);
 			if( empty($request->Auth) == false ){
-				$query->where('Themes.user_id', '<>', $request->Auth->id);
+				$query->where('themes.user_id', '<>', $request->Auth->id);
 			}
 		}
 
 		//募集中
 		if( empty($request->input('type_id')) || $request->input('type_id') == $this::TYPE['ACTIVE']){
 			$query
-				->whereDate('Themes.start_date_time', '<=', date('Y-m-d') )
-				->whereDate('Themes.end_date_time', '>=', date('Y-m-d') )
+				->whereDate('themes.start_date_time', '<=', date('Y-m-d') )
+				->whereDate('themes.end_date_time', '>=', date('Y-m-d') )
 			;
 
 			//TOP画面　ログインユーザーが未投票を表示
 			if( empty($is_mypage) && empty($request->Auth) == false ){
-				$query->whereNotIn('Themes.id', $request->Auth->themeIdsVoteUsers());
+				$query->whereNotIn('themes.id', $request->Auth->themeIdsVoteUsers());
 			}
 
 		//投票済み：TOP画面　ログインユーザーが投票済みを表示
 		}elseif($request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false){
 			$themeIdsVoteUsers = $request->Auth->themeIdsVoteUsers();
 
-			$query->whereIn('Themes.id', $themeIdsVoteUsers);
+			$query->whereIn('themes.id', $themeIdsVoteUsers);
 
 		//募集終了
 		}elseif($request->input('type_id') == $this::TYPE['CLOSE']){
-			$query->whereDate('Themes.end_date_time', '<', date('Y-m-d') );
+			$query->whereDate('themes.end_date_time', '<', date('Y-m-d') );
 
 		//募集予定：マイページ
 		}else{
-			$query->whereDate('Themes.start_date_time', '>', date('Y-m-d') );
+			$query->whereDate('themes.start_date_time', '>', date('Y-m-d') );
 		}
 
 		//検索
@@ -120,7 +120,7 @@ class Theme extends Model
 			$query->where(function ($query) use ($keyWords) {
 				foreach ($keyWords as $keyWord) {
 					$query
-						->orWhere('Themes.body', 'like', '%'.$keyWord.'%')
+						->orWhere('themes.body', 'like', '%'.$keyWord.'%')
 						->orWhereHas('User', function ($q) use ($keyWord) {
 							$q->Where('name', 'like', '%'.$keyWord.'%');
 						})
@@ -134,19 +134,19 @@ class Theme extends Model
 			switch($request->input('sort')){
 				//最新順
 				case '10':
-					$query->orderBy('Themes.created_at', 'desc');
+					$query->orderBy('themes.created_at', 'desc');
 					break;
 				//終了日が早い順
 				case '20':
-					$query->orderBy('Themes.end_date_time', 'asc');
+					$query->orderBy('themes.end_date_time', 'asc');
 					break;
 				//終了日が遅い順
 				case '30':
-					$query->orderBy('Themes.end_date_time', 'desc');
+					$query->orderBy('themes.end_date_time', 'desc');
 					break;
 				//開始日が早い順
 				case '40':
-					$query->orderBy('Themes.start_date_time', 'asc');
+					$query->orderBy('themes.start_date_time', 'asc');
 					break;
 				//投票順
 				case '50':
@@ -156,15 +156,15 @@ class Theme extends Model
 
 						$query->orderByRaw("FIELD(id, $themeIdsOrder)");
 					}else{
-						$query->orderBy('Themes.created_at', 'desc');
+						$query->orderBy('themes.created_at', 'desc');
 					}
 					break;
 				default:
-					$query->orderBy('Themes.created_at', 'desc');
+					$query->orderBy('themes.created_at', 'desc');
 					break;
 			}
 		}else{
-			$query->orderBy('Themes.created_at', 'desc');
+			$query->orderBy('themes.created_at', 'desc');
 		}
 
 		$query = $query->paginate(20);

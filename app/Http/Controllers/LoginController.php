@@ -31,7 +31,7 @@ class LoginController extends AppController
 				;
 			}
 
-			$entUser = User::where('Users.name', $getData['name'])
+			$entUser = User::where('users.name', $getData['name'])
 				->where('is_deleted', false)
 				->first()
 			;

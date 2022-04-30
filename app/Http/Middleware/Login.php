@@ -28,7 +28,7 @@ class Login
 		//ログインセッション処理
 		if( empty(session()->has('Auth')) == false ){
 			$Auth = session()->get('Auth');
-			$entUser = User::where('Users.id', $Auth['id'])
+			$entUser = User::where('users.id', $Auth['id'])
 				->where('is_deleted', false)
 				->first()
 			;
