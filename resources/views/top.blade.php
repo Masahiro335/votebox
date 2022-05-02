@@ -5,7 +5,7 @@
 	<div class="content">
 		<div class="search-group">
 			{{ Form::open(['method'=>'get', 'url' => empty($is_mypage) ? route('top') : route('mypage.top'), 'class' => 'search-form' ]) }} 
-				{{ Form::text('search', $data['search'], ['placeholder' => '検索']) }}</br>
+				{{ Form::text('keyWord', empty($data['keyWord']) ? '' : $data['keyWord'], ['placeholder' => '検索']) }}</br>
 				@if( $data['type_id'] != App\Models\Theme::TYPE['VOTE'] )
 					{{ Form::select('sort', App\Models\Theme::SORT,['value' => $data['sort']]) }}
 				@else

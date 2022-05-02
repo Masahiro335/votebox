@@ -11528,7 +11528,7 @@ ul.mypage-menu li {
   padding: 0 10px;
   margin-bottom: 20px;
 }
-.search-group input[name=search] {
+.search-group input[name=keyWord] {
   width: 80%;
   padding: 10px 0;
   margin-bottom: 10px;

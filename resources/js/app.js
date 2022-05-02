@@ -32,7 +32,7 @@ Vue.component('paging-component', PagingComponent);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-if( $('#app').length > 0){
+if( $('#app').length > 0 ){
 	const app = new Vue({
 		el: '#app',
 	});

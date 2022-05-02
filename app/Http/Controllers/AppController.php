@@ -74,7 +74,7 @@ class AppController extends Controller
 		}
 
 		//検索キーワード
-		$data['search'] = $request->input('search');
+		$data['keyWord'] = $request->input('keyWord');
 
 		return $data;
 	}
