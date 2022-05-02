@@ -5,7 +5,7 @@
 			@if( $data['type_id'] == App\Models\Theme::TYPE['ACTIVE'] )
 				<?php $voteLeftDay = $entTheme->voteLeftDay() ?>
 				<div class="period">
-					<span <?= !empty(strpos($voteLeftDay, '時間')) ? 'style="color:#f9141a;"' : ''  ?>>あと{{ $voteLeftDay }}で終了</span></br>
+					<span <?= !empty(strpos($voteLeftDay, '時間')) ? 'style="color:#f9141a;"' : ''  ?>>あと{{ $voteLeftDay }}で終了</span><br>
 					{{ date('n月j日 G時i分', strtotime($entTheme->start_date_time)).' 〜 '.date('n月j日 G時i分', strtotime($entTheme->end_date_time)) }}
 				</div>
 			@else

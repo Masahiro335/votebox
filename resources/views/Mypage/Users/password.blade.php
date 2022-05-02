@@ -28,7 +28,7 @@
 
 				{{ Form::submit(empty($is_confirm) ? '確認' : '変更', ['class'=>'btn add']) }}
 			{{ Form::close() }}
-			</br>
+			<br>
 
 		</div>
 	</div>

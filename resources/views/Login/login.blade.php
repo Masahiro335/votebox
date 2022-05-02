@@ -19,7 +19,7 @@
 
 				{{ Form::submit('ログイン', ['class'=>'btn add']) }}
 			{{ Form::close() }}
-			</br>
+			<br>
 			登録は<a href="{{ route('register') }}">こちら</a>です。
 		</div>
 	</div>

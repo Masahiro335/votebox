@@ -23,7 +23,7 @@
 
 				{{ Form::submit(empty($is_mypage) ? 'ログイン' : '変更', ['class'=>'btn add']) }}
 			{{ Form::close() }}
-			</br>
+			<br>
 
 		</div>
 	</div>
