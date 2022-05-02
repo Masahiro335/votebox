@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="wrapper" id="app">
+<div class="wrapper">
 	<div class="content">
 		<div class="item">
 			<div class="title">ENTRY</div>

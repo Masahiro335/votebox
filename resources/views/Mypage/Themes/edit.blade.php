@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="wrapper" id="app">
+<div class="wrapper">
 	<div class="content">
 		<div class="item">
 			{{ Form::open(['url' => route('Themes.edit',['id' => empty($entTheme) ? null : $entTheme->id ]) ]) }} 
@@ -105,7 +105,7 @@ new Vue({
 	},
 	methods: {
 		add: function(){
-			this.items.push('').val();
+			this.items.push('');
 		},
 		del: function(){
 			//追加したダミーを削除

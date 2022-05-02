@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrapper" id="app">
+<div class="wrapper">
 	<div class="content">
 		<div class="item">
 			<ul class="mypage-menu">

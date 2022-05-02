@@ -5520,9 +5520,11 @@ Vue.component('paging-component', _components_PagingComponent_vue__WEBPACK_IMPOR
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
-});
+if ($('#app').length > 0) {
+  var app = new Vue({
+    el: '#app'
+  });
+}
 
 /***/ }),
 
