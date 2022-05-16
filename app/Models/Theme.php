@@ -112,8 +112,8 @@ class Theme extends Model
 		//検索
 		if( empty($request->input('keyWord')) == false ){
 			//1.検索キーワードの「両端のスペース」を削除。
-			//2.検索キーワードの間の「全角スペースを半角スペース」に変更。
-			//3.検索キーワードにスペースと[,]が入ってた場合、文字列を分裂する。
+			//2.検索キーワードの間の「全角スペースを半角スペース」に変換。
+			//3.検索キーワードにスペースや[,]が入ってた場合、文字列を分裂する。
 			$keyWords = preg_split('/[\s,]+/', mb_convert_kana(trim($request->input('keyWord')),'s'));
 
 			//お題の検索
