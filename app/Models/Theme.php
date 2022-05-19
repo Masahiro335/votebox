@@ -152,9 +152,9 @@ class Theme extends Model
 				case '50':
 					//タブが「投票済み」の場合
 					if( $request->input('type_id') == $this::TYPE['VOTE'] && empty($request->Auth) == false ){
-						$themeIdsOrder = implode(',', $themeIdsVoteUsers);
+						$themeIdsSort = implode(',', $themeIdsVoteUsers);
 
-						$query->orderByRaw("FIELD(id, $themeIdsOrder)");
+						$query->orderByRaw("FIELD(id, $themeIdsSort)");
 					}else{
 						$query->orderBy('themes.created_at', 'desc');
 					}
