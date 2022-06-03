@@ -23,6 +23,7 @@
     - Mysql
 - インフラ
     - AWS EC2
-    - AWS RDS など
+    - AWS RDS
+    - AWS Route53 など
 - 非同期通信
     -  axios
