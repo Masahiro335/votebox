@@ -17,8 +17,9 @@
     - Laravel
 - ライブラリ
     - Vue.js
-    - chart.js
     - jQuery
+- プラグイン
+    - chart.js
 - SQL
     - Mysql
 - インフラ
